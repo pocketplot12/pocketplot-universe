@@ -10814,17 +10814,9 @@ print('Templates written:',
       'ADMIN_TOP_HTML', len(ADMIN_TOP_HTML))
 
 # ---- v21: serve the brand image assets from /root/pocketplot/ ----
-from flask import send_from_directory as _send_from_dir
-_BRAND_FILES = {
-    # No-halo variants (transparent background, blends with chrome)
-    'logo.png', 'logo.jpg', 'logo-icon.png', 'logo-icon-32.png',
-    'logo-icon-180.png', 'logo-wide.png', 'logo-og.png',
-    'logo-600.png', 'logo-400.png', 'logo-240.png', 'logo.svg',
-    # Halo variants (soft amber glow behind, for standalone use)
-    'logo-halo.png', 'logo-halo-icon.png', 'logo-halo-icon-32.png',
-    'logo-halo-icon-180.png', 'logo-halo-og.png', 'logo-halo-600.png',
-    'logo-halo-400.png', 'logo-halo-240.png',
-}
+
+
+# (Duplicate _BRAND_FILES block removed; primary one above)
 """v23 routes for PocketPlot Universe.
 
 This module is meant to be appended to app.py at the right insertion
