@@ -10206,10 +10206,26 @@ def _debug_env_route():
 @app.route('/<path:filename>', methods=['GET'])
 def _serve_brand_asset(filename):
     """Serve brand assets from project root. Whitelisted."""
-    if filename in _BRAND_FILES:
-        return _send_from_dir('.', filename)
-    from flask import abort
-    abort(404)
+    from flask import send_file, abort
+    if filename not in _BRAND_FILES:
+        abort(404)
+    # Try multiple candidate paths
+    import os
+    candidates = [
+        os.path.join(os.getcwd(), filename),
+        os.path.join('/var/www', filename),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), filename),
+    ]
+    for path in candidates:
+        if os.path.isfile(path):
+            return send_file(path, conditional=True)
+    # Last resort - serve via send_from_directory with the actual module path
+    import flask
+    module_dir = os.path.dirname(os.path.abspath(flask.__file__))
+    try:
+        return _send_from_dir(os.getcwd(), filename)
+    except Exception:
+        abort(404)
 
 
 
