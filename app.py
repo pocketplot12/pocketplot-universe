@@ -10191,6 +10191,18 @@ _BRAND_FILES = {
     'manifest.json',
     'sw.js',
 }
+
+@app.route("/_debug_env")
+def _debug_env_route():
+    import os
+    return {
+        'cwd': os.getcwd(),
+        'files_in_cwd': sorted(os.listdir('.')),
+        'render_pwd': os.environ.get('RENDER_PWD'),
+        'pwd': os.environ.get('PWD'),
+    }, 200, {'Content-Type': 'application/json'}
+
+
 @app.route('/<path:filename>', methods=['GET'])
 def _serve_brand_asset(filename):
     """Serve brand assets from project root. Whitelisted."""
