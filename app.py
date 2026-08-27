@@ -10191,48 +10191,21 @@ _BRAND_FILES = {
     'manifest.json',
     'sw.js',
 }
-
-@app.route("/_debug_env")
-def _debug_env_route():
-    import os
-    return {
-        'cwd': os.getcwd(),
-        'files_in_cwd': sorted(os.listdir('.')),
-        'render_pwd': os.environ.get('RENDER_PWD'),
-        'pwd': os.environ.get('PWD'),
-    }, 200, {'Content-Type': 'application/json'}
-
-
 @app.route('/<path:filename>', methods=['GET'])
 def _serve_brand_asset(filename):
     """Serve brand assets from project root. Whitelisted."""
-    import os
     from flask import send_file, abort
-    # Debug: log what we got
-    full_path = os.path.join(os.getcwd(), filename)
-    exists = os.path.isfile(full_path)
-    size = os.path.getsize(full_path) if exists else 0
     if filename not in _BRAND_FILES:
-        return {
-            'error': 'not in whitelist',
-            'requested': filename,
-            'whitelist_count': len(_BRAND_FILES),
-            'match_path': full_path,
-            'exists': exists,
-        }, 404, {'Content-Type': 'application/json'}
+        abort(404)
+    import os
     candidates = [
         os.path.join(os.getcwd(), filename),
-        os.path.join('/var/www', filename),
         os.path.join(os.path.dirname(os.path.abspath(__file__)), filename),
     ]
     for path in candidates:
         if os.path.isfile(path):
             return send_file(path, conditional=True)
-    return {
-        'error': 'not found in any candidate',
-        'candidates': candidates,
-        'cwd': os.getcwd(),
-    }, 404, {'Content-Type': 'application/json'}
+    abort(404)
 
 
 
@@ -11145,26 +11118,6 @@ ADMIN_NEWSLETTER_HTML = ADMIN_NEWSLETTER_HTML
 # ============================================================================
 # v23 routes (templates above; routes below)
 # ============================================================================
-
-@app.route("/_check_file/<path:filename>")
-def _check_file_route(filename):
-    """Debug: does send_from_directory find this file?"""
-    import os
-    full_path = os.path.join('.', filename)
-    exists = os.path.isfile(full_path)
-    abs_path = os.path.abspath(full_path)
-    return {
-        'cwd': os.getcwd(),
-        'filename_param': filename,
-        'full_path': full_path,
-        'absolute_path': abs_path,
-        'exists': exists,
-        'size': os.path.getsize(full_path) if exists else None,
-        'ls': sorted(os.listdir('.')),
-    }, 200, {'Content-Type': 'application/json'}
-
-
-
 @app.route("/_debug_routes")
 def _debug_routes_route():
     """List all registered routes."""
