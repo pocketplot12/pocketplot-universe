@@ -11166,3 +11166,18 @@ def _check_file_route(filename):
 
 
 
+@app.route("/_debug_routes")
+def _debug_routes_route():
+    """List all registered routes."""
+    from flask import current_app
+    routes = []
+    for rule in current_app.url_map.iter_rules():
+        routes.append({
+            'rule': str(rule),
+            'endpoint': rule.endpoint,
+            'methods': sorted(rule.methods - {'HEAD', 'OPTIONS'}),
+        })
+    return {'routes': sorted(routes, key=lambda r: r['rule'])}, 200, {'Content-Type': 'application/json'}
+
+
+
