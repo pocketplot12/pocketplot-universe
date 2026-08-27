@@ -1,0 +1,76 @@
+# =============================================================================
+# PocketPlot — docker-compose.yml
+#
+# Usage:
+#   1. Copy `.env.example` to `.env` and fill in your real values
+#   2. `docker compose up -d`
+#   3. Check logs: `docker compose logs -f pocketplot`
+#   4. Open http://localhost:5000
+# =============================================================================
+
+services:
+  pocketplot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pocketplot:latest
+    container_name: pocketplot
+    restart: unless-stopped
+    # Run as a non-root user inside the container (uid 1001).
+    # The image already creates this user; this is for clarity at the compose layer.
+    user: "1001:1001"
+    ports:
+      - "5000:5000"
+    # All secrets and config come from this file. Never commit a real .env to git.
+    env_file:
+      - .env
+    # Environment overrides take precedence over .env; use sparingly.
+    environment:
+      # Ensure production-ish defaults; override these in .env
+      PYTHONUNBUFFERED: "1"
+      # The container paths — these match the Dockerfile ENV values.
+      # Override only if you change the WORKDIR or volume mounts.
+      POCKETPLOT_DB_PATH: /app/data/pocketplot.db
+      POCKETPLOT_OUTBOX_DIR: /app/outbox
+      POCKETPLOT_SITE_URL: ${POCKETPLOT_SITE_URL:-http://localhost:5000}
+    # Persistent storage:
+    #   - pocketplot_data: SQLite database (so subscriptions survive container restarts)
+    #   - pocketplot_outbox: saved email .eml files when SMTP is unconfigured
+    # Named volumes are easier than bind mounts on most hosts. Use bind mounts
+    # in production if you need to back up the DB to a specific path.
+    volumes:
+      - pocketplot_data:/app/data
+      - pocketplot_outbox:/app/outbox
+    # Sensible health check; the Dockerfile's HEALTHCHECK is the canonical one.
+    # You can also monitor with `docker compose ps` which uses the same status.
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:5000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    # Resource limits: keep PocketPlot predictable on a shared host.
+    # Adjust if you're running on a 2GB VPS or a 64GB dedicated box.
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+    # No stdin — this is a web server, not an interactive process.
+    stdin_open: false
+    tty: false
+    # The default restart policy handles crashes; this is just for symmetry.
+    stop_grace_period: 30s
+
+volumes:
+  pocketplot_data:
+    name: pocketplot_data
+  pocketplot_outbox:
+    name: pocketplot_outbox
+
+# A network is implicit in compose v2; no need to declare one for a single service.
+# If you add a reverse proxy (nginx, caddy, traefik) later, declare it here and
+# put pocketplot on it.

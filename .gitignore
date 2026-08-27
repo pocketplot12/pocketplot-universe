@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+*.db
+*.sqlite
+*.sqlite3
+.pytest_cache/
+.DS_Store
+*.egg-info/
+.coverage
+.env
+.idea/
+.vscode/
+
+# Personal
+audio/
+.pocketplot-debug.log
+*.tmp

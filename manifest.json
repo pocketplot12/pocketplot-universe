@@ -1,0 +1,40 @@
+{
+  "name": "PocketPlot Universe",
+  "short_name": "PocketPlot",
+  "description": "Create. Roleplay. Explore. Premium storytelling for adults.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "orientation": "any",
+  "theme_color": "#0a0f1c",
+  "background_color": "#0a0f1c",
+  "categories": ["books", "entertainment", "lifestyle"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {"src": "/logo-icon-32.png", "sizes": "32x32", "type": "image/png", "purpose": "any"},
+    {"src": "/logo-icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/logo-icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/logo-halo-icon.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "screenshots": [
+    {"src": "/logo-halo-600.png", "sizes": "1200x630", "type": "image/png", "form_factor": "wide"}
+  ],
+  "shortcuts": [
+    {"name": "My worlds", "short_name": "Worlds", "url": "/worlds",
+     "icons": [{"src": "/logo-icon-32.png", "sizes": "32x32"}]},
+    {"name": "New world", "short_name": "New", "url": "/worlds/new",
+     "icons": [{"src": "/logo-icon-32.png", "sizes": "32x32"}]},
+    {"name": "Seed generator", "short_name": "Seed", "url": "/seed",
+     "icons": [{"src": "/logo-icon-32.png", "sizes": "32x32"}]}
+  ],
+  "share_target": {
+    "action": "/share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {"title": "title", "text": "text", "url": "url"}
+  },
+  "launch_handler": {"client_mode": "focus-existing"}
+}

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>500 · PocketPlot Universe</title>
+<style>
+
+
+/* v26: Apple-style refinement overlay */
+:root {
+  /* Type scale - tighter, more disciplined */
+  --type-xs:   0.75rem;     /* 12px */
+  --type-sm:   0.875rem;    /* 14px */
+  --type-base: 1rem;        /* 16px */
+  --type-md:   1.125rem;    /* 18px */
+  --type-lg:   1.25rem;     /* 20px */
+  --type-xl:   1.5rem;      /* 24px */
+  --type-2xl:  2rem;        /* 32px */
+  --type-3xl:  2.75rem;     /* 44px */
+  --type-4xl:  3.75rem;     /* 60px */
+  --type-5xl:  5rem;        /* 80px */
+
+  /* Spacing - 4px base */
+  --space-1:   0.25rem;     /* 4px */
+  --space-2:   0.5rem;      /* 8px */
+  --space-3:   0.75rem;     /* 12px */
+  --space-4:   1rem;        /* 16px */
+  --space-5:   1.5rem;      /* 24px */
+  --space-6:   2rem;        /* 32px */
+  --space-7:   3rem;        /* 48px */
+  --space-8:   4rem;        /* 64px */
+  --space-9:   6rem;        /* 96px */
+
+  /* Radii - Apple-style: tighter */
+  --radius-sm:  6px;
+  --radius:     10px;
+  --radius-lg:  16px;
+  --radius-xl:  22px;
+
+  /* Shadows - subtle, layered */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,.18);
+  --shadow:     0 4px 12px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.14);
+  --shadow-lg:  0 14px 32px rgba(0,0,0,.32), 0 4px 10px rgba(0,0,0,.18);
+
+  /* Muted accent (Apple-style: one restrained accent color) */
+  --accent-cyan:    rgba(93, 222, 240, 0.55);
+  --accent-cyan-2:  rgba(93, 222, 240, 0.85);
+  --accent-magenta: rgba(232, 90, 138, 0.45);
+  --accent-glow:    rgba(240, 181, 74, 0.18);
+
+  /* Glass surface (frosted backdrop) */
+  --glass:        rgba(15, 26, 46, 0.72);
+  --glass-blur:   saturate(180%) blur(18px);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    140ms;
+  --dur:         220ms;
+  --dur-slow:    400ms;
+}
+
+/* v26 hero composition - Apple-style restraint */
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: var(--space-7);
+  align-items: center;
+  padding: var(--space-9) 0 var(--space-8);
+  position: relative;
+}
+@media (max-width: 880px) {
+  .hero { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) 0 var(--space-6); }
+}
+
+/* Subtle gradient mesh behind the hero - replaces ornate corner brackets */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 120%;
+  background:
+    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(93,222,240,0.06), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(240,181,74,0.06), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 30%, rgba(232,200,121,0.04), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--type-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass-l);
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+}
+
+h1, .hero h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0 0 var(--space-4);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--brass-l);
+  font-weight: 400;
+}
+
+.lead, .hero p {
+  font-family: var(--font-sans);
+  font-size: var(--type-md);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-5);
+  max-width: 30em;
+}
+
+.hero .art {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-mark {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  filter: drop-shadow(0 30px 60px rgba(240,181,74,.18)) drop-shadow(0 6px 12px rgba(0,0,0,.3));
+  animation: hero-mark-float 8s ease-in-out infinite;
+}
+@keyframes hero-mark-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-8px) rotate(-1deg); }
+}
+
+/* v26 buttons - Apple-style gradient + glow */
+.btn, button.btn, a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px 26px;
+  font-family: var(--font-sans);
+  font-size: var(--type-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease-out),
+              box-shadow var(--dur) var(--ease-out),
+              background var(--dur) var(--ease-out);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+/* Primary - brass gradient + soft glow */
+.btn-primary, .btn:not(.secondary):not(.ghost) {
+  background: linear-gradient(180deg, var(--brass-l) 0%, var(--brass) 60%, var(--amber) 100%);
+  color: #1a1410;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 0 0 1px rgba(201,160,78,.4),
+    0 8px 22px rgba(240,181,74,.18),
+    0 2px 6px rgba(0,0,0,.3);
+}
+.btn-primary:hover, .btn:not(.secondary):not(.ghost):hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.3) inset,
+    0 0 0 1px rgba(232,200,121,.6),
+    0 14px 32px rgba(240,181,74,.32),
+    0 3px 8px rgba(0,0,0,.3);
+}
+
+/* Secondary - hairline outline, transparent fill */
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(232,200,121,.32);
+  backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+  background: rgba(232,200,121,.08);
+  border-color: rgba(232,200,121,.55);
+}
+
+/* Ghost - text only with subtle hover */
+.btn-ghost {
+  background: transparent;
+  color: var(--brass-l);
+  border: none;
+  padding: 12px 18px;
+}
+.btn-ghost:hover { color: var(--amber-l); }
+
+/* v26 cards - clean hairline, generous whitespace */
+.card, .panel, .feature {
+  background: var(--navy-2);
+  border: 1px solid rgba(201,160,78,.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: relative;
+  transition: transform var(--dur) var(--ease-out),
+              border-color var(--dur) var(--ease-out),
+              background var(--dur) var(--ease-out);
+}
+.card:hover, .panel:hover, .feature:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232,200,121,.36);
+  background: linear-gradient(180deg, var(--navy-2) 0%, var(--navy-3) 100%);
+}
+
+/* Accent stripe (replaces heavy ornate top border) */
+.card.accent, .feature.accent {
+  position: relative;
+  overflow: hidden;
+}
+.card.accent::before, .feature.accent::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--brass) 50%, transparent 100%);
+  opacity: 0.7;
+}
+
+/* v26 navigation - sticky + frosted glass */
+nav.main-nav, header.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid rgba(201,160,78,.15);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: var(--type-sm);
+}
+
+nav.main-nav .nav-link {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast), background var(--dur-fast);
+  position: relative;
+}
+nav.main-nav .nav-link:hover {
+  color: var(--brass-l);
+  background: rgba(232,200,121,.06);
+}
+nav.main-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 50%; transform: translateX(-50%);
+  width: 18px; height: 2px;
+  background: var(--brass);
+  border-radius: 1px;
+}
+
+/* v26 mobile bottom nav */
+@media (max-width: 880px) {
+  body { padding-bottom: 60px; }
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-top: 1px solid rgba(201,160,78,.15);
+    z-index: 90;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: var(--ink-faint);
+    text-decoration: none;
+    font-size: 11px;
+    font-family: var(--font-sans);
+    padding: 6px 12px;
+    min-width: 56px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .mobile-bottom-nav a.active { color: var(--brass-l); }
+  .mobile-bottom-nav a .icon { font-size: 18px; line-height: 1; }
+}
+@media (min-width: 881px) {
+  .mobile-bottom-nav { display: none; }
+}
+
+/* v26 section dividers - cleaner horizontal lines */
+.divider, .section-divider, hr {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(232,200,121,.4) 50%, transparent 100%);
+  border: none;
+  margin: var(--space-6) 0;
+}
+
+/* v26 responsive typography */
+@media (max-width: 880px) {
+  body { font-size: 16px; }
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+  .wrap { padding: 0 var(--space-4); }
+}
+
+  :root { --navy:#0e1a2e; --navy-2:#15243f; --navy-3:#1f3460; --gold:#e6c879;
+          --cream:#f3e9d2; --muted:#9eb6d4; --faint:#7a8aa8; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:0; background:var(--navy); color:var(--cream);
+         font-family:Karla, system-ui, sans-serif; min-height:100vh;
+         display:flex; align-items:center; justify-content:center; }
+  .card { max-width:540px; padding:32px; text-align:center; }
+  .wordmark { font-family:'Fraunces', Georgia, serif; font-style:italic;
+              color:var(--gold); font-size:18px; letter-spacing:.04em;
+              margin-bottom:24px; }
+  .wordmark i { color:var(--muted); font-style:italic; font-weight:400; }
+  h1 { font-family:'Fraunces', Georgia, serif; font-size:96px; margin:0 0 12px;
+       font-weight:600; color:var(--gold); line-height:1; }
+  .sub { font-family:'Fraunces', Georgia, serif; font-style:italic;
+         font-size:20px; color:var(--muted); margin:0 0 20px; }
+  p { color:var(--cream); font-size:15px; line-height:1.6; margin:0 0 24px; }
+  .links a { display:inline-block; margin:0 6px; color:var(--gold); text-decoration:none;
+              font-family:Karla; font-size:13px; }
+  .links a:hover { text-decoration:underline; }
+  .reassure { background:rgba(230,200,121,.08); border:1px solid var(--gold);
+               border-radius:12px; padding:16px 20px; margin-bottom:24px;
+               font-family:'Fraunces', Georgia, serif; font-style:italic;
+               font-size:14px; color:var(--cream); line-height:1.6; }
+  .corner { position:fixed; bottom:16px; left:16px; right:16px; text-align:center;
+            color:var(--faint); font-size:11px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="wordmark">Pocket<i>Plot</i> Universe</div>
+  <h1>500</h1>
+  <p class="sub">Something went wrong on our end.</p>
+
+  <div class="reassure">
+    The team has been notified. Your data is safe, your stories are
+    safe, your account is safe. Try refreshing in a minute, or check the
+    system status to see what's happening.
+  </div>
+
+  <p>
+    <a class="links" href="/" style="color:var(--gold)">Home</a> ·
+    <a href="/status" style="color:var(--gold)">Status</a> ·
+    <a href="/contact" style="color:var(--gold)">Report this</a>
+  </p>
+</div>
+<div class="corner">PocketPlot Universe · 18+ · original content only</div>
+</body></html>

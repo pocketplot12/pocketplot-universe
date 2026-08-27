@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pricing — PocketPlot Universe</title>
+<meta name="description" content="Three tiers. Free, Pro $7.99/mo, Creator $19.99/mo. Bring Your Own Brain. 18+.">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/logo-icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/logo-icon-180.png">
+<meta name="theme-color" content="#0a0f1c">
+<meta property="og:title" content="Pricing — PocketPlot Universe">
+<meta property="og:description" content="Three tiers: Free, Pro, Creator.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/logo-og.png">
+<style>
+/* v27 Apple-style system — same as index.html */
+:root {
+  --navy-deepest:  #050811;
+  --navy-deep:     #0a0f1c;
+  --navy:          #0e1a2e;
+  --navy-2:        #15243f;
+  --navy-3:        #1f3460;
+  --navy-4:        #2a4275;
+  --ink:           #f5ecd6;
+  --ink-soft:      #d8cba8;
+  --ink-muted:     #9eb6d4;
+  --ink-faint:     #6c7891;
+  --brass:         #c9a04e;
+  --brass-l:       #e8c879;
+  --brass-d:       #8a6a26;
+  --amber:         #f0b54a;
+  --accent:        #c9a04e;
+  --hairline:      rgba(232, 200, 121, 0.14);
+  --hairline-2:    rgba(232, 200, 121, 0.28);
+  --hairline-strong: rgba(232, 200, 121, 0.45);
+  --glass:         rgba(15, 26, 46, 0.78);
+  --glass-blur:    saturate(180%) blur(20px);
+  --type-xs:       0.75rem;
+  --type-sm:       0.875rem;
+  --type-base:     1.0625rem;
+  --type-md:       1.25rem;
+  --type-lg:       1.5rem;
+  --type-xl:       2rem;
+  --type-2xl:      2.75rem;
+  --type-3xl:      3.75rem;
+  --type-display:  5rem;
+  --font-serif:    'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-sans:     'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --space-1:  0.5rem;
+  --space-2:  1rem;
+  --space-3:  1.5rem;
+  --space-4:  2rem;
+  --space-5:  3rem;
+  --space-6:  4rem;
+  --space-7:  6rem;
+  --space-8:  8rem;
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.5;
+  --lh-loose:  1.7;
+  --tracking-tight:  -0.035em;
+  --tracking-snug:   -0.015em;
+  --tracking-caps:   0.18em;
+  --radius-sm:  4px;
+  --radius:     8px;
+  --radius-lg:  14px;
+  --radius-pill: 999px;
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:    120ms;
+  --dur:         220ms;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--navy-deepest);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--type-base);
+  line-height: var(--lh-loose);
+  -webkit-font-smoothing: antialiased;
+}
+
+.brand-mark { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+.brand-mark img { width:32px; height:30px; border-radius:4px; }
+.brand-mark .word { font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:16px; letter-spacing:var(--tracking-snug); }
+
+header.nav { position:sticky; top:0; z-index:100; background:var(--glass); backdrop-filter:var(--glass-blur); -webkit-backdrop-filter:var(--glass-blur); border-bottom:1px solid var(--hairline); }
+.nav-row { max-width:1200px; margin:0 auto; padding:14px 32px; display:flex; align-items:center; justify-content:space-between; font-size:var(--type-sm); }
+.nav-links { display:flex; gap:4px; align-items:center; }
+.nav-links a { color:var(--ink-soft); text-decoration:none; padding:8px 14px; border-radius:var(--radius-sm); font-weight:500; }
+.nav-links a:hover { color:var(--ink); background:rgba(232,200,121,.06); }
+.nav-links a.active { color:var(--ink); }
+.nav-links a.cta { color:#1a1410; background:linear-gradient(180deg,var(--brass-l),var(--brass) 80%); padding:8px 16px; border-radius:var(--radius-pill); margin-left:8px; font-weight:600; }
+.nav-links a.cta:hover { color:#1a1410; background:linear-gradient(180deg,var(--brass-l),var(--brass) 60%); }
+@media (max-width:760px){.nav-links .link{display:none;}.nav-links .cta{display:inline-flex;}}
+
+.page-head { max-width:880px; margin:0 auto; padding:var(--space-8) 32px var(--space-6); text-align:center; }
+.page-head .eyebrow { font-size:var(--type-xs); letter-spacing:var(--tracking-caps); text-transform:uppercase; color:var(--brass-l); margin-bottom:var(--space-3); font-weight:500; }
+.page-head h1 { font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:clamp(2.5rem,7vw,5rem); line-height:var(--lh-tight); letter-spacing:var(--tracking-tight); margin:0 0 var(--space-3); }
+.page-head p { font-size:var(--type-md); color:var(--ink-soft); margin:0 auto; max-width:36em; }
+
+.tiers { max-width:1100px; margin:0 auto; padding:var(--space-5) 32px; display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); }
+@media (max-width:880px){.tiers{grid-template-columns:1fr;}}
+.tier { padding:var(--space-5) var(--space-4); border:1px solid var(--hairline); border-radius:var(--radius-lg); display:flex; flex-direction:column; }
+.tier.featured { border-color:var(--hairline-strong); background:linear-gradient(180deg,rgba(201,160,78,.04),transparent); position:relative; }
+.tier.featured::before { content:'Most popular'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--brass); color:#1a1410; padding:4px 12px; border-radius:var(--radius-pill); font-size:11px; font-weight:600; letter-spacing:.05em; }
+.tier .name { font-family:var(--font-serif); font-style:italic; font-size:var(--type-md); color:var(--ink); margin-bottom:4px; }
+.tier .price { font-family:var(--font-serif); font-size:var(--type-2xl); color:var(--brass-l); margin-bottom:var(--space-1); line-height:1; }
+.tier .price-sub { font-size:var(--type-sm); color:var(--ink-faint); margin-bottom:var(--space-3); }
+.tier ul { list-style:none; padding:0; margin:0 0 var(--space-4); border-top:1px solid var(--hairline); padding-top:var(--space-3); }
+.tier li { padding:8px 0; font-size:var(--type-sm); color:var(--ink-soft); position:relative; padding-left:18px; }
+.tier li::before { content:''; position:absolute; left:0; top:14px; width:6px; height:6px; background:var(--brass); border-radius:50%; }
+.tier .btn { display:block; text-align:center; padding:14px; border-radius:var(--radius-pill); text-decoration:none; font-weight:600; font-size:var(--type-sm); margin-top:auto; }
+.tier.featured .btn { background:var(--brass); color:#1a1410; }
+.tier.featured .btn:hover { background:var(--brass-l); }
+.tier:not(.featured) .btn { background:transparent; color:var(--ink); border:1px solid var(--hairline-2); }
+.tier:not(.featured) .btn:hover { border-color:var(--hairline-strong); background:rgba(232,200,121,.06); }
+
+.compare { max-width:880px; margin:var(--space-7) auto 0; padding:var(--space-7) 32px 0; border-top:1px solid var(--hairline); }
+.compare h2 { font-family:var(--font-serif); font-style:italic; font-size:var(--type-2xl); text-align:center; margin-bottom:var(--space-5); }
+.compare-row { display:grid; grid-template-columns:1fr 1fr 1fr; padding:var(--space-2) 0; border-bottom:1px solid var(--hairline); }
+.compare-row.header { font-weight:600; color:var(--ink-faint); font-size:var(--type-xs); letter-spacing:var(--tracking-caps); text-transform:uppercase; padding-bottom:var(--space-2); }
+.compare-row > div { font-size:var(--type-sm); color:var(--ink-soft); }
+.compare-row > div:first-child { color:var(--ink); }
+@media (max-width:760px){.compare-row{grid-template-columns:1fr;gap:8px;padding:8px 0;}.compare-row > div:first-child{font-weight:600;color:var(--brass-l);}}
+
+footer { border-top:1px solid var(--hairline); padding:var(--space-5) 32px; text-align:center; font-size:var(--type-sm); color:var(--ink-faint); margin-top:var(--space-8); }
+footer .links { display:flex; justify-content:center; gap:var(--space-4); margin-bottom:var(--space-3); flex-wrap:wrap; }
+footer a { color:var(--ink-faint); text-decoration:none; }
+footer a:hover { color:var(--brass-l); }
+
+.mobile-bottom-nav { display:none; }
+@media (max-width:760px) {
+  body { padding-bottom:60px; }
+  .mobile-bottom-nav { display:flex; position:fixed; bottom:0; left:0; right:0; height:56px; background:var(--glass); backdrop-filter:var(--glass-blur); -webkit-backdrop-filter:var(--glass-blur); border-top:1px solid var(--hairline); z-index:90; justify-content:space-around; align-items:center; padding-bottom:env(safe-area-inset-bottom,0); }
+  .mobile-bottom-nav a { display:flex; flex-direction:column; align-items:center; gap:2px; color:var(--ink-faint); text-decoration:none; font-size:11px; padding:6px 12px; min-width:56px; min-height:44px; justify-content:center; }
+  .mobile-bottom-nav a.active { color:var(--brass-l); }
+  .mobile-bottom-nav .icon { width:22px; height:22px; }
+}
+@media (min-width:761px){.mobile-bottom-nav{display:none;}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-row">
+    <a href="/" class="brand-mark"><img src="/logo-240.png" alt=""><span class="word">PocketPlot</span></a>
+    <nav class="nav-links">
+      <a href="/how-it-works" class="link">How it works</a>
+      <a href="/pricing" class="link active">Pricing</a>
+      <a href="/library" class="link">Library</a>
+      <a href="/seed" class="link">Seed</a>
+      <a href="/faq" class="link">FAQ</a>
+      <a href="/signup" class="cta">Begin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head">
+  <p class="eyebrow">Pricing</p>
+  <h1>Three tiers.<br>One goal.</h1>
+  <p>Bring your own brain, or use the procedural generator. Either way, you keep your worlds.</p>
+</section>
+
+<section class="tiers">
+  <div class="tier">
+    <div class="name">Free</div>
+    <div class="price">$0</div>
+    <div class="price-sub">forever, no card</div>
+    <ul>
+      <li>3 stories / day</li>
+      <li>1,000-word cap</li>
+      <li>Procedural generator</li>
+      <li>16 genres</li>
+      <li>Public stories</li>
+    </ul>
+    <a href="/signup" class="btn">Begin free</a>
+  </div>
+  <div class="tier featured">
+    <div class="name">Pro</div>
+    <div class="price">$7.99</div>
+    <div class="price-sub">/ month</div>
+    <ul>
+      <li>Unlimited stories</li>
+      <li>3,000-word cap</li>
+      <li>Themes, tone, world settings</li>
+      <li>Priority generation</li>
+      <li>Custom cover images</li>
+    </ul>
+    <a href="/signup-pro" class="btn">Begin Pro</a>
+  </div>
+  <div class="tier">
+    <div class="name">Creator</div>
+    <div class="price">$19.99</div>
+    <div class="price-sub">/ month</div>
+    <ul>
+      <li>Everything in Pro</li>
+      <li>5,000-word cap</li>
+      <li>BYOB - your own LLM</li>
+      <li>Custom prompts</li>
+      <li>API access</li>
+    </ul>
+    <a href="/signup-creator" class="btn">Begin Creator</a>
+  </div>
+</section>
+
+<section class="compare">
+  <h2>Compare tiers</h2>
+  <div class="compare-row header"><div>Feature</div><div>Free</div><div>Pro · Creator</div></div>
+  <div class="compare-row"><div>Stories / day</div><div>3</div><div>Unlimited</div></div>
+  <div class="compare-row"><div>Word cap</div><div>1,000</div><div>3,000 · 5,000</div></div>
+  <div class="compare-row"><div>BYOB (your LLM)</div><div>—</div><div>Creator only</div></div>
+  <div class="compare-row"><div>API access</div><div>—</div><div>Creator only</div></div>
+  <div class="compare-row"><div>Public profiles</div><div>✓</div><div>✓</div></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="links">
+    <a href="/pricing">Pricing</a>
+    <a href="/how-it-works">How it works</a>
+    <a href="/library">Library</a>
+    <a href="/seed">Seed generator</a>
+    <a href="/faq">FAQ</a>
+    <a href="/terms">Terms</a>
+  </div>
+  <div>PocketPlot Universe · 18+ · Original content only</div>
+</footer>
+
+<div class="mobile-bottom-nav" aria-label="Mobile navigation">
+  <a href="/"><svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12 12 3l9 9M5 10v10h14V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Home</span></a>
+  <a href="/library"><svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4zM4 8h16M8 4v16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Library</span></a>
+  <a href="/me"><svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Me</span></a>
+</div>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(function() {});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PocketPlot Universe — Create. Roleplay. Explore.</title>
+<meta name="description" content="Premium storytelling for adults. Branching worlds, BYOB, scene-like art. 18+.">
+<link rel="canonical" href="/">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/logo-icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/logo-icon-180.png">
+<meta name="theme-color" content="#0a0f1c">
+<meta property="og:title" content="PocketPlot Universe">
+<meta property="og:description" content="Premium storytelling for adults. Branching worlds, BYOB, scene-like art. 18+.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/logo-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/logo-og.png">
+<style>
+/* v27: Apple-style restructure
+   - Display type dominates
+   - Single focal point per viewport
+   - One restrained accent (brass) + monochromatic base
+   - Generous line-height + breathing room
+   - Subtle, deliberate motion
+*/
+
+:root {
+  /* Colors — keep palette, add monochrome scale */
+  --navy-deepest:  #050811;
+  --navy-deep:     #0a0f1c;
+  --navy:          #0e1a2e;
+  --navy-2:        #15243f;
+  --navy-3:        #1f3460;
+  --navy-4:        #2a4275;
+
+  --ink:           #f5ecd6;
+  --ink-soft:      #d8cba8;
+  --ink-muted:     #9eb6d4;
+  --ink-faint:     #6c7891;
+
+  --brass:         #c9a04e;
+  --brass-l:       #e8c879;
+  --brass-d:       #8a6a26;
+  --amber:         #f0b54a;
+
+  /* Single restrained accent — only used on focus/active states */
+  --accent:        #c9a04e;
+
+  /* Hairline borders (barely-there) */
+  --hairline:      rgba(232, 200, 121, 0.14);
+  --hairline-2:    rgba(232, 200, 121, 0.28);
+  --hairline-strong: rgba(232, 200, 121, 0.45);
+
+  /* Glass for overlays */
+  --glass:         rgba(15, 26, 46, 0.78);
+  --glass-blur:    saturate(180%) blur(20px);
+
+  /* Type scale — Apple-style: bigger, more breathing */
+  --type-xs:       0.75rem;
+  --type-sm:       0.875rem;
+  --type-base:     1.0625rem;     /* 17px body */
+  --type-md:       1.25rem;
+  --type-lg:       1.5rem;
+  --type-xl:       2rem;
+  --type-2xl:      2.75rem;
+  --type-3xl:      3.75rem;
+  --type-display:  5rem;          /* 80px hero */
+  --type-display-l: 6.5rem;        /* 104px hero */
+  --type-display-xl: 8rem;         /* 128px hero */
+
+  /* Fonts */
+  --font-serif:    'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-sans:     'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', 'IBM Plex Mono', monospace;
+
+  /* Spacing — generous */
+  --space-1:  0.5rem;
+  --space-2:  1rem;
+  --space-3:  1.5rem;
+  --space-4:  2rem;
+  --space-5:  3rem;
+  --space-6:  4rem;
+  --space-7:  6rem;
+  --space-8:  8rem;
+  --space-9:  12rem;
+
+  /* Line heights — Apple-style: roomy */
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.5;
+  --lh-loose:  1.7;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.035em;
+  --tracking-snug:   -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.08em;
+  --tracking-caps:   0.18em;
+
+  /* Radii */
+  --radius-sm:  4px;
+  --radius:     8px;
+  --radius-lg:  14px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    120ms;
+  --dur:         220ms;
+  --dur-slow:    480ms;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--navy-deepest);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--type-base);
+  line-height: var(--lh-loose);
+  font-feature-settings: "kern" 1, "liga" 1, "ss01" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Brand-mark wordmark in nav — minimal, no big illustration */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-mark img {
+  width: 32px; height: 30px;
+  border-radius: 4px;
+}
+.brand-mark .word {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ink);
+  letter-spacing: var(--tracking-snug);
+}
+
+/* ========================================================================
+   NAV — sticky, frosted-glass, minimal
+   ======================================================================== */
+header.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--hairline);
+}
+.nav-row {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--type-sm);
+}
+.nav-links {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.nav-links a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast), background var(--dur-fast);
+  font-weight: 500;
+}
+.nav-links a:hover {
+  color: var(--ink);
+  background: rgba(232, 200, 121, 0.06);
+}
+.nav-links a.active {
+  color: var(--ink);
+}
+.nav-links a.cta {
+  color: #1a1410;
+  background: linear-gradient(180deg, var(--brass-l), var(--brass) 80%);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  margin-left: 8px;
+  font-weight: 600;
+}
+.nav-links a.cta:hover {
+  color: #1a1410;
+  background: linear-gradient(180deg, var(--brass-l), var(--brass) 60%);
+}
+
+@media (max-width: 760px) {
+  .nav-links .link { display: none; }
+  .nav-links .cta { display: inline-flex; }
+}
+
+/* ========================================================================
+   HERO — Apple-style: text-only focal point, single CTA, massive type
+   ======================================================================== */
+.hero {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-9) 32px var(--space-8);
+  text-align: center;
+}
+.hero .eyebrow {
+  font-size: var(--type-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--brass-l);
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(3rem, 8vw, var(--type-display-xl));
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+  margin: 0 0 var(--space-3);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--brass-l);
+  font-weight: 400;
+}
+.hero .lede {
+  font-size: var(--type-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-soft);
+  margin: 0 auto var(--space-5);
+  max-width: 32em;
+}
+.hero .cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  background: var(--brass);
+  color: #1a1410;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--type-base);
+  letter-spacing: var(--tracking-snug);
+  transition: background var(--dur), transform var(--dur) var(--ease-out);
+}
+.hero .cta-primary:hover {
+  background: var(--brass-l);
+  transform: translateY(-1px);
+}
+.hero .cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: var(--space-2);
+  color: var(--brass-l);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 16px 8px;
+}
+.hero .cta-secondary:hover { color: var(--amber); }
+.hero .cta-arrow {
+  width: 14px; height: 14px;
+  transition: transform var(--dur) var(--ease-out);
+}
+.hero .cta-secondary:hover .cta-arrow { transform: translateX(3px); }
+
+/* ========================================================================
+   SECTION — Apple-style: max-width 880, single focal point per section
+   ======================================================================== */
+.section {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-7) 32px;
+}
+.section + .section { border-top: 1px solid var(--hairline); }
+.section .section-eyebrow {
+  font-size: var(--type-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--brass-l);
+  margin-bottom: var(--space-2);
+  font-weight: 500;
+}
+.section h2 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2rem, 5vw, var(--type-3xl));
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-snug);
+  color: var(--ink);
+  margin: 0 0 var(--space-3);
+}
+.section p {
+  font-size: var(--type-md);
+  line-height: var(--lh-normal);
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-4);
+  max-width: 38em;
+}
+
+/* Feature row — single line, no card */
+.feature {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--hairline);
+}
+.feature:last-child { border-bottom: 1px solid var(--hairline); }
+.feature .label {
+  font-family: var(--font-sans);
+  font-size: var(--type-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--brass-l);
+  font-weight: 500;
+  padding-top: 4px;
+}
+.feature h3 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--type-lg);
+  margin: 0 0 var(--space-1);
+  color: var(--ink);
+  letter-spacing: var(--tracking-snug);
+}
+.feature p {
+  font-size: var(--type-base);
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: var(--lh-loose);
+}
+
+/* Stats strip — minimal */
+.stats {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.stat { text-align: center; }
+.stat .n {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: var(--type-2xl);
+  color: var(--brass-l);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat .label {
+  font-size: var(--type-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Quote — editorial style */
+.quote {
+  text-align: center;
+  padding: var(--space-7) 32px;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.quote blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, var(--type-2xl));
+  line-height: var(--lh-snug);
+  color: var(--ink-soft);
+  margin: 0 auto;
+  max-width: 32em;
+  letter-spacing: var(--tracking-snug);
+}
+.quote cite {
+  display: block;
+  margin-top: var(--space-3);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: var(--type-sm);
+  color: var(--ink-faint);
+}
+
+/* CTA strip at bottom */
+.cta-strip {
+  text-align: center;
+  padding: var(--space-8) 32px;
+}
+
+/* ========================================================================
+   FOOTER — minimal
+   ======================================================================== */
+footer {
+  border-top: 1px solid var(--hairline);
+  padding: var(--space-5) 32px;
+  text-align: center;
+  font-size: var(--type-sm);
+  color: var(--ink-faint);
+}
+footer .links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+footer a {
+  color: var(--ink-faint);
+  text-decoration: none;
+}
+footer a:hover { color: var(--brass-l); }
+
+/* ========================================================================
+   MOBILE — bottom tab bar + simplified layout
+   ======================================================================== */
+.mobile-bottom-nav {
+  display: none;
+}
+@media (max-width: 760px) {
+  body { padding-bottom: 60px; }
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-top: 1px solid var(--hairline);
+    z-index: 90;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: var(--ink-faint);
+    text-decoration: none;
+    font-size: 11px;
+    padding: 6px 12px;
+    min-width: 56px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .mobile-bottom-nav a.active { color: var(--brass-l); }
+  .mobile-bottom-nav .icon {
+    width: 22px; height: 22px;
+  }
+}
+@media (min-width: 761px) {
+  .mobile-bottom-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-row">
+    <a href="/" class="brand-mark">
+      <img src="/logo-240.png" alt="">
+      <span class="word">PocketPlot</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/how-it-works" class="link">How it works</a>
+      <a href="/pricing" class="link">Pricing</a>
+      <a href="/library" class="link">Library</a>
+      <a href="/seed" class="link">Seed</a>
+      <a href="/faq" class="link">FAQ</a>
+      <a href="/signup" class="cta">Begin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Portal to stories</p>
+  <h1>Create.<br>Roleplay.<br><em>Explore.</em></h1>
+  <p class="lede">
+    A premium storytelling platform for adults. Branching worlds, your own AI engine, scene-like art.
+  </p>
+  <div>
+    <a href="/signup" class="cta-primary">Begin your first world
+      <svg class="cta-arrow" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <a href="/how-it-works" class="cta-secondary">See how it works</a>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><div class="n">3</div><div class="label">Tiers</div></div>
+  <div class="stat"><div class="n">16</div><div class="label">Genres</div></div>
+  <div class="stat"><div class="n">1000s</div><div class="label">Words learned</div></div>
+  <div class="stat"><div class="n">24/7</div><div class="label">Always on</div></div>
+</section>
+
+<section class="section">
+  <p class="section-eyebrow">What it does</p>
+  <h2>Stories that branch.<br>Worlds that remember.</h2>
+  <p>
+    Every world is a graph, not a list. Each scene has 2-3 choices that branch the story. The same world can be played hundreds of times with different paths — and every choice you make shapes the next chapter.
+  </p>
+  <div>
+    <div class="feature">
+      <div class="label">Branching</div>
+      <div>
+        <h3>Branching-first narrative</h3>
+        <p>Your world unfolds across connected scenes. Players make choices that lead to new scenes, new paths, and new endings. No two playthroughs are the same.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="label">BYOB</div>
+      <div>
+        <h3>Bring your own brain</h3>
+        <p>Connect your own OpenAI-compatible LLM. The platform handles content moderation on the response side — your model, your guardrails.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="label">Visual</div>
+      <div>
+        <h3>Consistent scene art</h3>
+        <p>Every scene gets a procedurally-composed SVG illustration matched to the genre, tone, and story state. Visual continuity without paying per image.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <blockquote>
+    A world the user can actually play in — not a button-click visual novel.
+  </blockquote>
+  <cite>— The PocketPlot vision</cite>
+</section>
+
+<section class="section">
+  <p class="section-eyebrow">Modes</p>
+  <h2>Two ways to play every story.</h2>
+  <div>
+    <div class="feature">
+      <div class="label">Play</div>
+      <div>
+        <h3>Visual novel. Choices. Branching.</h3>
+        <p>Numbered choice buttons, progress bar, completion banner. Player sessions are tracked so you can return to where you left off.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="label">Read</div>
+      <div>
+        <h3>Manga / storybook. Read-only.</h3>
+        <p>One page per episode. Art panel + italic narration + speech bubbles. Page-flip animation. Keyboard navigation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <h2>Ready to begin?</h2>
+  <p class="lede" style="margin-bottom:32px;">Free tier includes 3 stories/day and a 1000-word cap. No card needed.</p>
+  <a href="/signup" class="cta-primary">Begin your first world</a>
+</section>
+
+</main>
+
+<footer>
+  <div class="links">
+    <a href="/pricing">Pricing</a>
+    <a href="/how-it-works">How it works</a>
+    <a href="/library">Library</a>
+    <a href="/seed">Seed generator</a>
+    <a href="/faq">FAQ</a>
+    <a href="/terms">Terms</a>
+  </div>
+  <div>PocketPlot Universe · 18+ · Original content only</div>
+</footer>
+
+<div class="mobile-bottom-nav" aria-label="Mobile navigation">
+  <a href="/" class="active">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12 12 3l9 9M5 10v10h14V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Home</span>
+  </a>
+  <a href="/library">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4zM4 8h16M8 4v16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Library</span>
+  </a>
+  <a href="/me">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Me</span>
+  </a>
+</div>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(function() {});
+}
+</script>
+</body>
+</html>

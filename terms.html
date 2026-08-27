@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Terms of Service · PocketPlot Universe</title>
+<style>
+
+
+/* v26: Apple-style refinement overlay */
+:root {
+  /* Type scale - tighter, more disciplined */
+  --type-xs:   0.75rem;     /* 12px */
+  --type-sm:   0.875rem;    /* 14px */
+  --type-base: 1rem;        /* 16px */
+  --type-md:   1.125rem;    /* 18px */
+  --type-lg:   1.25rem;     /* 20px */
+  --type-xl:   1.5rem;      /* 24px */
+  --type-2xl:  2rem;        /* 32px */
+  --type-3xl:  2.75rem;     /* 44px */
+  --type-4xl:  3.75rem;     /* 60px */
+  --type-5xl:  5rem;        /* 80px */
+
+  /* Spacing - 4px base */
+  --space-1:   0.25rem;     /* 4px */
+  --space-2:   0.5rem;      /* 8px */
+  --space-3:   0.75rem;     /* 12px */
+  --space-4:   1rem;        /* 16px */
+  --space-5:   1.5rem;      /* 24px */
+  --space-6:   2rem;        /* 32px */
+  --space-7:   3rem;        /* 48px */
+  --space-8:   4rem;        /* 64px */
+  --space-9:   6rem;        /* 96px */
+
+  /* Radii - Apple-style: tighter */
+  --radius-sm:  6px;
+  --radius:     10px;
+  --radius-lg:  16px;
+  --radius-xl:  22px;
+
+  /* Shadows - subtle, layered */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,.18);
+  --shadow:     0 4px 12px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.14);
+  --shadow-lg:  0 14px 32px rgba(0,0,0,.32), 0 4px 10px rgba(0,0,0,.18);
+
+  /* Muted accent (Apple-style: one restrained accent color) */
+  --accent-cyan:    rgba(93, 222, 240, 0.55);
+  --accent-cyan-2:  rgba(93, 222, 240, 0.85);
+  --accent-magenta: rgba(232, 90, 138, 0.45);
+  --accent-glow:    rgba(240, 181, 74, 0.18);
+
+  /* Glass surface (frosted backdrop) */
+  --glass:        rgba(15, 26, 46, 0.72);
+  --glass-blur:   saturate(180%) blur(18px);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    140ms;
+  --dur:         220ms;
+  --dur-slow:    400ms;
+}
+
+/* v26 hero composition - Apple-style restraint */
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: var(--space-7);
+  align-items: center;
+  padding: var(--space-9) 0 var(--space-8);
+  position: relative;
+}
+@media (max-width: 880px) {
+  .hero { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) 0 var(--space-6); }
+}
+
+/* Subtle gradient mesh behind the hero - replaces ornate corner brackets */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 120%;
+  background:
+    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(93,222,240,0.06), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(240,181,74,0.06), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 30%, rgba(232,200,121,0.04), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--type-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass-l);
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+}
+
+h1, .hero h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0 0 var(--space-4);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--brass-l);
+  font-weight: 400;
+}
+
+.lead, .hero p {
+  font-family: var(--font-sans);
+  font-size: var(--type-md);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-5);
+  max-width: 30em;
+}
+
+.hero .art {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-mark {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  filter: drop-shadow(0 30px 60px rgba(240,181,74,.18)) drop-shadow(0 6px 12px rgba(0,0,0,.3));
+  animation: hero-mark-float 8s ease-in-out infinite;
+}
+@keyframes hero-mark-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-8px) rotate(-1deg); }
+}
+
+/* v26 buttons - Apple-style gradient + glow */
+.btn, button.btn, a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px 26px;
+  font-family: var(--font-sans);
+  font-size: var(--type-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease-out),
+              box-shadow var(--dur) var(--ease-out),
+              background var(--dur) var(--ease-out);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+/* Primary - brass gradient + soft glow */
+.btn-primary, .btn:not(.secondary):not(.ghost) {
+  background: linear-gradient(180deg, var(--brass-l) 0%, var(--brass) 60%, var(--amber) 100%);
+  color: #1a1410;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 0 0 1px rgba(201,160,78,.4),
+    0 8px 22px rgba(240,181,74,.18),
+    0 2px 6px rgba(0,0,0,.3);
+}
+.btn-primary:hover, .btn:not(.secondary):not(.ghost):hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.3) inset,
+    0 0 0 1px rgba(232,200,121,.6),
+    0 14px 32px rgba(240,181,74,.32),
+    0 3px 8px rgba(0,0,0,.3);
+}
+
+/* Secondary - hairline outline, transparent fill */
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(232,200,121,.32);
+  backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+  background: rgba(232,200,121,.08);
+  border-color: rgba(232,200,121,.55);
+}
+
+/* Ghost - text only with subtle hover */
+.btn-ghost {
+  background: transparent;
+  color: var(--brass-l);
+  border: none;
+  padding: 12px 18px;
+}
+.btn-ghost:hover { color: var(--amber-l); }
+
+/* v26 cards - clean hairline, generous whitespace */
+.card, .panel, .feature {
+  background: var(--navy-2);
+  border: 1px solid rgba(201,160,78,.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: relative;
+  transition: transform var(--dur) var(--ease-out),
+              border-color var(--dur) var(--ease-out),
+              background var(--dur) var(--ease-out);
+}
+.card:hover, .panel:hover, .feature:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232,200,121,.36);
+  background: linear-gradient(180deg, var(--navy-2) 0%, var(--navy-3) 100%);
+}
+
+/* Accent stripe (replaces heavy ornate top border) */
+.card.accent, .feature.accent {
+  position: relative;
+  overflow: hidden;
+}
+.card.accent::before, .feature.accent::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--brass) 50%, transparent 100%);
+  opacity: 0.7;
+}
+
+/* v26 navigation - sticky + frosted glass */
+nav.main-nav, header.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid rgba(201,160,78,.15);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: var(--type-sm);
+}
+
+nav.main-nav .nav-link {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast), background var(--dur-fast);
+  position: relative;
+}
+nav.main-nav .nav-link:hover {
+  color: var(--brass-l);
+  background: rgba(232,200,121,.06);
+}
+nav.main-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 50%; transform: translateX(-50%);
+  width: 18px; height: 2px;
+  background: var(--brass);
+  border-radius: 1px;
+}
+
+/* v26 mobile bottom nav */
+@media (max-width: 880px) {
+  body { padding-bottom: 60px; }
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-top: 1px solid rgba(201,160,78,.15);
+    z-index: 90;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: var(--ink-faint);
+    text-decoration: none;
+    font-size: 11px;
+    font-family: var(--font-sans);
+    padding: 6px 12px;
+    min-width: 56px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .mobile-bottom-nav a.active { color: var(--brass-l); }
+  .mobile-bottom-nav a .icon { font-size: 18px; line-height: 1; }
+}
+@media (min-width: 881px) {
+  .mobile-bottom-nav { display: none; }
+}
+
+/* v26 section dividers - cleaner horizontal lines */
+.divider, .section-divider, hr {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(232,200,121,.4) 50%, transparent 100%);
+  border: none;
+  margin: var(--space-6) 0;
+}
+
+/* v26 responsive typography */
+@media (max-width: 880px) {
+  body { font-size: 16px; }
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+  .wrap { padding: 0 var(--space-4); }
+}
+
+  :root {
+    --navy: #0e1a2e; --navy-2: #15243f; --navy-3: #1f3460;
+    --gold: #e6c879; --cream: #f3e9d2; --muted: #9eb6d4; --faint: #7a8aa8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--navy); color: var(--cream);
+    font-family: Karla, system-ui, -apple-system, sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+  header { padding: 24px 0; border-bottom: 1px solid var(--navy-3); margin-bottom: 48px; }
+  .wordmark { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--gold); font-size: 22px; font-weight: 600; }
+  .wordmark i { color: var(--muted); font-style: italic; font-weight: 400; }
+  nav { float: right; margin-top: 8px; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 22px; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; }
+  nav a:hover { color: var(--gold); }
+  h1, h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; line-height: 1.2; color: var(--cream); }
+  h1 { font-size: 40px; margin: 0 0 16px; }
+  h1 i { color: var(--gold); font-style: italic; }
+  h2 { font-size: 22px; margin: 36px 0 12px; color: var(--gold); }
+  .lead { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--muted); font-size: 16px; }
+  .qa { background: var(--navy-2); border: 1px solid var(--navy-3); border-radius: 12px; padding: 22px 24px; margin: 16px 0; }
+  .qa h3 { margin: 0 0 8px; color: var(--gold); font-size: 17px; font-family: 'Fraunces', Georgia, serif; }
+  .qa p { margin: 8px 0; color: var(--cream); font-size: 14px; }
+  .qa p:last-child { margin-bottom: 0; }
+  .legal-note { background: rgba(230, 200, 121, .08); border: 1px solid var(--gold); border-radius: 12px; padding: 18px 22px; margin: 24px 0; color: var(--cream); font-size: 14px; }
+  footer { margin-top: 60px; padding: 28px 0; border-top: 1px solid var(--navy-3); color: var(--faint); font-size: 13px; text-align: center; }
+  footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
+</style>
+</head>
+<body>
+
+  <header class="v18-mini">
+    <a href="/" class="brand"><img src="/logo-halo-240.png" alt="PocketPlot Universe" width="40" height="37" class="brand-mark"><div class="wordmark-stack"><div class="wordmark-title">Pocket<em>Plot</em> Universe</div></div></a>
+    <nav class="v18">
+      <a href="/how-it-works">How it works</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/library">Library</a>
+      <a href="/seed">Seed</a>
+      <a href="/remix">Remix</a>
+      <a href="/faq">FAQ</a>
+      <a href="/signup" class="cta">Begin →</a>
+    </nav>
+  </header>
+  <style>
+    .v18-mini {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(201,160,78,.25);
+      background: #0a0f1c;
+    }
+    .v18-mini .brand svg { width: 200px; height: 44px; }
+    .v18-mini nav { display: flex; gap: 18px; align-items: center; }
+    .v18-mini nav a {
+      color: #c9bfa8; text-decoration: none;
+      font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 500;
+      letter-spacing: .04em;
+      padding: 4px 2px;
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .v18-mini nav a:hover { color: #ffd47a; border-bottom-color: #c9a04e; }
+    .v18-mini nav a.cta {
+      font-family: 'DM Sans',sans-serif; font-weight: 700; font-size: 12px;
+      letter-spacing: .12em; text-transform: uppercase;
+      background: linear-gradient(180deg, #e8c879 0%, #c9a04e 50%, #8a6a26 100%);
+      color: #0a0f1c;
+      padding: 8px 16px; border-radius: 3px;
+      border: 1px solid #8a6a26;
+      box-shadow: 0 0 0 1px #e8c879 inset, 0 4px 12px rgba(0,0,0,.4);
+    }
+    .v18-mini nav a.cta:hover {
+      box-shadow: 0 0 0 1px #ffd47a inset, 0 0 16px #f0b54a;
+    }
+  </style>
+
+<div class="wrap">
+  <header>
+    <div class="wordmark">Pocket<i>Plot</i> Universe</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/faq">FAQ</a>
+      <a href="/help">Help</a>
+      <a href="/roadmap">Roadmap</a>
+      <a href="/status">Status</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <h1>Terms of <i>Service</i></h1>
+  <p class="lead">Last updated: 2026-08-23. Plain English version below; the legal version is below that.</p>
+
+  <h2>Plain English</h2>
+  <div class="qa">
+    <h3>1. You're 18+.</h3>
+    <p>PocketPlot Universe is an adults-only platform. You confirm you're 18 years of age or older when you sign up. If we discover an account belongs to a minor, we delete it.</p>
+  </div>
+  <div class="qa">
+    <h3>2. You keep what you make.</h3>
+    <p>Your stories are yours. We don't sell them, license them, or use them to train models. Export them whenever you want.</p>
+  </div>
+  <div class="qa">
+    <h3>3. We'll be honest about what we collect.</h3>
+    <p>Email, display name, age (to verify 18+), your story preferences, your API keys (encrypted, only used to route your requests). That's it.</p>
+  </div>
+  <div class="qa">
+    <h3>4. The platform is Stripe- and Apple-friendly.</h3>
+    <p>We don't produce explicit sexual content, graphic gore, or hate speech. The full Content Policy is in the FAQ.</p>
+  </div>
+  <div class="qa">
+    <h3>5. Your BYOB keys stay yours.</h3>
+    <p>When you bring your own LLM or image API, we encrypt the key, use it only to route your requests, and never log it. You can delete it anytime.</p>
+  </div>
+  <div class="qa">
+    <h3>6. Cancel anytime.</h3>
+    <p>Pro and Creator are billed monthly or annually. Cancel from your dashboard; you'll keep access until the end of the period.</p>
+  </div>
+  <div class="qa">
+    <h3>7. If something breaks, we tell you.</h3>
+    <p>Service outages, security incidents, policy changes — we email you. We'd rather lose a few users to transparency than keep a few by hiding problems.</p>
+  </div>
+  <div class="qa">
+    <h3>8. Refunds within 14 days.</h3>
+    <p>If you change your mind inside 14 days of a Pro or Creator charge, reply to the receipt email and we'll refund. No questions, no friction.</p>
+  </div>
+  <div class="qa">
+    <h3>9. We may change these terms.</h3>
+    <p>When we do, we'll email you at least 14 days in advance. Continued use after the effective date counts as acceptance. If you don't accept, you can cancel and get a prorated refund.</p>
+  </div>
+
+  <h2>The legal version</h2>
+  <p>This section is the binding contract. Plain-English summaries above are not part of the contract; the language below is.</p>
+
+  <h2>1. Eligibility</h2>
+  <p>You must be at least 18 years of age to use PocketPlot Universe. By creating an account, you represent and warrant that you are 18 or older. We may at any time request proof of age and suspend or terminate accounts that cannot verify eligibility.</p>
+
+  <h2>2. Account</h2>
+  <p>You are responsible for keeping your account credentials secure. You agree to provide accurate information at signup and to update it as needed. We may suspend or terminate accounts that provide false information or that violate these Terms.</p>
+
+  <h2>3. Acceptable Use</h2>
+  <p>You agree not to use PocketPlot Universe to produce, request, or distribute content that:</p>
+  <ul>
+    <li>depicts minors in any sexual context (zero tolerance);</li>
+    <li>is explicitly sexual or pornographic;</li>
+    <li>contains graphic gore or violence designed to arouse rather than narrate;</li>
+    <li>constitutes hate speech targeting a specific protected class;</li>
+    <li>includes real-person private information (doxxing);</li>
+    <li>infringes any third-party intellectual-property right;</li>
+    <li>violates any applicable law.</li>
+  </ul>
+  <p>Light violence (action scenes, mild conflict, combat) and light romance (flirting, romantic tension, kissing between consenting adults) are permitted and encouraged. The full Content Policy is published in our <a href="/faq#content-policy" style="color:var(--gold)">FAQ</a>.</p>
+
+  <h2>4. Your Content</h2>
+  <p>You retain all ownership rights to the stories, prompts, and other content you create on PocketPlot Universe ("User Content"). You grant us a limited, non-exclusive, royalty-free license to store, transmit, and display User Content solely to operate the service for you. We will not sell, license, or use your User Content to train any model.</p>
+
+  <h2>5. Bring-Your-Own-Key (BYOB / BYOG)</h2>
+  <p>If you connect a third-party LLM or image-generation API (Creator tier), you represent that you have the right to use those services and to provide the API credentials. Your API keys are encrypted at rest using PBKDF2 + HMAC-based authenticated encryption; we use them only to route your requests and never log them. You can delete your saved keys at any time from <code>/me/settings</code>.</p>
+
+  <h2>6. Payment &amp; Cancellation</h2>
+  <p>Pro and Creator plans are billed in advance on a recurring basis (monthly or annually) via Stripe. You can cancel at any time; access continues through the end of the paid period. We offer a 14-day money-back guarantee for first-time subscribers; refund requests within 14 days of an initial charge will be honored. Existing Pro subscribers who joined before the v12 launch will continue at their $4.99/month grandfathered rate.</p>
+
+  <h2>7. Service Availability</h2>
+  <p>We aim for high availability but do not guarantee uninterrupted access. We may perform maintenance, updates, or emergency fixes that temporarily disrupt service. We will notify you of planned maintenance when feasible.</p>
+
+  <h2>8. Termination</h2>
+  <p>You may terminate your account at any time from your dashboard. We may suspend or terminate accounts that violate these Terms, that we reasonably believe are being used to harm others, or that remain inactive for more than 24 months. Upon termination, your User Content is deleted within 30 days except where retention is required by law.</p>
+
+  <h2>9. Disclaimers</h2>
+  <p>PocketPlot Universe is provided "as is" without warranties of any kind, express or implied. We do not warrant that the service will be uninterrupted, error-free, or that generated content will meet your expectations.</p>
+
+  <h2>10. Limitation of Liability</h2>
+  <p>To the maximum extent permitted by law, PocketPlot Universe's total liability arising from or related to your use of the service shall not exceed the amount you paid us in the 12 months preceding the claim, or $100, whichever is greater.</p>
+
+  <h2>11. Changes to These Terms</h2>
+  <p>We may update these Terms. Material changes will be announced by email at least 14 days before they take effect. Continued use after the effective date constitutes acceptance. If you do not accept the changes, you may cancel your subscription and request a prorated refund.</p>
+
+  <h2>12. Contact</h2>
+  <p>Questions about these Terms? Email us at <code>hello@pocketplot.local</code>.</p>
+
+  <div class="legal-note">
+    Plain-English summaries above are a courtesy; only the numbered legal sections
+    below form the binding contract. If you spot a conflict between the two, the
+    numbered sections control.
+  </div>
+
+  <footer>
+    <a href="/">Home</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/faq">FAQ</a>
+      <a href="/help">Help</a>
+      <a href="/roadmap">Roadmap</a>
+      <a href="/status">Status</a>
+      <a href="/contact">Contact</a>
+    <p style="margin-top:18px">PocketPlot Universe · 18+ · original content only</p>
+  </footer>
+</div>
+
+  <footer style="margin-top:60px;padding:30px 0;border-top:1px solid rgba(201,160,78,.25);background:#0a0f1c;text-align:center;font-family:'DM Sans',sans-serif;font-size:12px;color:#7a8aa8">
+    <div style="font-family:Fraunces,Georgia,serif;font-style:italic;font-size:13px;color:#c9bfa8;margin-bottom:10px">PocketPlot Universe · 18+ · Tech-Victorian Edition</div>
+    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap">
+      <a href="/faq" style="color:#e8c879;text-decoration:none">FAQ</a>·
+      <a href="/help" style="color:#e8c879;text-decoration:none">Help</a>·
+      <a href="/status" style="color:#e8c879;text-decoration:none">Status</a>·
+      <a href="/contact" style="color:#e8c879;text-decoration:none">Contact</a>·
+      <a href="/terms" style="color:#e8c879;text-decoration:none">Terms</a>
+    </div>
+  </footer>
+
+</body></html>

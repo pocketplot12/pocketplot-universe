@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PocketPlot · Stripe Setup &amp; CLI Testing Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a241d; --paper:#f6f0e1; --paper2:#ece4cb; --paper3:#d8cfb3;
+  --moss:#7a9a6e; --mossD:#3d5a3a; --mossL:#aac4a0;
+  --gold:#d4a849; --goldD:#8a6420; --goldL:#f0d99c;
+  --rust:#c46a3f; --rustD:#7a3d20;
+  --faint:#8a8270; --hi:#f6f0e1;
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Karla","Helvetica Neue",sans-serif;
+  --mono:"JetBrains Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--rust);text-decoration:none}a:hover{text-decoration:underline}
+code,pre,kbd{font-family:var(--mono)}
+
+/* ---------- layout ---------- */
+header.site{padding:18px 36px;border-bottom:1px solid var(--paper3);display:flex;justify-content:space-between;align-items:center;background:rgba(246,240,225,.92);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50}
+.wordmark{font-family:var(--serif);font-size:22px;font-weight:500;letter-spacing:.04em}
+.wordmark i{color:var(--moss);font-style:italic;font-weight:400}
+.wordmark .sep{color:var(--faint);margin:0 10px;font-weight:300}
+.doc-title{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--faint)}
+
+.layout{display:grid;grid-template-columns:240px 1fr;gap:0;max-width:1340px;margin:0 auto;padding:0 24px}
+@media(max-width:920px){.layout{grid-template-columns:1fr}.nav-rail{position:static;border-right:none;border-bottom:1px solid var(--paper3);padding:18px 22px}.nav-rail nav{columns:2}}
+
+/* ---------- nav rail ---------- */
+.nav-rail{padding:36px 0 36px 4px;border-right:1px solid var(--paper3);position:sticky;top:65px;align-self:start;max-height:calc(100vh - 70px);overflow-y:auto}
+.nav-rail nav{display:flex;flex-direction:column;gap:2px}
+.nav-rail .group-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:18px 0 6px 14px}
+.nav-rail a{padding:7px 14px;font-size:13.5px;color:var(--ink);border-radius:6px;display:block;line-height:1.4}
+.nav-rail a:hover{background:var(--paper2);text-decoration:none}
+.nav-rail a.sub{padding-left:28px;font-size:12.5px;color:#5a4a30}
+.nav-rail a.sub::before{content:"·";margin-right:6px;color:var(--faint)}
+
+/* ---------- main ---------- */
+main{padding:36px 0 80px 44px;max-width:880px}
+@media(max-width:920px){main{padding:24px 0 60px 0}}
+
+h1{font-family:var(--serif);font-weight:600;font-size:46px;line-height:1.1;margin-bottom:8px;letter-spacing:-.01em}
+h1 i{font-style:italic;color:var(--moss);font-weight:500}
+h2{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.2;margin:54px 0 14px;padding-top:18px;letter-spacing:-.005em}
+h2 i{font-style:italic;color:var(--moss);font-weight:500}
+h2 .num{font-family:var(--mono);font-size:13px;color:var(--faint);font-weight:400;margin-right:14px;letter-spacing:0}
+h3{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.25;margin:30px 0 10px;color:var(--ink)}
+h3 i{font-style:italic;color:var(--moss);font-weight:400}
+h4{font-family:var(--sans);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mossD);margin:24px 0 8px}
+
+p{margin-bottom:14px;font-size:15.5px;line-height:1.72}
+.lede{font-size:18px;color:#3a4a3a;font-family:var(--serif);font-style:italic;line-height:1.55;max-width:680px;margin-bottom:30px}
+
+ul,ol{margin:0 0 14px 22px;font-size:15.5px;line-height:1.7}
+li{padding:2px 0}
+li::marker{color:var(--faint)}
+li strong{color:var(--mossD)}
+
+.tagline{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mossD);font-weight:700;margin-bottom:14px}
+
+.callout{background:#fdf5e3;border:1px solid var(--gold);border-radius:10px;padding:14px 18px;margin:18px 0;font-size:14px;line-height:1.55;color:#7a6420}
+.callout b{color:var(--goldD)}
+.callout.ok{background:#ecf3e3;border-color:var(--moss);color:var(--mossD)}
+.callout.warn{background:#fbe5e1;border-color:var(--rust);color:var(--rustD)}
+.callout .label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:4px}
+
+code{background:var(--paper2);border:1px solid var(--paper3);border-radius:4px;padding:1px 6px;font-size:13.5px;color:var(--mossD)}
+pre{background:var(--ink);color:var(--hi);border-radius:10px;padding:18px 20px;margin:14px 0;overflow-x:auto;font-size:13px;line-height:1.65;position:relative}
+pre .c{color:#7a8a6a;font-style:italic}
+pre .k{color:#d4a849}
+pre .s{color:#aac4a0}
+pre .v{color:#f0d99c}
+pre .p{color:#c46a3f}
+.copy-btn{position:absolute;top:8px;right:10px;background:transparent;border:1px solid #4a5a4a;color:#aac4a0;font-family:var(--sans);font-size:11px;padding:3px 9px;border-radius:5px;cursor:pointer;letter-spacing:.04em}
+.copy-btn:hover{background:#2a3a2d}
+
+.kbd{background:#fff;border:1px solid var(--paper3);border-bottom-width:2px;border-radius:4px;padding:1px 7px;font-family:var(--mono);font-size:12.5px;color:var(--ink);box-shadow:0 1px 0 var(--paper3)}
+
+/* ---------- diagram cards ---------- */
+.diagram{background:#fff;border:1px solid var(--paper3);border-radius:14px;padding:22px 24px;margin:20px 0;box-shadow:0 8px 24px rgba(26,36,29,.05)}
+.diagram h4{margin-top:0;margin-bottom:14px}
+.diagram .caption{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--faint);margin-top:12px;text-align:center}
+.diagram svg{display:block;max-width:100%;height:auto;margin:0 auto}
+
+/* ---------- step list ---------- */
+.steps{counter-reset:step;list-style:none;margin:18px 0 22px;padding:0}
+.steps > li{counter-increment:step;padding:14px 0 14px 46px;position:relative;border-bottom:1px dotted var(--paper3)}
+.steps > li:last-child{border-bottom:none}
+.steps > li::before{content:counter(step);position:absolute;left:0;top:14px;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--hi);font-family:var(--serif);font-weight:500;display:flex;align-items:center;justify-content:center;font-size:14px}
+.steps > li strong{color:var(--mossD);font-family:var(--serif);font-weight:500;font-size:18px;display:block;margin-bottom:6px}
+
+.checklist{list-style:none;margin:14px 0 20px;padding:0;counter-reset:chk}
+.checklist li{padding:6px 0 6px 30px;position:relative;font-size:14.5px}
+.checklist li::before{content:"☐";position:absolute;left:0;top:6px;color:var(--faint);font-size:18px;line-height:1}
+.checklist li.done::before{content:"✓";color:var(--moss);font-weight:700}
+.checklist code{font-size:12.5px}
+
+.env-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+.env-table th,.env-table td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--paper3)}
+.env-table th{background:var(--paper2);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mossD);font-weight:700}
+.env-table code{font-size:12.5px;color:var(--rustD)}
+.env-table tr:last-child td{border-bottom:none}
+
+footer{padding:30px 36px;text-align:center;font-size:12px;color:var(--faint);border-top:1px solid var(--paper3);margin-top:60px}
+
+/* skip-to-content */
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;top:8px;left:8px;background:var(--ink);color:var(--hi);padding:8px 12px;border-radius:6px;z-index:99}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wordmark">Story<i>Spark</i><span class="sep">·</span><span class="doc-title">Stripe Setup &amp; CLI Testing Guide</span></div>
+  <div style="font-size:12px;color:var(--faint);font-family:var(--mono)">v1.0 · 2026-08-21</div>
+</header>
+<div class="layout">
+  <aside class="nav-rail">
+    <nav>
+      <div class="group-label">Overview</div>
+      <a href="#top">Introduction</a>
+      <a href="#test-mode">Test mode vs live</a>
+      <div class="group-label">Step 1 · Account &amp; keys</div>
+      <a href="#create-account" class="sub">Create account</a>
+      <a href="#api-keys" class="sub">Get API keys</a>
+      <div class="group-label">Step 2 · Product &amp; Price</div>
+      <a href="#create-product" class="sub">Create product</a>
+      <a href="#price-model" class="sub">Pricing model</a>
+      <a href="#capture-price-id" class="sub">Capture price ID</a>
+      <div class="group-label">Step 3 · Webhook</div>
+      <a href="#webhook-endpoint" class="sub">Add endpoint</a>
+      <a href="#webhook-events" class="sub">Event selection</a>
+      <a href="#webhook-secret" class="sub">Signing secret</a>
+      <div class="group-label">Step 4 · Environment</div>
+      <a href="#env-vars" class="sub">Environment variables</a>
+      <a href="#verify" class="sub">Verify</a>
+      <div class="group-label">Step 5 · CLI testing</div>
+      <a href="#cli-install" class="sub">Install CLI</a>
+      <a href="#cli-login" class="sub">Login</a>
+      <a href="#cli-listen" class="sub">Forward events</a>
+      <a href="#cli-trigger" class="sub">Trigger test events</a>
+      <a href="#cli-verify" class="sub">Verify in app</a>
+      <div class="group-label">Troubleshooting</div>
+      <a href="#troubleshoot">Common issues</a>
+    </nav>
+  </aside>
+  <main id="main">
+<!-- #1: Stripe Dashboard overview (annotated) -->
+<div class="diagram" id="fig-dashboard">
+<h4>Figure 1 · The Stripe Dashboard — annotated map</h4>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" role="img" aria-label="Stripe Dashboard annotated map">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#f3eedf"/>
+    </linearGradient>
+    <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r=".6" fill="#c4b894"/>
+    </pattern>
+  </defs>
+  <!-- frame -->
+  <rect x="0" y="0" width="880" height="540" fill="url(#g1)" stroke="#d8cfb3"/>
+  <!-- top chrome -->
+  <rect x="0" y="0" width="880" height="32" fill="#1a241d"/>
+  <text x="14" y="22" fill="#fff" font-family="Karla,sans-serif" font-size="12" font-weight="700">Stripe Dashboard</text>
+  <text x="660" y="22" fill="#aac4a0" font-family="Karla,sans-serif" font-size="11">⌘ K  ·  ?  ·  test mode ✓</text>
+  <!-- sidebar -->
+  <rect x="0" y="32" width="200" height="508" fill="#fbf6e6" stroke="#d8cfb3"/>
+  <g font-family="Karla,sans-serif" font-size="12" fill="#1a241d">
+    <text x="20" y="60" font-weight="700" fill="#5a6a4a" letter-spacing=".06em">PAYMENTS</text>
+    <text x="20" y="84">Payments</text>
+    <text x="20" y="108">Subscriptions</text>
+    <text x="20" y="132">Customers</text>
+    <text x="20" y="156">Connect</text>
+    <text x="20" y="180">Invoices</text>
+    <text x="20" y="212" font-weight="700" fill="#5a6a4a" letter-spacing=".06em">DEVELOPER</text>
+    <text x="20" y="236">API keys</text>
+    <text x="20" y="260">Webhooks</text>
+    <text x="20" y="284">Events</text>
+    <text x="20" y="308">Logs</text>
+    <text x="20" y="340" font-weight="700" fill="#5a6a4a" letter-spacing=".06em">WORKBENCH</text>
+    <text x="20" y="364">Products</text>
+    <text x="20" y="388">Prices</text>
+    <text x="20" y="412">Tax</text>
+    <text x="20" y="436">Reporting</text>
+  </g>
+  <!-- main content -->
+  <rect x="220" y="60" width="640" height="32" fill="none"/>
+  <text x="240" y="84" font-family="Fraunces,Georgia,serif" font-size="22" font-weight="500">Home</text>
+  <text x="240" y="112" font-family="Karla,sans-serif" font-size="12" fill="#8a8270">Today · 30 day view</text>
+  <!-- stats -->
+  <g font-family="Karla,sans-serif">
+    <rect x="240" y="130" width="200" height="92" fill="#fff" stroke="#d8cfb3"/>
+    <text x="252" y="152" font-size="10" letter-spacing=".14em" fill="#8a8270" font-weight="700">GROSS VOLUME</text>
+    <text x="252" y="180" font-size="24" font-weight="600">$4,842.19</text>
+    <text x="252" y="206" font-size="11" fill="#7a9a6e">▲ 12.4% from last 30d</text>
+    <rect x="450" y="130" width="200" height="92" fill="#fff" stroke="#d8cfb3"/>
+    <text x="462" y="152" font-size="10" letter-spacing=".14em" fill="#8a8270" font-weight="700">NEW CUSTOMERS</text>
+    <text x="462" y="180" font-size="24" font-weight="600">241</text>
+    <text x="462" y="206" font-size="11" fill="#7a9a6e">▲ 8.1% from last 30d</text>
+    <rect x="660" y="130" width="200" height="92" fill="#fff" stroke="#d8cfb3"/>
+    <text x="672" y="152" font-size="10" letter-spacing=".14em" fill="#8a8270" font-weight="700">MRR (RECURRING)</text>
+    <text x="672" y="180" font-size="24" font-weight="600">$1,203.49</text>
+    <text x="672" y="206" font-size="11" fill="#7a9a6e">▲ 4.2% from last 30d</text>
+  </g>
+  <!-- mock chart -->
+  <rect x="240" y="240" width="620" height="200" fill="#fff" stroke="#d8cfb3"/>
+  <text x="252" y="262" font-family="Karla,sans-serif" font-size="10" letter-spacing=".14em" fill="#8a8270" font-weight="700">VOLUME OVER TIME</text>
+  <g stroke="#d4a849" stroke-width="2" fill="none">
+    <polyline points="252,400 320,380 380,360 440,330 500,340 560,310 620,300 680,280 740,290 800,260 850,250"/>
+  </g>
+  <!-- annotations -->
+  <g font-family="Karla,sans-serif" font-size="11">
+    <!-- sidebar 1: API keys -->
+    <line x1="60" y1="234" x2="240" y2="100" stroke="#c46a3f" stroke-width="1.5"/>
+    <circle cx="60" cy="234" r="4" fill="#c46a3f"/>
+    <rect x="20" y="200" width="160" height="34" fill="#c46a3f"/>
+    <text x="32" y="216" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">①</text>
+    <text x="50" y="216" fill="#fff" font-weight="700">API keys</text>
+    <text x="32" y="230" fill="#fff" font-size="10">→ Step 1.2 · grab sk_test_...</text>
+    <!-- sidebar 2: Webhooks -->
+    <line x1="60" y1="258" x2="240" y2="160" stroke="#c46a3f" stroke-width="1.5"/>
+    <circle cx="60" cy="258" r="4" fill="#c46a3f"/>
+    <rect x="20" y="280" width="180" height="34" fill="#c46a3f"/>
+    <text x="32" y="296" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">②</text>
+    <text x="50" y="296" fill="#fff" font-weight="700">Webhooks</text>
+    <text x="32" y="310" fill="#fff" font-size="10">→ Step 3 · add endpoint + secret</text>
+    <!-- sidebar 3: Products -->
+    <line x1="60" y1="362" x2="240" y2="300" stroke="#c46a3f" stroke-width="1.5"/>
+    <circle cx="60" cy="362" r="4" fill="#c46a3f"/>
+    <rect x="20" y="346" width="170" height="34" fill="#c46a3f"/>
+    <text x="32" y="362" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">③</text>
+    <text x="50" y="362" fill="#fff" font-weight="700">Products</text>
+    <text x="32" y="376" fill="#fff" font-size="10">→ Step 2 · create PocketPlot Pro</text>
+    <!-- test mode toggle -->
+    <line x1="720" y1="22" x2="600" y2="450" stroke="#c46a3f" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <circle cx="720" cy="22" r="4" fill="#c46a3f"/>
+    <rect x="438" y="440" width="200" height="56" fill="#c46a3f"/>
+    <text x="450" y="456" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">④ TEST MODE TOGGLE</text>
+    <text x="450" y="476" fill="#fff" font-size="10.5">Always on "Test mode"</text>
+    <text x="450" y="490" fill="#fff" font-size="10.5">until you've gone live</text>
+  </g>
+  <rect x="0" y="510" width="880" height="30" fill="url(#dots)" opacity=".5"/>
+  <text x="14" y="530" font-family="Fraunces,Georgia,serif" font-style="italic" font-size="11" fill="#8a8270">All numbers shown are illustrative — your real test data will appear once you start transacting.</text>
+</svg>
+<div class="caption">The four things you'll touch in this guide: ① API keys, ② Webhooks, ③ Products, ④ the test-mode toggle (top right). The dashboard home is informational; everything you need is in the left sidebar.</div>
+</div>
+<!-- #2: Create Product form (annotated) -->
+<div class="diagram" id="fig-product">
+<h4>Figure 2 · The "Add product" form</h4>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 720" role="img" aria-label="Stripe Add Product form">
+  <defs>
+    <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#f3eedf"/></linearGradient>
+  </defs>
+  <rect x="0" y="0" width="880" height="720" fill="url(#g2)" stroke="#d8cfb3"/>
+  <rect x="0" y="0" width="880" height="32" fill="#1a241d"/>
+  <text x="14" y="22" fill="#fff" font-family="Karla,sans-serif" font-size="12" font-weight="700">Products  ·  Add product</text>
+
+  <!-- form panel -->
+  <rect x="60" y="60" width="500" height="620" fill="#fff" stroke="#d8cfb3"/>
+  <text x="80" y="100" font-family="Fraunces,Georgia,serif" font-size="22" font-weight="500">Add a product</text>
+  <text x="80" y="124" font-family="Karla,sans-serif" font-size="12" fill="#8a8270">A product is what your customer is buying. Prices define how much and how often.</text>
+
+  <!-- Product name -->
+  <g font-family="Karla,sans-serif">
+    <text x="80" y="170" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">PRODUCT NAME</text>
+    <rect x="80" y="178" width="460" height="40" fill="#fff" stroke="#7a9a6e" stroke-width="2"/>
+    <text x="92" y="204" font-size="15">PocketPlot Pro</text>
+  </g>
+
+  <!-- Description -->
+  <g font-family="Karla,sans-serif">
+    <text x="80" y="240" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">DESCRIPTION</text>
+    <rect x="80" y="248" width="460" height="40" fill="#fff" stroke="#d8cfb3"/>
+    <text x="92" y="274" font-size="14" fill="#5a4a30">A unique bedtime story in your inbox every night, written just for your child.</text>
+  </g>
+
+  <!-- Image -->
+  <g font-family="Karla,sans-serif">
+    <text x="80" y="310" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">IMAGE (optional)</text>
+    <rect x="80" y="318" width="80" height="80" fill="#ece4cb" stroke="#d8cfb3" stroke-dasharray="4,3"/>
+    <text x="120" y="362" text-anchor="middle" font-size="11" fill="#8a8270">+ upload</text>
+  </g>
+
+  <!-- Pricing model section header -->
+  <text x="80" y="430" font-family="Karla,sans-serif" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">PRICING MODEL</text>
+  <g font-family="Karla,sans-serif">
+    <rect x="80" y="442" width="100" height="40" fill="#fff" stroke="#d8cfb3"/>
+    <text x="130" y="466" text-anchor="middle" font-size="13">One-time</text>
+    <rect x="190" y="442" width="100" height="40" fill="#1a241d"/>
+    <text x="240" y="466" text-anchor="middle" font-size="13" fill="#fff" font-weight="600">Recurring</text>
+    <!-- (selected indicator) -->
+    <rect x="188" y="440" width="104" height="44" fill="none" stroke="#7a9a6e" stroke-width="2"/>
+    <rect x="300" y="442" width="100" height="40" fill="#fff" stroke="#d8cfb3"/>
+    <text x="350" y="466" text-anchor="middle" font-size="13">Usage-based</text>
+  </g>
+
+  <!-- Price amount -->
+  <g font-family="Karla,sans-serif">
+    <text x="80" y="520" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">AMOUNT</text>
+    <rect x="80" y="528" width="80" height="40" fill="#fff" stroke="#d8cfb3"/>
+    <text x="120" y="554" text-anchor="middle" font-size="15">USD</text>
+    <rect x="170" y="528" width="120" height="40" fill="#fff" stroke="#7a9a6e" stroke-width="2"/>
+    <text x="230" y="554" text-anchor="middle" font-size="15">$4.99</text>
+  </g>
+
+  <!-- Billing period -->
+  <g font-family="Karla,sans-serif">
+    <text x="80" y="600" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">BILLING PERIOD</text>
+    <rect x="80" y="608" width="100" height="40" fill="#1a241d"/>
+    <text x="130" y="632" text-anchor="middle" font-size="13" fill="#fff" font-weight="600">Monthly</text>
+    <rect x="190" y="608" width="100" height="40" fill="#fff" stroke="#d8cfb3"/>
+    <text x="240" y="632" text-anchor="middle" font-size="13">Yearly</text>
+    <rect x="300" y="608" width="100" height="40" fill="#fff" stroke="#d8cfb3"/>
+    <text x="350" y="632" text-anchor="middle" font-size="13">Weekly</text>
+    <rect x="410" y="608" width="100" height="40" fill="#fff" stroke="#d8cfb3"/>
+    <text x="460" y="632" text-anchor="middle" font-size="13">Daily</text>
+  </g>
+
+  <!-- Save button -->
+  <rect x="450" y="664" width="92" height="34" rx="17" fill="#1a241d"/>
+  <text x="496" y="685" text-anchor="middle" font-family="Karla,sans-serif" font-size="13" font-weight="700" fill="#fff">Save</text>
+
+  <!-- annotations -->
+  <g font-family="Karla,sans-serif" font-size="11">
+    <line x1="540" y1="200" x2="700" y2="120" stroke="#c46a3f" stroke-width="1.5"/>
+    <circle cx="540" cy="200" r="4" fill="#c46a3f"/>
+    <rect x="600" y="160" width="240" height="76" fill="#c46a3f"/>
+    <text x="612" y="178" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">A · NAME</text>
+    <text x="612" y="198" fill="#fff" font-size="10.5">Use the customer-facing</text>
+    <text x="612" y="214" fill="#fff" font-size="10.5">name. "PocketPlot Pro".</text>
+    <text x="612" y="230" fill="#fff" font-size="10.5">You'll see it in invoices.</text>
+
+    <line x1="540" y1="464" x2="700" y2="384" stroke="#c46a3f" stroke-width="1.5"/>
+    <circle cx="540" cy="464" r="4" fill="#c46a3f"/>
+    <rect x="600" y="354" width="240" height="76" fill="#c46a3f"/>
+    <text x="612" y="372" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">B · RECURRING</text>
+    <text x="612" y="392" fill="#fff" font-size="10.5">Required for subscriptions.</text>
+    <text x="612" y="408" fill="#fff" font-size="10.5">One-time gives you a</text>
+    <text x="612" y="424" fill="#fff" font-size="10.5">single charge, not a plan.</text>
+
+    <line x1="290" y1="550" x2="700" y2="500" stroke="#c46a3f" stroke-width="1.5"/>
+    <circle cx="290" cy="550" r="4" fill="#c46a3f"/>
+    <rect x="600" y="468" width="240" height="76" fill="#c46a3f"/>
+    <text x="612" y="486" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">C · AMOUNT</text>
+    <text x="612" y="506" fill="#fff" font-size="10.5">Pick the per-period price.</text>
+    <text x="612" y="522" fill="#fff" font-size="10.5">$4.99 is the canonical MVP</text>
+    <text x="612" y="538" fill="#fff" font-size="10.5">tier. Adjust later without</text>
+    <text x="612" y="550" fill="#fff" font-size="10.5">breaking existing subs.</text>
+  </g>
+</svg>
+<div class="caption">Three things matter on this form. The rest is metadata you can revisit any time.</div>
+</div>
+<!-- #3: Webhook endpoint setup (annotated) -->
+<div class="diagram" id="fig-webhook">
+<h4>Figure 3 · Add endpoint — the four screens you'll see</h4>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 600" role="img" aria-label="Stripe Webhook setup">
+  <defs>
+    <linearGradient id="g3" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#f3eedf"/></linearGradient>
+  </defs>
+  <rect x="0" y="0" width="880" height="600" fill="url(#g3)" stroke="#d8cfb3"/>
+  <rect x="0" y="0" width="880" height="32" fill="#1a241d"/>
+  <text x="14" y="22" fill="#fff" font-family="Karla,sans-serif" font-size="12" font-weight="700">Developers  ·  Webhooks  ·  Add endpoint</text>
+
+  <!-- panel -->
+  <rect x="40" y="60" width="800" height="500" fill="#fff" stroke="#d8cfb3"/>
+  <text x="60" y="100" font-family="Fraunces,Georgia,serif" font-size="22" font-weight="500">Add endpoint</text>
+
+  <!-- Endpoint URL -->
+  <g font-family="Karla,sans-serif">
+    <text x="60" y="138" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">ENDPOINT URL</text>
+    <rect x="60" y="146" width="760" height="44" fill="#fff" stroke="#7a9a6e" stroke-width="2"/>
+    <text x="76" y="174" font-size="14" font-family="JetBrains Mono,monospace">https://your-pocketplot.example.com/webhook/stripe</text>
+    <text x="60" y="208" font-size="11" fill="#8a8270" font-style="italic">Tip: for local testing, run <tspan font-family="JetBrains Mono,monospace">stripe listen --forward-to localhost:5000/webhook/stripe</tspan> and use the URL Stripe CLI prints.</text>
+  </g>
+
+  <!-- Description -->
+  <g font-family="Karla,sans-serif">
+    <text x="60" y="246" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">DESCRIPTION (optional)</text>
+    <rect x="60" y="254" width="760" height="38" fill="#fff" stroke="#d8cfb3"/>
+    <text x="76" y="278" font-size="14" fill="#5a4a30">PocketPlot · live subscription events</text>
+  </g>
+
+  <!-- Events to send -->
+  <text x="60" y="320" font-family="Karla,sans-serif" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">EVENTS TO SEND</text>
+  <g font-family="Karla,sans-serif">
+    <!-- radio: All / Selected -->
+    <circle cx="76" cy="346" r="7" fill="#fff" stroke="#7a9a6e" stroke-width="2"/>
+    <circle cx="76" cy="346" r="3" fill="#7a9a6e"/>
+    <text x="92" y="350" font-size="13">All events</text>
+    <text x="160" y="350" font-size="11" fill="#8a8270">— easier but more traffic</text>
+    <circle cx="296" cy="346" r="7" fill="#fff" stroke="#7a9a6e" stroke-width="2"/>
+    <text x="312" y="350" font-size="13">Selected events</text>
+    <text x="404" y="350" font-size="11" fill="#8a8270">— recommended; less noise</text>
+    <rect x="294" y="338" width="120" height="18" fill="none" stroke="#7a9a6e" stroke-width="1.5" stroke-dasharray="3,2"/>
+  </g>
+
+  <!-- Selected events list -->
+  <g font-family="JetBrains Mono,monospace" font-size="12" fill="#1a241d">
+    <rect x="60" y="368" width="760" height="156" fill="#fbf6e6" stroke="#d8cfb3"/>
+    <text x="76" y="392">✓  customer.subscription.created</text>
+    <text x="76" y="412">✓  customer.subscription.updated</text>
+    <text x="76" y="432">✓  customer.subscription.deleted</text>
+    <text x="76" y="452">✓  invoice.paid</text>
+    <text x="76" y="472">✓  invoice.payment_failed</text>
+    <text x="76" y="512" font-family="Karla,sans-serif" fill="#8a8270" font-style="italic">+ Add events  (only these five; ignore the other 28)</text>
+  </g>
+
+  <!-- Version -->
+  <g font-family="Karla,sans-serif">
+    <text x="60" y="546" font-size="11" font-weight="700" letter-spacing=".06em" fill="#3d5a3a">API VERSION</text>
+    <text x="60" y="568" font-size="13">Use the latest (recommended) — keep the default.</text>
+  </g>
+
+  <!-- annotations -->
+  <g font-family="Karla,sans-serif" font-size="11">
+    <line x1="800" y1="170" x2="850" y2="120" stroke="#c46a3f" stroke-width="1.5"/>
+    <circle cx="800" cy="170" r="4" fill="#c46a3f"/>
+    <rect x="640" y="50" width="200" height="40" fill="#c46a3f"/>
+    <text x="654" y="68" fill="#fff" font-weight="700" font-size="10" letter-spacing=".1em">HTTPS required (HTTP for localhost)</text>
+    <text x="654" y="82" fill="#fff" font-size="10">Stripe refuses non-HTTPS URLs.</text>
+  </g>
+
+  <!-- below: signing secret hint -->
+  <g font-family="Karla,sans-serif" font-size="12" fill="#5a4a30">
+    <text x="40" y="588" font-weight="700" fill="#3d5a3a">After clicking "Add endpoint":</text>
+    <text x="220" y="588">a "Signing secret" appears (whsec_...). Copy it as <tspan font-family="JetBrains Mono,monospace">STRIPE_WEBHOOK_SECRET</tspan>.</text>
+  </g>
+</svg>
+<div class="caption">Five events is enough. Anything else is noise (the dashboard, disputes, payouts) — you can ignore them.</div>
+</div>
+<!-- #4: Stripe CLI flow (annotated diagram) -->
+<div class="diagram" id="fig-cli">
+<h4>Figure 4 · How Stripe CLI fits between Stripe and your local app</h4>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" role="img" aria-label="Stripe CLI architecture">
+  <defs>
+    <linearGradient id="g4" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#f3eedf"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7a9a6e"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c46a3f"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="360" fill="url(#g4)" stroke="#d8cfb3"/>
+
+  <!-- box: Stripe -->
+  <rect x="40" y="80" width="220" height="200" fill="#635bff" rx="8"/>
+  <text x="150" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-weight="700" font-size="18" fill="#fff">Stripe</text>
+  <text x="150" y="142" text-anchor="middle" font-family="Karla,sans-serif" font-size="11" fill="#d4d3ff">your test account</text>
+  <g font-family="Karla,sans-serif" font-size="11" fill="#fff">
+    <text x="60" y="180">• Subscription created</text>
+    <text x="60" y="200">• Subscription updated</text>
+    <text x="60" y="220">• Subscription deleted</text>
+    <text x="60" y="240">• invoice.paid</text>
+    <text x="60" y="260">• invoice.payment_failed</text>
+  </g>
+
+  <!-- box: Stripe CLI -->
+  <rect x="330" y="80" width="220" height="200" fill="#1a241d" rx="8"/>
+  <text x="440" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-weight="700" font-size="18" fill="#fff">stripe CLI</text>
+  <text x="440" y="142" text-anchor="middle" font-family="Karla,sans-serif" font-size="11" fill="#aac4a0">running on your laptop</text>
+  <g font-family="JetBrains Mono,monospace" font-size="11" fill="#aac4a0">
+    <text x="350" y="180">$ stripe listen \</text>
+    <text x="362" y="196">  --forward-to \</text>
+    <text x="362" y="212">  localhost:5000/...</text>
+    <text x="350" y="240">$ stripe trigger \</text>
+    <text x="362" y="256">  invoice.paid</text>
+  </g>
+
+  <!-- box: your app -->
+  <rect x="620" y="80" width="220" height="200" fill="#7a9a6e" rx="8"/>
+  <text x="730" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-weight="700" font-size="18" fill="#fff">pocketplot</text>
+  <text x="730" y="142" text-anchor="middle" font-family="Karla,sans-serif" font-size="11" fill="#dfe9da">python3 app.py</text>
+  <g font-family="Karla,sans-serif" font-size="11" fill="#fff">
+    <text x="640" y="180">• POST /webhook/stripe</text>
+    <text x="640" y="200">• verify signature</text>
+    <text x="640" y="220">• look up subscriber</text>
+    <text x="640" y="240">• apply_stripe_event</text>
+    <text x="640" y="260">• respond 200</text>
+  </g>
+
+  <!-- arrows -->
+  <line x1="260" y1="180" x2="320" y2="180" stroke="#7a9a6e" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="270" y="170" font-family="Karla,sans-serif" font-size="10" fill="#7a9a6e">HTTPS</text>
+  <line x1="550" y1="180" x2="610" y2="180" stroke="#7a9a6e" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="555" y="170" font-family="Karla,sans-serif" font-size="10" fill="#7a9a6e">HTTP localhost</text>
+
+  <!-- return arrow (response) -->
+  <line x1="610" y1="220" x2="550" y2="220" stroke="#c46a3f" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr2)"/>
+  <text x="555" y="240" font-family="Karla,sans-serif" font-size="10" fill="#c46a3f">200 OK</text>
+  <line x1="320" y1="220" x2="260" y2="220" stroke="#c46a3f" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr2)"/>
+
+  <!-- bottom caption -->
+  <text x="40" y="316" font-family="Fraunces,Georgia,serif" font-style="italic" font-size="12" fill="#5a4a30">Without CLI:</text>
+  <text x="140" y="316" font-family="Karla,sans-serif" font-size="12" fill="#1a241d">Stripe → internet → your deploy. Hard to debug, no real-time view.</text>
+  <text x="40" y="338" font-family="Fraunces,Georgia,serif" font-style="italic" font-size="12" fill="#5a4a30">With CLI:</text>
+  <text x="140" y="338" font-family="Karla,sans-serif" font-size="12" fill="#1a241d">Stripe → CLI on your laptop → your localhost app. Full visibility, signature-verified, no deploy needed.</text>
+</svg>
+<div class="caption">The CLI is a relay with a real Stripe account on one side and a real local server on the other. Every event hits your code in real time, exactly as production will.</div>
+</div>
+<section id="top">
+  <div class="tagline">PocketPlot · Operational Reference · v1.0</div>
+  <h1>Stripe setup &amp; <i>CLI</i> testing guide</h1>
+  <p class="lede">Two things in one document: how to point PocketPlot at a real Stripe account (Product, Price, Webhook), and how to test the whole pipeline locally with the Stripe CLI before you ever deploy.</p>
+
+  <div class="callout">
+    <span class="label">⏱ Time required</span>
+    <b>15–25 minutes</b> for the first run, including account creation. After that, <b>5 minutes</b> to point a fresh deploy at a new Stripe account. The CLI section takes another <b>10 minutes</b> and is the part you'll come back to every time you change webhook logic.
+  </div>
+
+  <div class="callout ok">
+    <span class="label">Prerequisites</span>
+    PocketPlot v2 installed and running (<code>python3 app.py</code>). Python 3.10+. macOS, Linux, or WSL. ~50 MB free disk for the CLI.
+  </div>
+</section>
+
+<section id="test-mode">
+  <h2><span class="num">§0</span>Test mode vs live mode — read this first</h2>
+  <p>Stripe has a <b>toggle</b> in the top-right of the dashboard that switches between two completely separate environments. Test mode (the default for a new account) uses fake money and lets you use <b>test card numbers</b> like <code>4242 4242 4242 4242</code>. Live mode uses real money and real cards.</p>
+  <p>Every API key, every product, every webhook endpoint you create exists in exactly one of these two modes. You have separate keys for each. <b>For everything in this guide, stay in test mode</b> until you've deployed to production.</p>
+  <p>When you switch from test → live, you have to create a Product and webhook endpoint again in live mode. The CLI talks to whichever mode you're authenticated against.</p>
+</section>
+
+<section id="create-account">
+  <h2><span class="num">§1</span>Account &amp; API keys</h2>
+
+  <h3 id="create-account">1.1 · Create a Stripe account (or sign in)</h3>
+  <ol class="steps">
+    <li><strong>Go to <a href="https://dashboard.stripe.com/register" target="_blank">dashboard.stripe.com/register</a>.</strong> Email + password + business name is enough for test mode. Stripe doesn't require identity verification until you turn on live payouts.
+      <div class="callout warn" style="margin-top:8px">
+        <span class="label">Privacy note</span>
+        Stripe will email you about activating live mode. You can ignore those emails until you're ready to charge real money.
+      </div>
+    </li>
+    <li><strong>You'll land on the dashboard in test mode.</strong> Look for the <b>test mode toggle</b> in the top-right corner — it should say "Test mode" with a green checkmark. Leave it on.
+    </li>
+    <li><strong>Bookmark the dashboard home.</strong> You'll come back to it.
+    </li>
+  </ol>
+
+  <h3 id="api-keys">1.2 · Grab your API keys</h3>
+  <p>From the dashboard, in the left sidebar, click <b>Developers → API keys</b>.</p>
+  <p>You'll see two keys:</p>
+  <ul>
+    <li><b>Publishable key</b> — starts with <code>pk_test_</code>. Safe to put in client-side code. PocketPlot doesn't actually use this (server-side only), but you'll need it for the front-end Stripe.js if you ever add Elements.</li>
+    <li><b>Secret key</b> — starts with <code>sk_test_</code>. <b>Treat this like a password.</b> Don't commit it to git. Reveal-click to copy.</li>
+  </ul>
+  <div class="callout">
+    <span class="label">💡 Roll keys if you leak one</span>
+    If you accidentally commit a secret key to GitHub, Stripe's GitHub scanner will auto-revoke it within minutes. Roll a new one from the same page — there's a <b>Roll</b> button next to each key.
+  </div>
+  <p>Copy both into a temporary scratch file. You'll use them in step 4.</p>
+</section>
+
+<section id="create-product">
+  <h2><span class="num">§2</span>Create the Product &amp; Price</h2>
+  <p>PocketPlot Pro is a <b>recurring product</b> with a <b>monthly price of $4.99 USD</b>. Stripe's vocabulary is "Product" = the thing you're selling; "Price" = the specific billing configuration under that product. You can have many prices per product (e.g. monthly, yearly, regional variants), but for the MVP you only need one.</p>
+
+  <ol class="steps">
+    <li id="create-product"><strong>From the left sidebar, click <b>Workbench → Products</b> → <b>+ Add product</b>.</strong>
+      <p>You'll see a form like <a href="#fig-product">Figure 2</a>. Fill it in:</p>
+      <ul class="checklist">
+        <li><b>Name</b>: <code>PocketPlot Pro</code> (the customer-facing name)</li>
+        <li><b>Description</b>: <code>A unique bedtime story in your inbox every night, written just for your child.</code></li>
+        <li><b>Image</b>: skip for now (you can add a moon illustration later)</li>
+        <li><b>Pricing model</b>: <b>Recurring</b> <span class="callout" style="display:inline;padding:2px 8px">required for subscriptions</span></li>
+        <li><b>Amount</b>: <code>$4.99</code> USD</li>
+        <li><b>Billing period</b>: <b>Monthly</b></li>
+      </ul>
+    </li>
+    <li id="price-model"><strong>Click <b>Save product</b>.</strong> You'll land on the product detail page.</li>
+    <li id="capture-price-id"><strong>Find and copy the <b>Price ID</b>.</strong> Scroll down to the "Pricing" section. You'll see a card like <code>price_1ABCdef…</code>. That's your <code>STRIPE_PRICE_ID</code>.</li>
+  </ol>
+  <div class="callout ok">
+    <span class="label">Quick reference</span>
+    The IDs you now have:
+    <ul style="margin:6px 0 0 18px">
+      <li><code>sk_test_...</code> — your secret key</li>
+      <li><code>pk_test_...</code> — your publishable key (not used by PocketPlot server-side)</li>
+      <li><code>price_1ABC...</code> — your Pro price id</li>
+    </ul>
+  </div>
+</section>
+
+<section id="webhook-endpoint">
+  <h2><span class="num">§3</span>Add a webhook endpoint</h2>
+  <p>Webhooks are how Stripe tells your app that a subscription was created, a payment succeeded, a customer cancelled, etc. PocketPlot listens at <code>POST /webhook/stripe</code> and reacts to <b>five</b> events.</p>
+
+  <ol class="steps">
+    <li id="webhook-endpoint"><strong>From the left sidebar, click <b>Developers → Webhooks</b> → <b>+ Add endpoint</b>.</strong>
+      <p>You'll see a form like <a href="#fig-webhook">Figure 3</a>.</p>
+    </li>
+    <li><strong>Endpoint URL</strong>: <code>https://your-domain.com/webhook/stripe</code>
+      <div class="callout" style="margin-top:8px">
+        <span class="label">For local dev, use Stripe CLI</span>
+        In step 5 you'll run <code>stripe listen --forward-to localhost:5000/webhook/stripe</code> and the CLI will print a <code>whsec_...</code> URL. Use that for now; replace with your real domain at deploy time.
+      </div>
+    </li>
+    <li id="webhook-events"><strong>Events to send</strong>: choose <b>Selected events</b>, then check exactly these five:
+      <pre><code>✓  customer.subscription.created
+✓  customer.subscription.updated
+✓  customer.subscription.deleted
+✓  invoice.paid
+✓  invoice.payment_failed</code></pre>
+      <p>That's it. Don't select "All events" — you'll get noise (radar, disputes, payouts) you don't need to handle.</p>
+    </li>
+    <li id="webhook-secret"><strong>Click <b>Add endpoint</b>.</strong> You'll land on the endpoint detail page.</li>
+    <li><strong>Click <b>Reveal</b> under "Signing secret</strong>. Copy the value (it starts with <code>whsec_</code>). This is your <code>STRIPE_WEBHOOK_SECRET</code>.</li>
+  </ol>
+  <div class="callout warn">
+    <span class="label">⚠ Rotate the secret when you redeploy</span>
+    Each environment (local, staging, prod) gets its own signing secret. If you delete and re-add the endpoint, you get a new secret. Always update the env var on every deploy.
+  </div>
+</section>
+
+<section id="env-vars">
+  <h2><span class="num">§4</span>Environment variables</h2>
+  <p>Now bring it all together. Set these in your shell, in a <code>.env</code> file, or in your hosting provider's secrets store.</p>
+
+  <h4 id="env-vars">Required</h4>
+  <table class="env-table">
+    <thead><tr><th>Variable</th><th>Example value</th><th>Where you got it</th></tr></thead>
+    <tbody>
+      <tr><td><code>STRIPE_SECRET_KEY</code></td><td><code>sk_test_AbCdEf...</code></td><td>§1.2</td></tr>
+      <tr><td><code>STRIPE_PRICE_ID</code></td><td><code>price_1ABC...</code></td><td>§2.3</td></tr>
+      <tr><td><code>STRIPE_WEBHOOK_SECRET</code></td><td><code>whsec_...</code></td><td>§3.5</td></tr>
+      <tr><td><code>POCKETPLOT_SITE_URL</code></td><td><code>https://pocketplot.example.com</code></td><td>your domain</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Optional (with defaults)</h4>
+  <table class="env-table">
+    <thead><tr><th>Variable</th><th>Default</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>STRIPE_PUBLISHABLE_KEY</code></td><td><i>unused server-side</i></td><td>only if you later add client Elements</td></tr>
+      <tr><td><code>POCKETPLOT_ADMIN_PASSWORD</code></td><td><code>letmein</code></td><td>change in production</td></tr>
+      <tr><td><code>POCKETPLOT_DELIVERY_HOUR</code></td><td><code>20</code></td><td>UTC hour of nightly delivery</td></tr>
+      <tr><td><code>POCKETPLOT_SMTP_*</code></td><td><i>empty</i></td><td>set to send real email instead of writing to outbox/</td></tr>
+    </tbody>
+  </table>
+
+  <h4 id="verify">Verify it boots in live mode</h4>
+  <pre><code><span class="c"># bash / zsh</span>
+<span class="k">export</span> STRIPE_SECRET_KEY=<span class="s">"sk_test_..."</span>
+<span class="k">export</span> STRIPE_PRICE_ID=<span class="s">"price_..."</span>
+<span class="k">export</span> STRIPE_WEBHOOK_SECRET=<span class="s">"whsec_..."</span>
+<span class="k">export</span> POCKETPLOT_SITE_URL=<span class="s">"http://localhost:5000"</span>
+
+python3 app.py</code></pre>
+
+  <p>You should see this in the logs:</p>
+  <pre><code>Stripe live mode: secret key configured
+Billing: <span class="v">LIVE Stripe</span>
+Daily delivery at 20:00 UTC</code></pre>
+
+  <p>If you see <code>Billing: MOCK mode</code> instead, one of the env vars didn't get picked up. Check the spelling — they're case-sensitive.</p>
+</section>
+
+<section id="cli-install">
+  <h2><span class="num">§5</span>Stripe CLI — local end-to-end testing</h2>
+  <p>This is the part that makes the difference between "I think the webhook works" and "I just watched a real Stripe subscription event land in my local server and update the database." The CLI relays events from your Stripe account to <code>localhost:5000</code> in real time, with real signatures.</p>
+
+  <h3 id="cli-install">5.1 · Install</h3>
+  <p>macOS (Homebrew):</p>
+  <pre><code>brew install stripe/stripe-cli/stripe</code></pre>
+  <p>Linux (.deb):</p>
+  <pre><code>curl -sL -o stripe.deb https://github.com/stripe/stripe-cli/releases/latest/download/stripe_*_linux_amd64.deb
+sudo dpkg -i stripe.deb</code></pre>
+  <p>Windows: download the MSI from <a href="https://github.com/stripe/stripe-cli/releases/latest" target="_blank">the releases page</a>.</p>
+  <p>Verify with <code>stripe --version</code> (should print something like <code>stripe version 1.50.3</code>).</p>
+
+  <h3 id="cli-login">5.2 · Login</h3>
+  <pre><code>stripe login</code></pre>
+  <p>This opens your browser to a Stripe page asking to pair the CLI with your account. Click <b>Allow access</b>. The CLI will print <code>Done! The Stripe CLI is configured for &lt;your account&gt;</code>.</p>
+  <div class="callout">
+    <span class="label">Headless / no browser</span>
+    If you're on a remote server, run with <code>stripe login --interactive</code> and copy the URL it prints into a browser on your laptop. Or set the <code>STRIPE_API_KEY</code> env var to your secret key directly (less safe; skip if you can).
+  </div>
+
+  <h3 id="cli-listen">5.3 · Forward events to your local server</h3>
+  <p>Open a second terminal and run:</p>
+  <pre><code>stripe listen --forward-to localhost:5000/webhook/stripe</code></pre>
+  <p>You'll see something like:</p>
+  <pre><code><span class="c">&gt; Ready! Your webhook signing secret is whsec_1234567890abcdef...</span>
+<span class="c">&gt; 2026-08-21 19:50:00  --> customer.subscription.created [evt_1ABC]</span>
+<span class="c">&gt; 2026-08-21 19:50:00  <-- 200 [evt_1ABC]</span></code></pre>
+  <p>Two things to notice:</p>
+  <ol>
+    <li>The signing secret <b>the CLI prints</b> is for this CLI session only. Use it as your <code>STRIPE_WEBHOOK_SECRET</code> in your local dev shell so the signature verification in PocketPlot passes.</li>
+    <li>The <code>--&gt;</code> and <code>&lt;--</code> lines show the request and response in real time. If your app returns a non-2xx, the CLI retries with exponential backoff — the same behavior production gets.</li>
+  </ol>
+  <p>Keep this terminal open. It's your window into the live event stream.</p>
+
+  <h3 id="cli-trigger">5.4 · Trigger test events</h3>
+  <p>You have two ways to fire events at your local server:</p>
+  <h4>Option A — synthesize events with <code>stripe trigger</code></h4>
+  <p>No need to actually create a subscription in your dashboard. The CLI ships with canned events:</p>
+  <pre><code>stripe trigger customer.subscription.created
+stripe trigger customer.subscription.updated
+stripe trigger customer.subscription.deleted
+stripe trigger invoice.paid
+stripe trigger invoice.payment_failed</code></pre>
+  <p>Each one fires a real event with a real signature at your listening endpoint. In your CLI terminal you'll see the request and response, and in your PocketPlot log you'll see <code>Stripe customer.subscription.created for sub#X (active)</code>.</p>
+  <h4>Option B — drive it through the UI</h4>
+  <p>Open <a href="http://localhost:5000" target="_blank">localhost:5000</a> in your browser. Sign up, sign in via the magic link, click <b>Upgrade to Pro</b>. With live mode enabled, this opens a real Stripe Checkout. Use test card <code>4242 4242 4242 4242</code>, any future expiry, any CVC, any postal code. On success you bounce back to <code>/me</code> as Pro. Watch the CLI terminal — you'll see the <code>customer.subscription.created</code> and <code>invoice.paid</code> events arrive in real time.</p>
+
+  <h3 id="cli-verify">5.5 · Verify in the app</h3>
+  <p>After triggering <code>customer.subscription.created</code>, check the database:</p>
+  <pre><code>sqlite3 pocketplot.db <span class="s">"SELECT email, plan, subscription_id, subscription_status FROM subscribers;"</span></code></pre>
+  <p>You should see <code>plan=pro</code> on the row you just triggered for.</p>
+  <p>Then trigger <code>customer.subscription.updated</code> (with <code>cancel_at_period_end=true</code> in the event body if you want to test the graceful cancel) and confirm the status field updates.</p>
+  <p>Finally trigger <code>customer.subscription.deleted</code> and confirm the plan downgrades back to <code>free</code>.</p>
+</section>
+
+<section id="troubleshoot">
+  <h2><span class="num">§6</span>Troubleshooting</h2>
+
+  <h4>"Webhook signature verification failed"</h4>
+  <p>Your <code>STRIPE_WEBHOOK_SECRET</code> doesn't match the secret Stripe signed with. In dev, this usually means you copied the dashboard's secret instead of the one <code>stripe listen</code> printed. In prod, it means the secret rotated. Get the new one and restart the app.</p>
+
+  <h4>"Webhook for unknown subscriber" warning in the log</h4>
+  <p>The webhook arrived for a customer/subscription that isn't in your database. Either the user signed up with a different Stripe account, or this is a leftover event from a previous test. Safe to ignore unless production.</p>
+
+  <h4>Events arrive but DB doesn't update</h4>
+  <p>Open the CLI terminal — if the response is 200 but no DB change, the event is reaching your app but the lookup is failing. Add a <code>log.info(...)</code> in <code>apply_stripe_event_to_subscriber</code> to trace.</p>
+
+  <h4>Live card <code>4000 0000 0000 0002</code> is declined</h4>
+  <p>That's the correct behavior — that test card simulates a generic decline. Use <code>4242 4242 4242 4242</code> instead. Stripe's <a href="https://docs.stripe.com/testing" target="_blank">test card reference</a> has the full list.</p>
+
+  <h4>I keep getting redirected to login after upgrading</h4>
+  <p>The session cookie didn't survive the Stripe redirect. Check that <code>POCKETPLOT_SITE_URL</code> is set to the same domain the user is browsing on (not <code>localhost</code> if they're using a real domain, or vice-versa). Flask sessions are domain-bound.</p>
+
+  <h4>CLI says "no such command trigger"</h4>
+  <p>You have an old CLI (&lt;1.50). Update.</p>
+</section>
+
+<section id="appendix">
+  <h2><span class="num">§7</span>Appendix · The flow in one diagram</h2>
+  <p>When everything is wired up, the production flow looks like <a href="#fig-cli">Figure 4</a>. The same diagram describes your local dev flow exactly, except "internet" is replaced by the CLI on your laptop.</p>
+</section>
+
+<footer>
+  PocketPlot · Stripe Setup &amp; CLI Testing Guide · v1.0 · 2026-08-21<br>
+  Open this file in any modern browser. Search works. Print to PDF for a paper copy.
+</footer>
+</main>
+</div>
+</body>
+</html>

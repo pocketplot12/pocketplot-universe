@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ · PocketPlot Universe</title>
+<style>
+
+
+/* v26: Apple-style refinement overlay */
+:root {
+  /* Type scale - tighter, more disciplined */
+  --type-xs:   0.75rem;     /* 12px */
+  --type-sm:   0.875rem;    /* 14px */
+  --type-base: 1rem;        /* 16px */
+  --type-md:   1.125rem;    /* 18px */
+  --type-lg:   1.25rem;     /* 20px */
+  --type-xl:   1.5rem;      /* 24px */
+  --type-2xl:  2rem;        /* 32px */
+  --type-3xl:  2.75rem;     /* 44px */
+  --type-4xl:  3.75rem;     /* 60px */
+  --type-5xl:  5rem;        /* 80px */
+
+  /* Spacing - 4px base */
+  --space-1:   0.25rem;     /* 4px */
+  --space-2:   0.5rem;      /* 8px */
+  --space-3:   0.75rem;     /* 12px */
+  --space-4:   1rem;        /* 16px */
+  --space-5:   1.5rem;      /* 24px */
+  --space-6:   2rem;        /* 32px */
+  --space-7:   3rem;        /* 48px */
+  --space-8:   4rem;        /* 64px */
+  --space-9:   6rem;        /* 96px */
+
+  /* Radii - Apple-style: tighter */
+  --radius-sm:  6px;
+  --radius:     10px;
+  --radius-lg:  16px;
+  --radius-xl:  22px;
+
+  /* Shadows - subtle, layered */
+  --shadow-sm:  0 1px 2px rgba(0,0,0,.18);
+  --shadow:     0 4px 12px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.14);
+  --shadow-lg:  0 14px 32px rgba(0,0,0,.32), 0 4px 10px rgba(0,0,0,.18);
+
+  /* Muted accent (Apple-style: one restrained accent color) */
+  --accent-cyan:    rgba(93, 222, 240, 0.55);
+  --accent-cyan-2:  rgba(93, 222, 240, 0.85);
+  --accent-magenta: rgba(232, 90, 138, 0.45);
+  --accent-glow:    rgba(240, 181, 74, 0.18);
+
+  /* Glass surface (frosted backdrop) */
+  --glass:        rgba(15, 26, 46, 0.72);
+  --glass-blur:   saturate(180%) blur(18px);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    140ms;
+  --dur:         220ms;
+  --dur-slow:    400ms;
+}
+
+/* v26 hero composition - Apple-style restraint */
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: var(--space-7);
+  align-items: center;
+  padding: var(--space-9) 0 var(--space-8);
+  position: relative;
+}
+@media (max-width: 880px) {
+  .hero { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) 0 var(--space-6); }
+}
+
+/* Subtle gradient mesh behind the hero - replaces ornate corner brackets */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 120%;
+  background:
+    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(93,222,240,0.06), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(240,181,74,0.06), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 30%, rgba(232,200,121,0.04), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--type-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass-l);
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+}
+
+h1, .hero h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0 0 var(--space-4);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--brass-l);
+  font-weight: 400;
+}
+
+.lead, .hero p {
+  font-family: var(--font-sans);
+  font-size: var(--type-md);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-5);
+  max-width: 30em;
+}
+
+.hero .art {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-mark {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  filter: drop-shadow(0 30px 60px rgba(240,181,74,.18)) drop-shadow(0 6px 12px rgba(0,0,0,.3));
+  animation: hero-mark-float 8s ease-in-out infinite;
+}
+@keyframes hero-mark-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-8px) rotate(-1deg); }
+}
+
+/* v26 buttons - Apple-style gradient + glow */
+.btn, button.btn, a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px 26px;
+  font-family: var(--font-sans);
+  font-size: var(--type-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease-out),
+              box-shadow var(--dur) var(--ease-out),
+              background var(--dur) var(--ease-out);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+/* Primary - brass gradient + soft glow */
+.btn-primary, .btn:not(.secondary):not(.ghost) {
+  background: linear-gradient(180deg, var(--brass-l) 0%, var(--brass) 60%, var(--amber) 100%);
+  color: #1a1410;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 0 0 1px rgba(201,160,78,.4),
+    0 8px 22px rgba(240,181,74,.18),
+    0 2px 6px rgba(0,0,0,.3);
+}
+.btn-primary:hover, .btn:not(.secondary):not(.ghost):hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.3) inset,
+    0 0 0 1px rgba(232,200,121,.6),
+    0 14px 32px rgba(240,181,74,.32),
+    0 3px 8px rgba(0,0,0,.3);
+}
+
+/* Secondary - hairline outline, transparent fill */
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: rgba(232,200,121,.32);
+  backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+  background: rgba(232,200,121,.08);
+  border-color: rgba(232,200,121,.55);
+}
+
+/* Ghost - text only with subtle hover */
+.btn-ghost {
+  background: transparent;
+  color: var(--brass-l);
+  border: none;
+  padding: 12px 18px;
+}
+.btn-ghost:hover { color: var(--amber-l); }
+
+/* v26 cards - clean hairline, generous whitespace */
+.card, .panel, .feature {
+  background: var(--navy-2);
+  border: 1px solid rgba(201,160,78,.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: relative;
+  transition: transform var(--dur) var(--ease-out),
+              border-color var(--dur) var(--ease-out),
+              background var(--dur) var(--ease-out);
+}
+.card:hover, .panel:hover, .feature:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232,200,121,.36);
+  background: linear-gradient(180deg, var(--navy-2) 0%, var(--navy-3) 100%);
+}
+
+/* Accent stripe (replaces heavy ornate top border) */
+.card.accent, .feature.accent {
+  position: relative;
+  overflow: hidden;
+}
+.card.accent::before, .feature.accent::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--brass) 50%, transparent 100%);
+  opacity: 0.7;
+}
+
+/* v26 navigation - sticky + frosted glass */
+nav.main-nav, header.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid rgba(201,160,78,.15);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: var(--type-sm);
+}
+
+nav.main-nav .nav-link {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast), background var(--dur-fast);
+  position: relative;
+}
+nav.main-nav .nav-link:hover {
+  color: var(--brass-l);
+  background: rgba(232,200,121,.06);
+}
+nav.main-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 50%; transform: translateX(-50%);
+  width: 18px; height: 2px;
+  background: var(--brass);
+  border-radius: 1px;
+}
+
+/* v26 mobile bottom nav */
+@media (max-width: 880px) {
+  body { padding-bottom: 60px; }
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-top: 1px solid rgba(201,160,78,.15);
+    z-index: 90;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: var(--ink-faint);
+    text-decoration: none;
+    font-size: 11px;
+    font-family: var(--font-sans);
+    padding: 6px 12px;
+    min-width: 56px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .mobile-bottom-nav a.active { color: var(--brass-l); }
+  .mobile-bottom-nav a .icon { font-size: 18px; line-height: 1; }
+}
+@media (min-width: 881px) {
+  .mobile-bottom-nav { display: none; }
+}
+
+/* v26 section dividers - cleaner horizontal lines */
+.divider, .section-divider, hr {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(232,200,121,.4) 50%, transparent 100%);
+  border: none;
+  margin: var(--space-6) 0;
+}
+
+/* v26 responsive typography */
+@media (max-width: 880px) {
+  body { font-size: 16px; }
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+  .wrap { padding: 0 var(--space-4); }
+}
+
+  :root {
+    --navy: #0e1a2e; --navy-2: #15243f; --navy-3: #1f3460;
+    --gold: #e6c879; --cream: #f3e9d2; --muted: #9eb6d4; --faint: #7a8aa8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--navy); color: var(--cream);
+    font-family: Karla, system-ui, -apple-system, sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+  header { padding: 24px 0; border-bottom: 1px solid var(--navy-3); margin-bottom: 48px; }
+  .wordmark { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--gold); font-size: 22px; font-weight: 600; }
+  .wordmark i { color: var(--muted); font-style: italic; font-weight: 400; }
+  nav { float: right; margin-top: 8px; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 22px; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; }
+  nav a:hover { color: var(--gold); }
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; line-height: 1.2; color: var(--cream); }
+  h1 { font-size: 44px; margin: 0 0 16px; }
+  h1 i { color: var(--gold); font-style: italic; }
+  h2 { font-size: 24px; margin: 40px 0 12px; color: var(--gold); }
+  h3 { font-size: 18px; margin: 24px 0 8px; color: var(--cream); }
+  .lead { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--muted); font-size: 18px; }
+  .qa { background: var(--navy-2); border: 1px solid var(--navy-3); border-radius: 12px; padding: 22px 24px; margin: 16px 0; }
+  .qa h3 { margin: 0 0 8px; color: var(--gold); font-size: 17px; }
+  .qa p { margin: 8px 0; color: var(--cream); font-size: 15px; }
+  .qa p:last-child { margin-bottom: 0; }
+  code { background: rgba(0,0,0,.3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--gold); }
+  footer { margin-top: 60px; padding: 28px 0; border-top: 1px solid var(--navy-3); color: var(--faint); font-size: 13px; text-align: center; }
+</style>
+</head>
+<body>
+
+  <header class="v18-mini">
+    <a href="/" class="brand"><img src="/logo-halo-240.png" alt="PocketPlot Universe" width="40" height="37" class="brand-mark"><div class="wordmark-stack"><div class="wordmark-title">Pocket<em>Plot</em> Universe</div></div></a>
+    <nav class="v18">
+      <a href="/how-it-works">How it works</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/library">Library</a>
+      <a href="/seed">Seed</a>
+      <a href="/remix">Remix</a>
+      <a href="/faq" style="color:#e8c879">FAQ</a>
+      <a href="/signup" class="cta">Begin →</a>
+    </nav>
+  </header>
+  <style>
+    .v18-mini {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(201,160,78,.25);
+      background: #0a0f1c;
+    }
+    .v18-mini .brand svg { width: 200px; height: 44px; }
+    .v18-mini nav { display: flex; gap: 18px; align-items: center; }
+    .v18-mini nav a {
+      color: #c9bfa8; text-decoration: none;
+      font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 500;
+      letter-spacing: .04em;
+      padding: 4px 2px;
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .v18-mini nav a:hover { color: #ffd47a; border-bottom-color: #c9a04e; }
+    .v18-mini nav a.cta {
+      font-family: 'DM Sans',sans-serif; font-weight: 700; font-size: 12px;
+      letter-spacing: .12em; text-transform: uppercase;
+      background: linear-gradient(180deg, #e8c879 0%, #c9a04e 50%, #8a6a26 100%);
+      color: #0a0f1c;
+      padding: 8px 16px; border-radius: 3px;
+      border: 1px solid #8a6a26;
+      box-shadow: 0 0 0 1px #e8c879 inset, 0 4px 12px rgba(0,0,0,.4);
+    }
+    .v18-mini nav a.cta:hover {
+      box-shadow: 0 0 0 1px #ffd47a inset, 0 0 16px #f0b54a;
+    }
+  </style>
+
+<div class="wrap">
+  <header>
+    <div class="wordmark">Pocket<i>Plot</i> Universe</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/faq">FAQ</a>
+      <a href="/help">Help</a>
+      <a href="/roadmap">Roadmap</a>
+      <a href="/status">Status</a>
+      <a href="/contact">Contact</a>
+      <a href="/signup" style="color:var(--navy);background:var(--gold);padding:10px 20px;border-radius:99px;text-transform:none;letter-spacing:0;font-weight:700;margin-left:0;text-decoration:none">Begin →</a>
+    </nav>
+  </header>
+
+  <h1>Questions, <i>answered</i>.</h1>
+  <p class="lead">Everything you need to know before you begin.</p>
+
+  <h2>The platform</h2>
+
+  <div class="qa">
+    <h3>What is PocketPlot Universe?</h3>
+    <p>A tiered, interactive storytelling platform where you can create, roleplay, and experience unique branching narratives — from short bedtime stories to long procedurally generated adventures. The full procedural engine powers every story; the higher tiers add your own AI services for unlimited creative range.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Is this safe for kids?</h3>
+    <p>No. PocketPlot Universe is an <b>adults-only (18+)</b> platform. The default engine produces original fictional content for adults. There is no child profile, no parental controls, and no COPPA-compliant path. If you're looking for kid-safe bedtime stories, this isn't it.</p>
+  </div>
+
+  <div class="qa">
+    <h3>How do you generate stories?</h3>
+    <p>Every story is composed from in-house word pools by a deterministic procedural engine — the same seed produces the same story. It's not an LLM, so there's no chance of it reproducing copyrighted material. At the Creator tier you can opt to route generation through your own LLM (BYOB) for richer output; those responses still pass through our content filter before they reach you.</p>
+  </div>
+
+  
+
+  <h2 id="content-policy">Content Policy</h2>
+
+  <div class="qa">
+    <h3>What's allowed on PocketPlot Universe?</h3>
+    <p>PocketPlot Universe is an adults-only (18+) platform, but it's not a "no rules" zone. We permit the kind of fiction adults actually read and write:
+      <br><br>
+      <b>Allowed:</b> light violence (action scenes, mild conflict, combat); light romance (flirting, romantic tension, kissing between consenting adults); mature themes (grief, betrayal, moral ambiguity, addiction, recovery); strong language in moderation; drug/alcohol use depicted in fiction; psychological horror; suspense and thriller.
+      <br><br>
+      <b>Not allowed:</b> explicit sexual content (NSFW, pornographic); graphic gore or violence-for-arousal; anything depicting minors in any sexual context (zero tolerance, no exceptions); hate speech targeting specific protected classes; content that would get Stripe, Apple, or Google to ban us.
+    </p>
+    <p>This isn't a wishy-washy line. It exists because we need to keep the platform on Stripe and the App Store, and because the writer-audience for "no rules" creative fiction is much smaller than the audience for "good stories, no sleaze". The validation system filters both pre-generation (prompt) and post-generation (output) for the disallowed list.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Why no NSFW? I thought this was for adults?</h3>
+    <p>"Adults" doesn't mean "everything goes". It means we don't treat you like a child. Adults can absolutely enjoy light violence and light romance without needing explicit content; in fact, the audience for tasteful adult storytelling is broader than the audience for explicit content. By drawing a hard line at NSFW, we keep the platform open to more payment gateways, more app stores, and more writers who'd rather not have their work associated with that category.</p>
+  </div>
+
+  <div class="qa">
+    <h3>What about "PocketPlot" (the original)?</h3>
+    <p>The original <b>PocketPlot</b> is a separate product: a kids' bedtime-story app with parental controls and educational layers. PocketPlot Universe is the adults-only sibling, with a different brand, different content rules, and a different codebase. If you had an account on the original PocketPlot, it's still there; that product hasn't changed. We just built a second product for a different audience.</p>
+  </div>
+
+<h2>The tiered system</h2>
+
+  <div class="qa">
+    <h3>What changed from the original PocketPlot?</h3>
+    <p>The original <b>PocketPlot</b> (the children's bedtime story app) remains a separate product. PocketPlot Universe is the adults-only sibling — different brand, different content rules, different audience. If you had an account on the old PocketPlot, it's still there; this is a new product.</p>
+  </div>
+
+  <div class="qa">
+    <h3>What's the difference between Pro and Creator?</h3>
+    <p><b>Pro</b> ($7.99/month or $79.99/year) gives you unlimited stories up to 3000 words, full theme/tone/world control, Story Worlds (branching narratives), and PDF + shareable URL export. <b>Creator</b> ($19.99/month or $199.99/year) adds the ability to bring your own LLM and image APIs (BYOB/BYOG), raises the word ceiling to 5000, and grants API access for mobile clients.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Do you support annual billing?</h3>
+    <p>Yes — Pro annual is $79.99 (save ~16%) and Creator annual is $199.99 (save ~16%). Existing Pro subscribers grandfathered at $4.99/month keep that rate for the life of their subscription.</p>
+  </div>
+
+  <h2>BYOB &amp; BYOG</h2>
+
+  <div class="qa">
+    <h3>What is BYOB?</h3>
+    <p><b>Bring Your Own Brain.</b> Creator-tier users can plug in their own OpenAI-compatible LLM endpoint (OpenAI, OpenRouter, LiteLLM, Together, Groq, Mistral, local models with a shim, etc.). You bring your API key and base URL; we route the request. We never see or store your prompts or the responses beyond what validation requires.</p>
+  </div>
+
+  <div class="qa">
+    <h3>What is BYOG?</h3>
+    <p><b>Bring Your Own Graphics.</b> Same idea, for image generation: plug in any OpenAI-compatible image endpoint (OpenAI DALL-E, Together, OpenRouter image models, custom Stable Diffusion deployments). Generated images are returned as URLs (or base64 data URIs) for you to use.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Where are my API keys stored?</h3>
+    <p>Encrypted at rest using PBKDF2 + HMAC-based authenticated encryption (a stdlib-only implementation — no third-party crypto libraries required). The encryption key is derived from the <code>POCKETPLOT_API_ENCRYPTION_KEY</code> environment variable. We log only the first 7 characters of any key, never the full key.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Are there usage limits?</h3>
+    <p>Yes — 100 external-API calls per Creator subscriber per day. The limit is configurable via <code>POCKETPLOT_CREATOR_DAILY_LIMIT</code>. We describe it as "generous" rather than "unlimited" because the word "unlimited" is a hosting-cost bomb and a marketing claim we won't make.</p>
+  </div>
+
+  <h2>Content &amp; safety</h2>
+
+  <div class="qa">
+    <h3>What content is banned?</h3>
+    <p>Content that targets identifiable minors, real people with private info attached, or specific protected classes with intent to harm. Everything else — violence, romance, complex morality, grief, romance between adults, horror, drug/alcohol use in fiction, strong language — is allowed in an adults-only platform.</p>
+  </div>
+
+  <div class="qa">
+    <h3>How does the content filter work?</h3>
+    <p>Two layers: a pre-generation prompt check (rejects obviously-bad inputs before they cost anything) and a post-generation sanitizer (rewrites banned phrases to neutral placeholders). Both layers are logged to <code>validation_log</code> so the admin can review rejections. The filter is <b>not</b> a coherence checker — it's a safety net, not a guarantee. Adversarial prompts can still get through; that's a known limitation, not a hidden one.</p>
+  </div>
+
+  <div class="qa">
+    <h3>If I bring my own LLM, can I bypass the filter?</h3>
+    <p>No. Every BYOB response passes through the same validation pass before it reaches you. Paying for Creator tier doesn't unlock content that would violate platform policy. We think this makes the platform safer, not weaker.</p>
+  </div>
+
+  <h2>Privacy &amp; data</h2>
+
+  <div class="qa">
+    <h3>What data do you collect?</h3>
+    <p>Email, the name and age of the person using PocketPlot (a creative-writing persona you choose), your story preferences, and — for Creator tier — your encrypted API keys. We don't collect photos, biometrics, real names, addresses, or any data we don't need to run the service.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Do you sell my data?</h3>
+    <p>No. We don't sell your writing, your prompts, your API keys, or your email. The only party that sees your API keys is PocketPlot, and only when your request actually goes out.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Can I export my data?</h3>
+    <p>Yes. Stories can be exported as plain text (every tier), PDF (Pro and Creator), or a shareable URL (Pro and Creator). Worlds can be exported as a single markdown document. Account data deletion is on the roadmap.</p>
+  </div>
+
+  <h2>Technical</h2>
+
+  <div class="qa">
+    <h3>What about a mobile app?</h3>
+    <p>Coming later. The platform is API-first today — every critical function is exposed under <code>/api/v1/*</code> with cookie or Bearer-token auth. Mobile clients can hit that surface without touching the web UI.</p>
+  </div>
+
+  <div class="qa">
+    <h3>Can I self-host?</h3>
+    <p>Yes. PocketPlot is a single-file Flask app. The <code>README.md</code> has setup instructions; the <code>Dockerfile</code> has a one-line build. SQLite is the database; no Redis, no separate worker, no surprise infrastructure.</p>
+  </div>
+
+  <div class="qa">
+    <h3>What happens if PocketPlot shuts down?</h3>
+    <p>You keep your stories (they're exportable). If you've configured your own API keys via BYOB, they're stored encrypted in your local SQLite database — they don't go anywhere unless you send them somewhere.</p>
+  </div>
+
+  <footer>
+    PocketPlot Universe · adults-only creative platform · <a href="/pricing" style="color:var(--muted)">Pricing</a> · <a href="/" style="color:var(--muted)">Home</a>
+  </footer>
+</div>
+
+  <footer style="margin-top:60px;padding:30px 0;border-top:1px solid rgba(201,160,78,.25);background:#0a0f1c;text-align:center;font-family:'DM Sans',sans-serif;font-size:12px;color:#7a8aa8">
+    <div style="font-family:Fraunces,Georgia,serif;font-style:italic;font-size:13px;color:#c9bfa8;margin-bottom:10px">PocketPlot Universe · 18+ · Tech-Victorian Edition</div>
+    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap">
+      <a href="/faq" style="color:#e8c879;text-decoration:none">FAQ</a>·
+      <a href="/help" style="color:#e8c879;text-decoration:none">Help</a>·
+      <a href="/status" style="color:#e8c879;text-decoration:none">Status</a>·
+      <a href="/contact" style="color:#e8c879;text-decoration:none">Contact</a>·
+      <a href="/terms" style="color:#e8c879;text-decoration:none">Terms</a>
+    </div>
+  </footer>
+
+</body>
+</html>

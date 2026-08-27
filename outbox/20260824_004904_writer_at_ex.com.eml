@@ -1,0 +1,47 @@
+Subject: Your PocketPlot sign-in link
+From: stories@pocketplot.local
+To: writer@ex.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3541247220050555123=="
+
+--===============3541247220050555123==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Sign in to PocketPlot
+
+Open this link (works once, expires in 60 minutes):
+
+http://localhost:5000/login/w1vvbyRRK8V9cwuWPRqxKdmDYU2Jo9Mnb2KA3IYRFVc
+
+If you didn't request this, ignore this email.
+
+--===============3541247220050555123==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<!doctype html><html><head><meta charset=3D"utf-8"><style>
+body{font-family:Georgia,serif;background:#f6f0e1;color:#1a241d;margin:0;padd=
+ing:0}
+.wrap{max-width:540px;margin:0 auto;padding:36px 28px}
+h1{font-style:italic;font-weight:500;font-size:24px;margin:0 0 16px}
+p{font-size:15px;line-height:1.6}
+.cta{display:inline-block;margin:20px 0;padding:13px 22px;background:#1a241d;=
+color:#f6f0e1;
+text-decoration:none;border-radius:99px;font-family:"Helvetica Neue",sans-ser=
+if;font-weight:600;font-size:14px}
+.faint{font-size:12px;color:#8a8270;font-style:italic;margin-top:24px;line-he=
+ight:1.5}
+</style></head><body><div class=3D"wrap">
+<h1>Your PocketPlot sign-in link</h1>
+<p>Hi =E2=80=94 click the button below to sign in to your PocketPlot account.=
+ The link works once and expires in 60 minutes.</p>
+<a class=3D"cta" href=3D"http://localhost:5000/login/w1vvbyRRK8V9cwuWPRqxKdmD=
+YU2Jo9Mnb2KA3IYRFVc">Sign in to PocketPlot</a>
+<p class=3D"faint">If you didn't request this, you can ignore this email. The=
+ link will expire on its own.</p>
+</div></body></html>
+
+--===============3541247220050555123==--

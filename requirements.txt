@@ -1,0 +1,5 @@
+flask>=3.0
+apscheduler>=3.10
+itsdangerous>=2.0
+stripe>=7.0
+gunicorn>=22.0

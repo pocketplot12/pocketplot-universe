@@ -1,0 +1,71 @@
+"""
+PocketPlot Universe - v18 logo.
+
+The v18 wordmark adds brass accents + a subtle tech detail
+(a circuit-style path inside the branching icon).
+"""
+
+LOGO_SVG_V18 = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" role="img" aria-label="PocketPlot Universe">
+  <defs>
+    <linearGradient id="v18_lg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#e8c879"/>
+      <stop offset="50%"  stop-color="#c9a04e"/>
+      <stop offset="100%" stop-color="#8a6a26"/>
+    </linearGradient>
+    <linearGradient id="v18_lg_h" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#8a6a26"/>
+      <stop offset="50%"  stop-color="#e8c879"/>
+      <stop offset="100%" stop-color="#8a6a26"/>
+    </linearGradient>
+    <radialGradient id="v18_logo_glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#f0b54a" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#f0b54a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- glow behind icon -->
+  <circle cx="32" cy="32" r="28" fill="url(#v18_logo_glow)"/>
+
+  <!-- branching icon: stylized compass-rose + branching paths -->
+  <g transform="translate(32 32)">
+    <!-- compass ring -->
+    <circle r="20" fill="none" stroke="url(#v18_lg_h)" stroke-width="1.5"/>
+    <circle r="16" fill="none" stroke="url(#v18_lg_h)" stroke-width="0.5" opacity="0.6"/>
+    <!-- 4 cardinal direction markers -->
+    <g fill="url(#v18_lg)">
+      <circle cx="0"   cy="-20" r="2"/>
+      <circle cx="20"  cy="0"   r="2"/>
+      <circle cx="0"   cy="20"  r="2"/>
+      <circle cx="-20" cy="0"   r="2"/>
+    </g>
+    <!-- branching paths (3 doors converging on a center point) -->
+    <g fill="none" stroke="url(#v18_lg)" stroke-width="1.5" stroke-linecap="round">
+      <path d="M 0 0 L -12 -12 L -16 -16"/>  <!-- upper left -->
+      <path d="M 0 0 L  12 -12 L  16 -16"/>  <!-- upper right -->
+      <path d="M 0 0 L  0  16"/>              <!-- straight down (the 'P' anchor) -->
+    </g>
+    <!-- tech detail: tiny circuit dots at path ends -->
+    <g fill="#5ddef0" opacity="0.85">
+      <circle cx="-16" cy="-16" r="1.4"/>
+      <circle cx="16"  cy="-16" r="1.4"/>
+      <circle cx="0"   cy="16"  r="1.4"/>
+    </g>
+    <!-- center emblem -->
+    <circle r="3" fill="url(#v18_lg)"/>
+    <circle r="1.2" fill="#0e1a2e"/>
+  </g>
+
+  <!-- wordmark: "PocketPlot" italic serif + "Universe" smaller -->
+  <g transform="translate(68 0)">
+    <text x="0" y="28" font-family="Fraunces,Georgia,serif" font-style="italic"
+          font-size="22" font-weight="600" fill="#e8c879">Pocket<tspan fill="#9eb6d4" font-style="normal" font-weight="400">Plot</tspan></text>
+    <text x="0" y="50" font-family="DM Sans,Inter,sans-serif"
+          font-size="10" font-weight="500" letter-spacing="3" fill="#c9a04e" text-transform="uppercase">UNIVERSE</text>
+  </g>
+
+  <!-- subtle brass underline -->
+  <line x1="68" y1="54" x2="270" y2="54" stroke="url(#v18_lg_h)" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- decorative end-cap (small dot) -->
+  <circle cx="276" cy="32" r="2" fill="url(#v18_lg)"/>
+</svg>'''

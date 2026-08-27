@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PocketPlot — Today's Adventure</title>
+<!--
+  PocketPlot Mini-Game — Today's Adventure
+  ----------------------------------------------------------
+  Self-contained. No external dependencies, no images, no fonts.
+  Everything is drawn with the Canvas 2D API using the same warm
+  pocketplot palette as the rest of the app.
+
+  Story data is injected by the server via a <script type="application/json"
+  id="story-data"> block (with safe HTML-escaped values). The game then reads
+  the JSON and plays through:
+    1. Walk the child from the cottage (top-left) toward the meadow (right).
+    2. Along the way, pick up the WORD OF THE DAY (glowing orb).
+    3. At a story checkpoint, answer a STORY TALK question by walking
+       through one of three colored doorways.
+    4. Reach the helper character to finish the adventure.
+  Educational reinforcement: the orb teaches the word by making it the
+  protagonist's "spell" (you type the word to "release" the helper), and
+  the checkpoint choices surface the Story Talk questions in dialogue form.
+-->
+<style>
+  /* Reset + warm background that matches the email cards */
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+  body {
+    background: linear-gradient(180deg, #f6f0e1 0%, #fff8e7 50%, #ffe5a0 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1a241d;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  /* The game stage */
+  #stage {
+    display: block;
+    margin: 12px auto;
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(60, 40, 20, .18), 0 1px 0 #fff inset;
+    background: #fff8e7;
+    cursor: default;
+    touch-action: none;          /* prevent browser scroll on touch */
+    image-rendering: pixelated;  /* preserve crisp pixel-art look */
+  }
+  /* The dialog overlay (story text, choices) */
+  #dialog {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    max-width: min(560px, calc(100vw - 24px));
+    background: #fff8e7;
+    border: 2px solid #c46a3f;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    display: none;
+    font-family: Georgia, serif;
+  }
+  #dialog.show { display: block; }
+  #dialog .who {
+    font-weight: 700;
+    color: #c46a3f;
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  #dialog .what {
+    font-size: 16px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  #dialog .choices {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #dialog .choices button {
+    flex: 1 1 auto;
+    background: #5c7c5a;
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 80px;
+  }
+  #dialog .choices button:hover { background: #4a6648; }
+  #dialog .choices button.secondary {
+    background: #e88960;
+  }
+  #dialog .choices button.secondary:hover { background: #c46a3f; }
+  #dialog .hint {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #5a6a4a;
+    font-style: italic;
+    text-align: right;
+  }
+  /* Top bar with the word of the day + collected orbs + score */
+  #hud {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 248, 231, .92);
+    border: 2px solid #5c7c5a;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(60, 40, 20, .12);
+    white-space: nowrap;
+  }
+  #hud .word {
+    font-family: Georgia, serif;
+    font-style: italic;
+    color: #c46a3f;
+    font-size: 16px;
+  }
+  #hud .orb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffe5a0, #f8d77e 70%);
+    box-shadow: 0 0 8px #f8d77e;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+  /* Title screen */
+  #title-screen, #win-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #f6f0e1 0%, #ffe5a0 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    z-index: 10;
+  }
+  #title-screen h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(28px, 5vw, 44px);
+    color: #1a241d;
+    margin: 0 0 12px;
+  }
+  #title-screen p, #win-screen p {
+    max-width: 480px;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #4a3a2a;
+    margin: 4px 0;
+  }
+  #title-screen .controls {
+    margin-top: 24px;
+    font-family: Georgia, serif;
+    color: #5a4a3a;
+    font-size: 14px;
+    background: rgba(255, 248, 231, .7);
+    border-radius: 12px;
+    padding: 12px 18px;
+  }
+  #title-screen .start {
+    margin-top: 24px;
+    background: #c46a3f;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #title-screen .start:hover { background: #a8572f; }
+  /* Win screen */
+  #win-screen { display: none; }
+  #win-screen .stats {
+    background: rgba(255, 248, 231, .7);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 18px 0;
+    font-family: Georgia, serif;
+  }
+  #win-screen .stats div { margin: 4px 0; }
+  #win-screen .back {
+    margin-top: 16px;
+    color: #5c7c5a;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Title screen (hidden until the player presses Start) -->
+<div id="title-screen">
+  <h1>Today's Adventure</h1>
+  <p id="title-story"></p>
+  <p style="font-family: Georgia, serif; font-style: italic; color: #c46a3f; font-size: 18px;" id="title-word"></p>
+  <div class="controls">
+    Use <b>← → ↑ ↓</b> or <b>WASD</b> to walk.<br>
+    Pick up the glowing orb to learn today's word.<br>
+    Talk to the helper at the end of the path.
+  </div>
+  <button class="start" onclick="Game.start()">Begin</button>
+</div>
+
+<!-- Top HUD (the word + collected orb counter) -->
+<div id="hud">
+  <span>Today's word: <span class="word" id="hud-word">—</span></span>
+  <span><span class="orb"></span><span id="hud-orbs">0</span></span>
+</div>
+
+<!-- The game canvas. Touch/keyboard input. -->
+<canvas id="stage" width="512" height="320"></canvas>
+
+<!-- Dialog overlay -->
+<div id="dialog">
+  <div class="who" id="dlg-who"></div>
+  <div class="what" id="dlg-what"></div>
+  <div class="choices" id="dlg-choices"></div>
+  <div class="hint" id="dlg-hint">← → to walk · Space to continue</div>
+</div>
+
+<!-- Win screen -->
+<div id="win-screen">
+  <h1>Adventure complete!</h1>
+  <div class="stats">
+    <div>The helper remembers: <b><span class="word" id="win-word"></span></b></div>
+    <div>Correct Story Talk answers: <b><span id="win-questions">0</span></b></div>
+    <div>Story: <span id="win-title"></span></div>
+  </div>
+  <a href="/me" class="back">Back to your account</a>
+</div>
+
+<!-- Story data injected by the server. We read it via DOM rather than
+     global JS so the page remains a single self-contained file. -->
+<!--STORY_DATA_BEGIN--><script type="application/json" id="story-data">
+{
+  "title": "A Small Story for a Curious Wren",
+  "body": "Once upon a time, Wren went on an adventure and learned something new.",
+  "cast": ["Wren", "Bram"],
+  "word": {"w": "curious", "d": "eager to learn or know about things", "tier": "simple"},
+  "questions": [
+    {"q": "What was Wren's small problem in tonight's story?", "choices": ["Wren was lost", "Wren was hungry", "Wren was lonely"], "answer": 0},
+    {"q": "Who helped Wren find the way home?", "choices": ["Bram the bear", "A wise owl", "A friendly fox"], "answer": 0},
+    {"q": "What did Wren learn by the end of the night?", "choices": ["Sharing helps everyone", "Loud is best", "Going alone is fun"], "answer": 0}
+  ]
+}
+</script><!--STORY_DATA_END-->
+
+<script>
+(function () {
+  "use strict";
+
+  // ------------------------------------------------------------------
+  // Story loader — reads the JSON block the server embedded above.
+  // Falls back to the embedded demo data if the server-side block is empty
+  // (so this file is also a standalone demo when opened directly).
+  // ------------------------------------------------------------------
+  function loadStoryData() {
+    var raw = "";
+    var el = document.getElementById("story-data");
+    if (el) raw = (el.textContent || el.innerText || "").trim();
+    var data;
+    try { data = JSON.parse(raw); }
+    catch (e) {
+      console.warn("story-data JSON parse failed, using embedded defaults:", e);
+      data = {};
+    }
+    // Defaults (used by the demo)
+    if (!data.title)         data.title = "A Small Story for a Curious Wren";
+    if (!data.cast || data.cast.length < 2) data.cast = ["Wren", "Bram"];
+    if (!data.word || !data.word.w) data.word = {w: "curious", d: "eager to learn", tier: "simple"};
+    if (!data.questions || data.questions.length < 1) data.questions = [
+      {q: "What was Wren's small problem?", choices: ["Lost", "Hungry", "Tired"], answer: 0}
+    ];
+    return data;
+  }
+
+  // ------------------------------------------------------------------
+  // Game constants — tuned for the 512x320 canvas (16x10 tile grid).
+  // ------------------------------------------------------------------
+  var TILE = 32;             // pixels per tile (canvas is 16x10 tiles)
+  var COLS = 16, ROWS = 10;  // canvas is 512x320
+  var STORY = loadStoryData();
+
+  // The world map (10 rows, 16 cols). 0 = grass, 1 = path, 2 = tree,
+  // 3 = flower, 4 = water, 5 = cottage, 6 = checkpoint, 7 = helper-hut.
+  // The path winds from the cottage (top-left) to the helper (bottom-right).
+  var MAP = [
+    [5,1,1,1,3,3,2,2,2,2,3,3,1,1,1,1],
+    [2,1,3,1,3,1,1,3,3,1,1,3,1,3,3,1],
+    [2,3,1,1,3,1,3,3,1,1,3,1,1,3,1,1],
+    [2,3,1,3,3,1,3,1,1,3,3,1,3,1,1,3],
+    [2,1,1,3,1,1,1,3,3,3,1,1,1,3,1,3],
+    [3,3,1,1,1,3,3,3,1,1,1,3,3,1,1,3],
+    [2,2,1,3,3,3,1,1,1,3,3,1,1,1,3,3],
+    [2,3,1,1,1,1,1,3,3,1,1,1,3,1,1,2],
+    [3,3,3,3,1,3,3,1,1,1,3,3,1,3,1,2],
+    [3,2,2,2,1,1,1,1,1,1,1,1,6,7,7,1],
+  ];
+
+  // ------------------------------------------------------------------
+  // The protagonist — drawn as a small bird-like figure matching
+  // PocketPlot's storybook aesthetic.
+  // ------------------------------------------------------------------
+  var player = { x: 1.5, y: 1.5, dir: "right", step: 0, sprite: "wren" };
+
+  // The Word-of-the-Day orb that the player must pick up.
+  var orb = { x: 7.5, y: 4.5, collected: false };
+
+  // The Story Talk checkpoint signs scattered along the path.
+  // Each has a question + 3 colored doorways.
+  var checkpoints = [
+    { x: 12.5, y: 1.5, used: false, qIdx: 0 },
+    { x: 6.5,  y: 6.5, used: false, qIdx: 1 },
+  ];
+
+  // The helper character at the end of the path (Bram).
+  var helper = { x: 14.5, y: 8.5, sprite: "bear" };
+
+  // Track which questions have been answered correctly.
+  var correctCount = 0;
+
+  // ------------------------------------------------------------------
+  // Input — keyboard + touch D-pad.
+  // ------------------------------------------------------------------
+  var keys = {};
+  window.addEventListener("keydown", function (e) {
+    keys[e.key.toLowerCase()] = true;
+    if (e.key === " ") { e.preventDefault(); Game.advanceDialog(); }
+    if (e.key === "Enter") { e.preventDefault(); Game.advanceDialog(); }
+  });
+  window.addEventListener("keyup", function (e) { keys[e.key.toLowerCase()] = false; });
+
+  // ------------------------------------------------------------------
+  // World helpers
+  // ------------------------------------------------------------------
+  function tileAt(col, row) { return (MAP[row] && MAP[row][col]) || 0; }
+  function isWalkable(col, row) {
+    if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return false;
+    var t = tileAt(col, row);
+    // Walkable: grass (0), path (1), flower (3), checkpoint (6), helper-hut (7).
+    return t === 0 || t === 1 || t === 3 || t === 6 || t === 7;
+  }
+  function rectOverlap(ax, ay, bx, by, size) {
+    return ax < bx + size && ax + size > bx && ay < by + size && ay + size > by;
+  }
+  function distance(ax, ay, bx, by) {
+    var dx = ax - bx, dy = ay - by; return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  // ------------------------------------------------------------------
+  // Rendering — hand-drawn pixel art via Canvas 2D primitives.
+  // No images, no fonts, no third-party assets.
+  // ------------------------------------------------------------------
+  var canvas = document.getElementById("stage");
+  var ctx = canvas.getContext("2d");
+
+  function drawTile(col, row, t) {
+    var x = col * TILE, y = row * TILE;
+    if (t === 0) {                  // grass
+      ctx.fillStyle = "#92d4a8"; ctx.fillRect(x, y, TILE, TILE);
+      // Tiny grass blades
+      ctx.strokeStyle = "#5c7c5a"; ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x + 4, y + 22); ctx.lineTo(x + 4, y + 18);
+      ctx.moveTo(x + 12, y + 24); ctx.lineTo(x + 12, y + 19);
+      ctx.moveTo(x + 22, y + 22); ctx.lineTo(x + 22, y + 17);
+      ctx.stroke();
+    } else if (t === 1) {           // path (warm dirt)
+      ctx.fillStyle = "#d8b87e"; ctx.fillRect(x, y, TILE, TILE);
+      ctx.fillStyle = "#c89e64";
+      ctx.beginPath();
+      ctx.arc(x + 8, y + 12, 1.5, 0, Math.PI * 2);
+      ctx.arc(x + 22, y + 18, 1.5, 0, Math.PI * 2);
+      ctx.arc(x + 14, y + 24, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (t === 2) {           // tree
+      ctx.fillStyle = "#92d4a8"; ctx.fillRect(x, y, TILE, TILE);
+      // Trunk
+      ctx.fillStyle = "#8b5e3c";
+      ctx.fillRect(x + 13, y + 18, 6, 12);
+      // Canopy
+      ctx.fillStyle = "#5c7c5a";
+      ctx.beginPath(); ctx.arc(x + 16, y + 14, 12, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#7a9a6e";
+      ctx.beginPath(); ctx.arc(x + 13, y + 10, 6, 0, Math.PI * 2); ctx.arc(x + 19, y + 11, 5, 0, Math.PI * 2); ctx.fill();
+    } else if (t === 3) {           // flowers
+      ctx.fillStyle = "#92d4a8"; ctx.fillRect(x, y, TILE, TILE);
+      // Flower stems
+      ctx.strokeStyle = "#5c7c5a"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(x + 16, y + 28); ctx.lineTo(x + 16, y + 16); ctx.stroke();
+      // Flower head
+      ctx.fillStyle = "#f8b7b0";
+      ctx.beginPath(); ctx.arc(x + 13, y + 14, 3, 0, Math.PI * 2); ctx.arc(x + 19, y + 14, 3, 0, Math.PI * 2); ctx.arc(x + 16, y + 11, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#ffe5a0"; ctx.beginPath(); ctx.arc(x + 16, y + 14, 2, 0, Math.PI * 2); ctx.fill();
+    } else if (t === 4) {           // water (decorative)
+      ctx.fillStyle = "#a8d8f0"; ctx.fillRect(x, y, TILE, TILE);
+      ctx.fillStyle = "#7bb8dc";
+      ctx.beginPath(); ctx.arc(x + 6, y + 18, 2, 0, Math.PI * 2); ctx.arc(x + 22, y + 12, 2, 0, Math.PI * 2); ctx.fill();
+    } else if (t === 5) {           // cottage (start)
+      drawCottage(x, y);
+    } else if (t === 6) {           // checkpoint sign
+      drawCheckpointSign(x, y);
+    } else if (t === 7) {           // helper hut (end)
+      drawHelperHut(x, y);
+    }
+  }
+
+  function drawCottage(x, y) {
+    // Ground tile
+    ctx.fillStyle = "#92d4a8"; ctx.fillRect(x, y, TILE, TILE);
+    // Walls (cream)
+    ctx.fillStyle = "#fff8e7";
+    ctx.fillRect(x + 6, y + 12, 20, 16);
+    // Roof (terracotta)
+    ctx.fillStyle = "#c46a3f";
+    ctx.beginPath();
+    ctx.moveTo(x + 4, y + 14); ctx.lineTo(x + 16, y + 4); ctx.lineTo(x + 28, y + 14); ctx.closePath();
+    ctx.fill();
+    // Door (moss green)
+    ctx.fillStyle = "#5c7c5a";
+    ctx.fillRect(x + 14, y + 20, 4, 8);
+    // Window (warm light)
+    ctx.fillStyle = "#ffe5a0";
+    ctx.fillRect(x + 8, y + 16, 4, 4);
+    ctx.fillRect(x + 20, y + 16, 4, 4);
+  }
+
+  function drawCheckpointSign(x, y) {
+    ctx.fillStyle = "#92d4a8"; ctx.fillRect(x, y, TILE, TILE);
+    // Post
+    ctx.fillStyle = "#8b5e3c";
+    ctx.fillRect(x + 14, y + 14, 4, 14);
+    // Sign board
+    ctx.fillStyle = "#fff8e7";
+    ctx.fillRect(x + 6, y + 6, 20, 12);
+    ctx.strokeStyle = "#3a3633"; ctx.lineWidth = 1.5;
+    ctx.strokeRect(x + 6, y + 6, 20, 12);
+    // A question mark on the sign
+    ctx.fillStyle = "#c46a3f";
+    ctx.font = "bold 12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("?", x + 16, y + 16);
+    ctx.textAlign = "left";
+  }
+
+  function drawHelperHut(x, y) {
+    ctx.fillStyle = "#92d4a8"; ctx.fillRect(x, y, TILE, TILE);
+    // Roof (warmer for the destination)
+    ctx.fillStyle = "#a87044";
+    ctx.beginPath();
+    ctx.moveTo(x + 2, y + 14); ctx.lineTo(x + 16, y + 2); ctx.lineTo(x + 30, y + 14); ctx.closePath();
+    ctx.fill();
+    // Walls
+    ctx.fillStyle = "#ffe5a0";
+    ctx.fillRect(x + 4, y + 12, 24, 18);
+    // Door (welcoming green)
+    ctx.fillStyle = "#5c7c5a";
+    ctx.fillRect(x + 14, y + 18, 4, 12);
+    // Welcome lantern hanging
+    ctx.fillStyle = "#ffe5a0";
+    ctx.beginPath(); ctx.arc(x + 16, y + 6, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#c46a3f"; ctx.fillRect(x + 15, y + 8, 2, 4);
+  }
+
+  // Draw a tiny character (wren or bear) at (px, py).
+  function drawCharacter(px, py, sprite, dir, stepFrame) {
+    // stepFrame: 0 = standing, 1/2 = walking
+    var bounce = (stepFrame === 1) ? -1 : 0;
+    if (sprite === "wren") {
+      // Body (small bluebird-style)
+      ctx.fillStyle = "#7bb8dc";
+      ctx.beginPath();
+      ctx.arc(px, py - 8 + bounce, 5, 0, Math.PI * 2);   // head
+      ctx.fill();
+      ctx.fillStyle = "#5a9bc4";
+      ctx.ellipse(px + 3, py - 4 + bounce, 8, 5, 0, 0, Math.PI * 2);  // body
+      ctx.fill();
+      // Beak
+      ctx.fillStyle = "#e88960";
+      ctx.beginPath();
+      ctx.moveTo(px + 7, py - 8 + bounce);
+      ctx.lineTo(px + 11, py - 7 + bounce);
+      ctx.lineTo(px + 7, py - 6 + bounce);
+      ctx.fill();
+      // Eye
+      ctx.fillStyle = "#1a241d";
+      ctx.beginPath(); ctx.arc(px + 2, py - 9 + bounce, 1, 0, Math.PI * 2); ctx.fill();
+      // Eye glint
+      ctx.fillStyle = "#fff8e7";
+      ctx.beginPath(); ctx.arc(px + 2.3, py - 9.5 + bounce, 0.4, 0, Math.PI * 2); ctx.fill();
+      // Tiny feet
+      ctx.strokeStyle = "#c46a3f"; ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(px, py + 2); ctx.lineTo(px, py + 4);
+      ctx.moveTo(px + 5, py + 2); ctx.lineTo(px + 5, py + 4);
+      ctx.stroke();
+      // Direction flip
+      if (dir === "left") {
+        ctx.save();
+        ctx.translate(px * 2, 0); ctx.scale(-1, 1);
+        // Re-draw mirrored would be redundant; just leave as-is for simplicity
+        ctx.restore();
+      }
+    } else if (sprite === "bear") {
+      // Head
+      ctx.fillStyle = "#c89368";
+      ctx.beginPath(); ctx.arc(px, py - 8 + bounce, 7, 0, Math.PI * 2); ctx.fill();
+      // Body
+      ctx.fillStyle = "#c89368";
+      ctx.beginPath(); ctx.ellipse(px, py - 2, 9, 6, 0, 0, Math.PI * 2); ctx.fill();
+      // Belly
+      ctx.fillStyle = "#e0b584";
+      ctx.beginPath(); ctx.ellipse(px, py - 1, 5, 4, 0, 0, Math.PI * 2); ctx.fill();
+      // Ears
+      ctx.fillStyle = "#8b5e3c";
+      ctx.beginPath(); ctx.arc(px - 5, py - 13 + bounce, 3, 0, Math.PI * 2); ctx.arc(px + 5, py - 13 + bounce, 3, 0, Math.PI * 2); ctx.fill();
+      // Muzzle
+      ctx.fillStyle = "#ffe5a0";
+      ctx.beginPath(); ctx.arc(px, py - 6 + bounce, 3, 0, Math.PI * 2); ctx.fill();
+      // Eyes
+      ctx.fillStyle = "#1a241d";
+      ctx.beginPath(); ctx.arc(px - 2, py - 9 + bounce, 1, 0, Math.PI * 2); ctx.arc(px + 2, py - 9 + bounce, 1, 0, Math.PI * 2); ctx.fill();
+      // Nose
+      ctx.fillStyle = "#1a241d";
+      ctx.beginPath(); ctx.arc(px, py - 7 + bounce, 0.9, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  // Draw the Word-of-the-Day orb (a glowing peach star with pulse).
+  function drawOrb(px, py, t) {
+    var pulse = 1 + Math.sin(t / 300) * 0.18;
+    var r = 12 * pulse;
+    // Outer halo
+    var grad = ctx.createRadialGradient(px, py - 4, 1, px, py - 4, r * 2);
+    grad.addColorStop(0, "rgba(255, 232, 168, 0.9)");
+    grad.addColorStop(0.5, "rgba(248, 215, 126, 0.4)");
+    grad.addColorStop(1, "rgba(248, 215, 126, 0)");
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.arc(px, py - 4, r * 2, 0, Math.PI * 2); ctx.fill();
+    // Star shape (5-point)
+    ctx.fillStyle = "#f8d77e";
+    ctx.strokeStyle = "#c46a3f";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (var i = 0; i < 5; i++) {
+      var a = (i * 2 * Math.PI / 5) - Math.PI / 2;
+      var a2 = a + Math.PI / 5;
+      var r1 = r * 0.9, r2 = r * 0.4;
+      ctx.lineTo(px + Math.cos(a) * r1, py - 4 + Math.sin(a) * r1);
+      ctx.lineTo(px + Math.cos(a2) * r2, py - 4 + Math.sin(a2) * r2);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    // Center glint
+    ctx.fillStyle = "#fff8e7";
+    ctx.beginPath(); ctx.arc(px - 2, py - 6, 1.6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // ------------------------------------------------------------------
+  // Game state machine
+  // ------------------------------------------------------------------
+  var started = false;
+  var walkFrame = 0;          // 0 / 1 alternates while moving
+  var lastTimestamp = 0;
+  var dialog = null;          // {who, what, choices, callback}
+  var awaitingQuestion = null;
+
+  function move(dx, dy) {
+    if (dialog) return;       // can't move during dialog
+    var nx = player.x + dx;
+    var ny = player.y + dy;
+    var col = Math.floor(nx), row = Math.floor(ny);
+    if (isWalkable(col, row)) {
+      player.x = nx; player.y = ny;
+      walkFrame = (walkFrame + 1) % 2;
+    } else {
+      walkFrame = 0;
+    }
+    if (dx > 0) player.dir = "right";
+    if (dx < 0) player.dir = "left";
+    if (dy < 0) player.dir = "up";
+    if (dy > 0) player.dir = "down";
+    checkInteractions();
+  }
+
+  function checkInteractions() {
+    if (!orb.collected) {
+      if (distance(player.x, player.y, orb.x, orb.y) < 0.6) {
+        orb.collected = true;
+        showDialog({
+          who: "A glowing orb",
+          what: "You picked up today's word: <b>" + STORY.word.w + "</b>.<br><i>" + STORY.word.d + "</i>",
+          choices: [{label: "Wonderful!", primary: true, action: closeDialog}]
+        });
+        return;
+      }
+    }
+    for (var i = 0; i < checkpoints.length; i++) {
+      var cp = checkpoints[i];
+      if (cp.used) continue;
+      if (distance(player.x, player.y, cp.x, cp.y) < 0.6) {
+        cp.used = true;
+        presentQuestion(cp.qIdx, cp);
+        return;
+      }
+    }
+    // Helper encounter at the end
+    if (orb.collected && distance(player.x, player.y, helper.x, helper.y) < 0.6) {
+      onWin();
+    }
+  }
+
+  function presentQuestion(qIdx, cp) {
+    var q = STORY.questions[qIdx % STORY.questions.length];
+    var dlg = {
+      who: "Sign asks:",
+      what: q.q,
+      choices: [],
+      callback: function (picked) {
+        if (picked === q.answer) {
+          correctCount++;
+          showDialog({
+            who: STORY.cast[1] + " smiles",
+            what: "Right! \"" + q.choices[q.answer] + "\" — that's exactly what happened.",
+            choices: [{label: "Continue walking →", primary: true, action: closeDialog}]
+          });
+        } else {
+          showDialog({
+            who: STORY.cast[1] + " gently shakes head",
+            what: "Not quite. The right answer was \"" + q.choices[q.answer] + "\". Try the next one!",
+            choices: [{label: "Onward →", primary: true, action: closeDialog}]
+          });
+        }
+      }
+    };
+    for (var i = 0; i < q.choices.length; i++) {
+      (function (idx) {
+        dlg.choices.push({ label: q.choices[idx], primary: idx === 0, action: function () { closeDialog(); dlg.callback(idx); } });
+      })(i);
+    }
+    showDialog(dlg);
+  }
+
+  function onWin() {
+    document.getElementById("win-word").textContent = STORY.word.w;
+    document.getElementById("win-questions").textContent = correctCount + " / " + STORY.questions.length;
+    document.getElementById("win-title").textContent = STORY.title;
+    document.getElementById("win-screen").style.display = "flex";
+    // Phase 7: record this game-finish server-side. Fire-and-forget; the
+    // server may award badges or add the day's word to the vault. The win
+    // screen also shows up-to-date Word Vault stats when the response
+    // arrives (non-blocking).
+    fetch("/api/game/finish", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        word:           STORY.word && STORY.word.w ? STORY.word.w : "",
+        word_tier:      STORY.word && STORY.word.tier ? STORY.word.tier : "",
+        word_definition: STORY.word && STORY.word.d ? STORY.word.d : "",
+        correct:        correctCount,
+        total:          STORY.questions.length,
+      }),
+    }).then(function(r){ return r.json(); }).then(function(data){
+      if (!data || !data.ok) return;
+      // Add the vault info to the win screen if there's room.
+      try {
+        var stats = data.stats || {};
+        var badgeNames = (data.new_badges || []).map(function(b){return b.label;});
+        var extras = document.createElement("div");
+        extras.style.cssText = "margin-top:14px;font-family:Karla;font-size:13px;color:#5c7c5a;";
+        var html = "<b>Adventure Stats:</b> ";
+        html += "Streak " + (stats.streak_days || 0) + " day";
+        html += (stats.streak_days === 1 ? "" : "s");
+        html += " · Word Vault " + (stats.word_count || 0);
+        html += " · Badges " + (stats.badge_count || 0) + "/8";
+        if (badgeNames.length > 0) {
+          html += "<div style='margin-top:6px;color:#c46a3f;font-weight:600;'>New badge" +
+                  (badgeNames.length > 1 ? "s" : "") + ": " + badgeNames.join(", ") + "</div>";
+        }
+        extras.innerHTML = html;
+        var ws = document.querySelector("#win-screen .stats");
+        if (ws) ws.appendChild(extras);
+      } catch (e) { /* decoration only — ignore */ }
+    }).catch(function(){ /* network blip — win screen still works */ });
+  }
+
+  function showDialog(d) {
+    dialog = d;
+    var el = document.getElementById("dialog");
+    document.getElementById("dlg-who").innerHTML = d.who;
+    document.getElementById("dlg-what").innerHTML = d.what;
+    var choices = document.getElementById("dlg-choices");
+    choices.innerHTML = "";
+    for (var i = 0; i < d.choices.length; i++) {
+      var c = d.choices[i];
+      var btn = document.createElement("button");
+      btn.textContent = c.label;
+      if (c.primary) btn.classList.add("primary");
+      else btn.classList.add("secondary");
+      (function (cb) { btn.addEventListener("click", function () { cb(); }); })(c.action);
+      choices.appendChild(btn);
+    }
+    el.classList.add("show");
+  }
+  function closeDialog() {
+    dialog = null;
+    document.getElementById("dialog").classList.remove("show");
+  }
+  function advanceDialog() {
+    if (!dialog) return;
+    // Space/Enter fires the primary button
+    var btns = document.querySelectorAll("#dlg-choices button");
+    if (btns.length > 0) btns[0].click();
+  }
+
+  // ------------------------------------------------------------------
+  // Main animation loop
+  // ------------------------------------------------------------------
+  function frame(ts) {
+    var dt = ts - (lastTimestamp || ts);
+    lastTimestamp = ts;
+
+    if (started) {
+      // Movement — only when no dialog is open
+      if (!dialog) {
+        var speed = 0.07 * (dt / 16);  // normalized to 60fps
+        var dx = 0, dy = 0;
+        if (keys["arrowleft"]  || keys["a"]) dx -= speed;
+        if (keys["arrowright"] || keys["d"]) dx += speed;
+        if (keys["arrowup"]    || keys["w"]) dy -= speed;
+        if (keys["arrowdown"]  || keys["s"]) dy += speed;
+        if (dx !== 0 || dy !== 0) move(dx, dy);
+      }
+    }
+
+    // ---- RENDER ----
+    ctx.fillStyle = "#fdf3dc";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Tiles
+    for (var r = 0; r < ROWS; r++) {
+      for (var c = 0; c < COLS; c++) {
+        drawTile(c, r, tileAt(c, r));
+      }
+    }
+    // Orb (if not collected)
+    if (!orb.collected) drawOrb(orb.x * TILE + TILE/2, orb.y * TILE + TILE/2, ts);
+    // Helper character
+    drawCharacter(helper.x * TILE + TILE/2, helper.y * TILE + TILE/2, "bear", "down", 0);
+    // Player (only after Start)
+    if (started) {
+      drawCharacter(player.x * TILE + TILE/2, player.y * TILE + TILE/2, "wren", player.dir, walkFrame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  // ------------------------------------------------------------------
+  // Game entry — populate the title screen IMMEDIATELY (not waiting for
+  // the user to click "Begin", which used to leave the title screen blank).
+  // ------------------------------------------------------------------
+  (function populateTitle() {
+    var titleStory = document.getElementById("title-story");
+    if (titleStory) {
+      titleStory.textContent =
+        "Tonight's story: \u201C" + STORY.title + "\u201D \u2014 " + STORY.cast[0] +
+        " is on a small adventure. Walk the path, collect today's word, and answer the story signs.";
+    }
+    var titleWord = document.getElementById("title-word");
+    if (titleWord) {
+      titleWord.innerHTML = "Today's word: \u201C<em>" + STORY.word.w + "</em>\u201D \u2014 " + STORY.word.d;
+    }
+    var hudWord = document.getElementById("hud-word");
+    if (hudWord) hudWord.textContent = STORY.word.w;
+  })();
+
+  var Game = window.Game = {
+    start: function () {
+      // Hide title, show canvas + HUD
+      document.getElementById("title-screen").style.display = "none";
+      started = true;
+    }
+  };
+
+  // First-frame paint so the canvas isn't blank before "Start" is pressed.
+  // (The frame loop already starts below.)
+
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
