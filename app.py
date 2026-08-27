@@ -11131,3 +11131,22 @@ ADMIN_NEWSLETTER_HTML = ADMIN_NEWSLETTER_HTML
 # v23 routes (templates above; routes below)
 # ============================================================================
 
+@app.route("/_check_file/<path:filename>")
+def _check_file_route(filename):
+    """Debug: does send_from_directory find this file?"""
+    import os
+    full_path = os.path.join('.', filename)
+    exists = os.path.isfile(full_path)
+    abs_path = os.path.abspath(full_path)
+    return {
+        'cwd': os.getcwd(),
+        'filename_param': filename,
+        'full_path': full_path,
+        'absolute_path': abs_path,
+        'exists': exists,
+        'size': os.path.getsize(full_path) if exists else None,
+        'ls': sorted(os.listdir('.')),
+    }, 200, {'Content-Type': 'application/json'}
+
+
+
