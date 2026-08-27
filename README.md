@@ -361,3 +361,7 @@ A CSS-only revamp that keeps the v18 Tech-Victorian palette + brand mark while r
 ### v27 - Apple-style restructure (2026-08-27)
 
 Full HTML restructure (not just CSS) for the homepage + pricing page. Hero: single-column text-only focal point with massive display serif (60-128pt) + single CTA. Sections: 3-up card grids replaced with single-focal-point text entries. Pricing: 3 clean tier blocks with hairline borders + a "Most popular" pill. Footer: minimal. Mobile: bottom tab bar visible. All 64 tests still pass.
+
+### v28 - Render deployment (2026-08-27)
+
+v27 codebase is live at https://pocketplot.onrender.com (and pending DNS, soon at https://pocketplot.app). 64 automated tests pass. Source: github.com/pocketplot12/pocketplot-universe. Auto-deploy on every push. Bug fixed: removed duplicate _BRAND_FILES set that was shadowing the correct whitelist, causing 404 on PWA manifest + service worker.

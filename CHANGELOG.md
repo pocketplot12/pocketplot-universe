@@ -1301,3 +1301,65 @@ A proper HTML restructure (not just CSS overlay) that gives the homepage + prici
 1. **Removed visual elements** — the big brand mark illustration is gone from the hero. The site looks cleaner but has less visual punch.
 2. **Other pages still have v26 styles** — only index.html + pricing.html got the v27 restructure in this pass. Other pages (faq, how-it-works, terms, etc.) can be updated on request.
 3. **Pitch deck + ad deck PDFs** still show v22/v23 visuals. Regenerating would require updating the deck generator script.
+
+
+## v28 - Render deployment (2026-08-27)
+
+The v27 codebase is now deployed on Render and live at:
+**`https://pocketplot.onrender.com`**
+
+### What's deployed
+
+- Full v27 codebase (Apple-style hero + 7 sections)
+- All 95+ routes
+- All 64 automated tests pass
+- Initial DB schema applied (v6 + v11 + v17 + v23 + v24)
+- PWA manifest + service worker live
+- Sitemap + robots.txt working
+- All brand assets (logo PNGs, favicons, OGs) served
+
+### Hosting setup
+
+- **Host:** Render.com (free tier, paid upgrade before launch)
+- **Repo:** github.com/pocketplot12/pocketplot-universe (private → public during setup, can flip back to private)
+- **Source:** `/opt/render/project/src/`
+- **Working dir:** auto-injected via gunicorn
+- **Auto-deploy:** yes (every push to main triggers rebuild)
+
+### Bug fixes during deploy
+
+- Removed duplicate `_BRAND_FILES` set (line 10818) that shadowed the correct one (line 10182)
+- The duplicate was missing `manifest.json` and `sw.js`, causing 404s on PWA assets
+- Cleaned up debug routes (`/_debug_env`, `/_check_file`, `/_debug_routes`)
+
+### Naming changes
+
+- Moved git branch `master` → `main` to match GitHub's default + Render's preferred
+- Switched Render service from autoDeploy=no → autoDeploy=yes for live updates
+
+### What works
+
+```
+GET /              → 200  Apple-style v27 hero
+GET /healthz       → 200  (Render health check passes)
+GET /pricing       → 200  Apple-style pricing
+GET /sitemap.xml   → 200
+GET /robots.txt    → 200
+GET /manifest.json → 200  PWA manifest
+GET /sw.js         → 200  Service worker
+GET /logo-240.png  → 200  Brand mark
+```
+
+### Next steps
+
+1. **Connect `pocketplot.app` (Namecheap DNS)** — point A record at Render
+2. **Verify SSL certificate** auto-issues (required for `.app` TLD)
+3. **Monitor for 24-48 hours** to ensure stability
+4. **Iterate** based on real user feedback
+
+### Known caveats
+
+- Free tier sleeps after 15min of inactivity (slow first load)
+- DB is ephemeral on free tier (resets on each redeploy) — this is fine for development
+- Some `audio/` files were committed accidentally but gitignored
+- Public GitHub repo during setup (can flip back to private anytime)
