@@ -41,6 +41,9 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="/logo-og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css?v=30">
 </head>
 <body>
@@ -62,7 +65,7 @@
       <a href="/seed" class="link">Seed</a>
       <a href="/faq" class="link">FAQ</a>
       <a href="/signup" class="cta">Begin</a>
-      <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle between Kindle paper theme and dark theme" title="Click to switch between Kindle paper and dark themes">
+      <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
   <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -74,7 +77,8 @@
     <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
     <path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
   </svg>
-  <span class="label">Kindle</span>
+  <span class="label label-dark">Night</span>
+  <span class="label label-light">Paper</span>
 </button>
 <script>
   // Bind handler AFTER window.pocketplot is defined

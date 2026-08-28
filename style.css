@@ -52,8 +52,10 @@
   --type-display-xl: 8rem;         /* 128px hero */
 
   /* Fonts */
-  --font-serif:    'Fraunces', 'Playfair Display', Georgia, serif;
-  --font-sans:     'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-body: 'EB Garamond', 'Georgia', 'Times New Roman', serif;
+  --font-ui: 'Inter', 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces', 'Playfair Display', Georgia, serif
   --font-mono:     'JetBrains Mono', 'IBM Plex Mono', monospace;
 
   /* Spacing — generous */
@@ -99,8 +101,7 @@ html, body { margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-sans);
+  color: var(--ink);font-family: var(--font-body);
   font-size: var(--type-base);
   line-height: var(--lh-loose);
   font-feature-settings: "kern" 1, "liga" 1, "ss01" 1;
@@ -309,7 +310,7 @@ header.nav {
 }
 .feature:last-child { border-bottom: 1px solid var(--hairline); }
 .feature .label {
-  font-family: var(--font-sans);
+  font-family: var(--font-ui);
   font-size: var(--type-xs);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
@@ -379,7 +380,7 @@ header.nav {
 .quote cite {
   display: block;
   margin-top: var(--space-3);
-  font-family: var(--font-sans);
+  font-family: var(--font-ui);
   font-style: normal;
   font-size: var(--type-sm);
   color: var(--ink-faint);
@@ -467,7 +468,7 @@ footer a:hover { color: var(--accent-light); }
   border: 2px solid var(--brand);
   border-radius: var(--radius-pill, 999px);
   padding: 8px 16px 8px 14px;
-  font-family: var(--font-sans);
+  font-family: var(--font-ui);
   font-size: 13px;
   font-weight: 600;
   color: var(--text-body);
@@ -810,6 +811,25 @@ html[data-theme="warm-light"] .tier.featured .btn {
   color: #1a1410;  /* dark text on brass */
 }
 
+
+
+/* v32: explicit font family assignments */
+body { font-family: var(--font-body); }
+h1, h2, h3, h4, h5, h6, .hero h1, .hero h2, .section h2, .page-head h1 { font-family: var(--font-serif); }
+button, input, textarea, select, .btn, .theme-toggle, .nav-links a, .cta,
+.stat .label, .feature .label, .eyebrow, .badge, .tag, .pill { font-family: var(--font-ui); }
+code, kbd, samp, pre { font-family: var(--font-mono); }
+/* v32: Paper/Night dual label */
+.theme-toggle .label-dark { display: inline; }
+.theme-toggle .label-light { display: none; }
+html[data-theme="warm-light"] .theme-toggle .label-dark { display: none; }
+html[data-theme="warm-light"] .theme-toggle .label-light { display: inline; color: var(--brand); }
+/* v32: explicit font family assignments */
+body { font-family: var(--font-body); }
+h1, h2, h3, h4, h5, h6, .hero h1, .hero h2, .section h2, .page-head h1 { font-family: var(--font-serif); }
+button, input, textarea, select, .btn, .theme-toggle, .nav-links a, .cta,
+.stat .label, .feature .label, .eyebrow, .badge, .tag, .pill { font-family: var(--font-ui); }
+code, kbd, samp, pre { font-family: var(--font-mono); }
 .v31-test-strip {
   position: fixed;
   bottom: 0; left: 0; right: 0;
