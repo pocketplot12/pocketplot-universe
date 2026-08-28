@@ -3467,6 +3467,30 @@ def admin_queue():
     return render_template_string(
         queue_templates.QUEUE_LIST_HTML, rows=rows, status=status or "all", counts=counts
     )
+@app.route("/version")
+def version_route():
+    """Diagnostic: shows what's actually deployed."""
+    import subprocess
+    commit = subprocess.run(['git', '-C', '/root/pocketplot', 'rev-parse', '--short', 'HEAD'],
+                            capture_output=True, text=True).stdout.strip() or 'unknown'
+    return {
+        'commit': commit,
+        'deployed': 'v30 design system',
+        'timestamp': '2026-08-28T15:56:15Z',
+        'themes': ['warm-dark (default)', 'warm-light (Kindle paper)'],
+        'features': [
+            '4-tier text hierarchy (--text-heading/body/caption/faint)',
+            '3-tier button system (--brand primary, --border secondary, --brand-text tertiary)',
+            '3 status colors (--success, --warning, --danger)',
+            'Sun/moon theme toggle in nav',
+            'localStorage persistence',
+            'System prefers-color-scheme detection',
+        ],
+        'marker': 'V30-VERSION-FINGERPRINT: pocketplot-v30-2026-08-28-16:50-UNIQUE',
+    }, 200, {'Content-Type': 'application/json'}
+
+
+
 
 
 @app.route("/admin/queue/<int:qid>", methods=["GET"])
