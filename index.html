@@ -109,7 +109,60 @@
 <main>
 
 <section class="hero reveal">
-  <p class="eyebrow">Portal to stories</p>
+  <svg class="branching-illustration reveal" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Branching story paths" style="width:100%;max-width:560px;height:auto;margin:0 auto 32px;display:block;color:#c9a04e">
+  <defs>
+    <linearGradient id="path-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="currentColor" stop-opacity="0.3"></stop>
+      <stop offset="50%" stop-color="currentColor" stop-opacity="1"></stop>
+      <stop offset="100%" stop-color="currentColor" stop-opacity="0.3"></stop>
+    </linearGradient>
+  </defs>
+  <style>
+    .branching-illustration .node { fill: var(--bg-elevated); stroke: currentColor; stroke-width: 1.5; }
+    .branching-illustration .node-start { fill: currentColor; stroke: currentColor; }
+    .branching-illustration .path { stroke: currentColor; stroke-width: 1.2; fill: none; opacity: 0.35; stroke-dasharray: 4 4; stroke-linecap: round; }
+    .branching-illustration .path-active { opacity: 1; stroke-width: 2; stroke-dasharray: 200; stroke-dashoffset: 200; animation: drawPath 6s ease-in-out infinite; }
+    .branching-illustration .label { font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-size: 13px; fill: var(--text-body); text-anchor: middle; }
+    .branching-illustration .label-eyebrow { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; fill: var(--text-caption); text-anchor: middle; text-transform: uppercase; }
+    .branching-illustration .endpoint { transform-origin: center; transform-box: fill-box; animation: pulseActive 6s ease-in-out infinite; }
+    .branching-illustration .endpoint-1 { animation-delay: 1s; }
+    .branching-illustration .endpoint-2 { animation-delay: 2.5s; }
+    .branching-illustration .endpoint-3 { animation-delay: 4s; }
+    .branching-illustration .endpoint-4 { animation-delay: 5.5s; }
+    .branching-illustration .path-1 { animation-delay: 0s; }
+    .branching-illustration .path-2 { animation-delay: 1.5s; }
+    .branching-illustration .path-3 { animation-delay: 3s; }
+    .branching-illustration .path-4 { animation-delay: 4.5s; }
+    @keyframes drawPath { 0% { stroke-dashoffset: 200; opacity: 1; } 70% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: -200; opacity: 0.3; } }
+    @keyframes pulseActive { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.8; } }
+    @media (prefers-reduced-motion: reduce) {
+      .branching-illustration .path-active,
+      .branching-illustration .endpoint-1, .endpoint-2, .endpoint-3, .endpoint-4 {
+        animation: none !important;
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+  <g transform="translate(300, 40)"><circle class="node node-start" r="7"></circle><text class="label" y="22">scene 1</text></g>
+  <path class="path path-active path-1" d="M 300,55 Q 200,90 100,140"></path>
+  <path class="path path-active path-2" d="M 300,55 L 300,140"></path>
+  <path class="path path-active path-3" d="M 300,55 Q 400,90 500,140"></path>
+  <g class="endpoint endpoint-1" transform="translate(100, 150)"><circle class="node" r="6"></circle><text class="label" y="22">scene 2</text></g>
+  <g class="endpoint endpoint-2" transform="translate(300, 150)"><circle class="node" r="6"></circle><text class="label" y="22">scene 3</text></g>
+  <g class="endpoint endpoint-3" transform="translate(500, 150)"><circle class="node" r="6"></circle><text class="label" y="22">scene 4</text></g>
+  <path class="path path-active path-1" d="M 100,165 Q 60,210 50,260"></path>
+  <path class="path path-active path-2" d="M 100,165 Q 200,210 200,260"></path>
+  <path class="path path-active path-3" d="M 300,165 L 300,260"></path>
+  <path class="path path-active path-4" d="M 500,165 Q 400,210 400,260"></path>
+  <path class="path path-active path-2" d="M 500,165 Q 540,210 550,260"></path>
+  <g class="endpoint endpoint-1" transform="translate(50, 270)"><circle class="node" r="4"></circle></g>
+  <g class="endpoint endpoint-2" transform="translate(200, 270)"><circle class="node" r="4"></circle></g>
+  <g class="endpoint endpoint-3" transform="translate(300, 270)"><circle class="node" r="4"></circle></g>
+  <g class="endpoint endpoint-4" transform="translate(400, 270)"><circle class="node" r="4"></circle></g>
+  <g class="endpoint endpoint-2" transform="translate(550, 270)"><circle class="node" r="4"></circle></g>
+  <text class="label-eyebrow" x="300" y="305">multiple endings · one story · your choices</text>
+</svg>
+<p class="eyebrow">Portal to stories</p>
   <h1>Create.<br>Roleplay.<br><em>Explore.</em></h1>
   <p class="lede">
     A premium storytelling platform for adults. Branching worlds, your own AI engine, scene-like art.
