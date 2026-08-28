@@ -3487,7 +3487,25 @@ def version_route():
             'System prefers-color-scheme detection',
         ],
         'marker': 'V30-VERSION-FINGERPRINT: pocketplot-v30-2026-08-28-16:50-UNIQUE',
-    }, 200, {'Content-Type': 'application/json'}
+    }, 
+@app.route("/debug-giant-red-banner")
+def debug_giant_red_banner_route():
+    """Diagnostic: a giant red banner. If user sees this, the path to them works."""
+    from datetime import datetime
+    return f"""<!DOCTYPE html><html><head><title>V30 DIAGNOSTIC</title></head>
+<body style="margin:0;font-family:sans-serif">
+<div style="background:red;color:white;padding:60px 30px;font-size:64px;font-weight:900;text-align:center;">
+POCKETPLOT V30 LIVE TEST
+</div>
+<div style="padding:30px;font-size:24px;background:#fff7e6;color:#3d2e1f;">
+<h2>If you see the big red banner above, the server is sending you fresh content.</h2>
+<p>Time on server: {datetime.utcnow().isoformat()} UTC</p>
+<p>If you DON'T see the red banner, your browser or network has old cached content.</p>
+<p>Try a different network (mobile data) or a different browser to verify.</p>
+</div>
+</body></html>"""
+
+200, {'Content-Type': 'application/json'}
 
 
 
