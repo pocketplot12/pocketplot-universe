@@ -287,3 +287,5 @@ Instead I delivered the candidates with reasoning + an explicit "verify on Namec
 - **v27 - Apple-style restructure**: Full HTML restructure of index.html + pricing.html (not just CSS overlay). Hero: text-only focal point with 60-128pt display serif + single CTA. Sections: 3-up card grids → single-focal-point text entries. Pricing: 3 clean tier blocks. Mobile bottom tab bar. Brand mark + palette + fonts unchanged. All 64 tests still pass.
 
 - **v28 - Render deployment**: v27 deployed to Render free tier, live at pocketplot.onrender.com. 64 tests pass. Repo at github.com/pocketplot12/pocketplot-universe (auto-deploy on push). Fixed: removed duplicate _BRAND_FILES shadow definition (was 19 entries, missing manifest.json + sw.js → 404s on PWA assets). Cleaning up debug routes.
+
+- **v29 - Kindle-e-ink theme toggle**: Two themes via sun/moon toggle in nav (warm-dark default + warm-light Kindle paper). localStorage persistence + prefers-color-scheme detection. CSS refactor to semantic tokens. Fixed: duplicate click handler bug (two different flags `_ppBound` vs `_themeBound` caused toggle to no-op). 64 tests still passing. Live at pocketplot.app.

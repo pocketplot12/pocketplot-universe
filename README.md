@@ -365,3 +365,11 @@ Full HTML restructure (not just CSS) for the homepage + pricing page. Hero: sing
 ### v28 - Render deployment (2026-08-27)
 
 v27 codebase is live at https://pocketplot.onrender.com (and pending DNS, soon at https://pocketplot.app). 64 automated tests pass. Source: github.com/pocketplot12/pocketplot-universe. Auto-deploy on every push. Bug fixed: removed duplicate _BRAND_FILES set that was shadowing the correct whitelist, causing 404 on PWA manifest + service worker.
+
+### v29 - Kindle-e-ink theme toggle (2026-08-27)
+
+Two reading-friendly themes added to https://pocketplot.app:
+- **warm-dark** (default): deep navy + warm cream text (current visual style)
+- **warm-light**: Kindle paper feel — warm cream background + warm dark brown text, NO pure white
+
+Sun/moon toggle in nav. Choice persists via localStorage. First-visit uses system preference. Both themes preserve the brass/Tech-Victorian palette + Fraunces serif typography. 64 tests still passing.

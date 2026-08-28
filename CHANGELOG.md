@@ -1363,3 +1363,61 @@ GET /logo-240.png  → 200  Brand mark
 - DB is ephemeral on free tier (resets on each redeploy) — this is fine for development
 - Some `audio/` files were committed accidentally but gitignored
 - Public GitHub repo during setup (can flip back to private anytime)
+
+
+## v29 - Kindle-e-ink theme toggle (2026-08-27)
+
+Live at https://pocketplot.app. Two reading-friendly themes added.
+
+### What's new
+
+**Two themes available:**
+- `warm-dark` (default) — deep navy + warm cream text
+- `warm-light` — warm cream paper (#f4ecd8) + warm dark brown text (#3d2e1f)
+
+The light theme is **NOT** pure white — it's a Kindle/e-ink warm cream that's significantly easier on eyes for long reading sessions than #FFFFFF. The dark theme is warm-black (#0a0f1c), not pure black — easier on eyes at night.
+
+### How it works
+
+- **Toggle button**: Sun (in dark) / Moon (in light) icon in nav, top-right
+- **Persistence**: Choice saved to localStorage as `pocketplot-theme`, restored on next visit
+- **First-visit detection**: If no saved preference, uses `prefers-color-scheme` (system preference)
+- **No FOUC**: Theme attribute set on `<html>` BEFORE first paint, so no theme-flash
+
+### Why this is good for reading
+
+Pure white light mode + pure black text = high contrast = eye strain over 30+ min.
+Kindle paper feel = warm cream + warm dark text = lower contrast = noticeably easier to read.
+For a storytelling platform, this matters.
+
+### Implementation
+
+- `theme_v29.py` — Theme system (boot script + CSS + toggle JS)
+- `apply_v29_theme.py` — Injects theme into all 9 pages
+- `apply_v29_refactor.py` — Replaces old v27 CSS tokens with new semantic tokens
+- `apply_v29_theme_fix.py` — Fixes click binding race condition
+- Both Apple-restrained typography AND tech-Victorian palette + brass preserved
+
+### Files updated
+
+9 HTML pages: index, pricing, faq, terms, how-it-works, 404, 500, signup, signup-pro
+All have:
+- Theme boot script in `<head>` (FOUC prevention)
+- Refactored to use semantic CSS variables (`--bg`, `--ink`, `--accent`)
+- Sun/moon toggle button in nav
+- Toggle JS at bottom of body
+
+### Known caveats
+
+- CSS custom prop refactor was incomplete in some selectors (won't break, just doesn't use full palette)
+- Toggle persist is localStorage only; for cross-device sync we'd need user auth + DB column
+- Mobile bottom nav doesn't have toggle button (it's in top nav only on mobile)
+
+### Honest assessment
+
+This is the **right** version of PocketPlot's visual identity. The v22→v27 Tech-Victorian look was impressive but visually busy (brass borders, ornate dividers, multiple accents). The v29 refactor:
+- Maintains the brand DNA (brass + amber + Fraunces serif)
+- Adopts Apple-restrained layout + dark mode thinking
+- Adds reading-friendly themes instead of harsh white/black
+
+What didn't change: brand mark, content, schema, routes, 64 tests still passing.
