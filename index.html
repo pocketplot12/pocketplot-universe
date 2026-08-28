@@ -108,7 +108,7 @@
 
 <main>
 
-<section class="hero">
+<section class="hero reveal">
   <p class="eyebrow">Portal to stories</p>
   <h1>Create.<br>Roleplay.<br><em>Explore.</em></h1>
   <p class="lede">
@@ -125,13 +125,13 @@
 </section>
 
 <section class="stats">
-  <div class="stat"><div class="n">3</div><div class="label">Tiers</div></div>
+  <div class="stat reveal"><div class="n">3</div><div class="label">Tiers</div></div>
   <div class="stat"><div class="n">16</div><div class="label">Genres</div></div>
   <div class="stat"><div class="n">1000s</div><div class="label">Words learned</div></div>
   <div class="stat"><div class="n">24/7</div><div class="label">Always on</div></div>
 </section>
 
-<section class="section">
+<section class="section reveal">
   <p class="section-eyebrow">What it does</p>
   <h2>Stories that branch.<br>Worlds that remember.</h2>
   <p>
@@ -190,7 +190,7 @@
   </div>
 </section>
 
-<section class="cta-strip">
+<section class="cta-strip reveal">
   <h2>Ready to begin?</h2>
   <p class="lede" style="margin-bottom:32px;">Free tier includes 3 stories/day and a 1000-word cap. No card needed.</p>
   <a href="/signup" class="cta-primary">Begin your first world</a>
@@ -272,5 +272,101 @@ if ('serviceWorker' in navigator) {
 </script>
 
 
+<script>
+// v33 motion: scroll-triggered reveals + count-up animations
+(function() {
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // If reduced motion, reveal everything immediately and bail
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      el.classList.add('visible');
+    });
+    document.querySelectorAll('.stat .n').forEach(function(el) {
+      el.classList.add('visible');
+    });
+    return;
+  }
+
+  // IntersectionObserver: add .visible when 15% in view
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -60px 0px'  // trigger slightly before fully visible
+    });
+
+    // Observe all .reveal elements
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    // Observe stat numbers (have their own .n class)
+    document.querySelectorAll('.stat .n').forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: just show everything
+    document.querySelectorAll('.reveal, .stat .n').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+
+  // Toggle button: add spinning class momentarily on click
+  var toggleBtn = document.getElementById('theme-toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function() {
+      toggleBtn.classList.add('spinning');
+      setTimeout(function() {
+        toggleBtn.classList.remove('spinning');
+      }, 400);
+    });
+  }
+
+  // Count-up animation for .stat .n when it gets .visible
+  document.querySelectorAll('.stat .n').forEach(function(el) {
+    var targetText = (el.textContent || '').trim();
+    var targetNum = parseFloat(targetText.replace(/[^0-9.]/g, ''));
+    if (isNaN(targetNum)) return;
+    var duration = 1200;
+    var start = performance.now();
+    var origText = targetText;
+    var suffix = targetText.replace(/[0-9.]/g, '').trim();
+
+    function tick() {
+      var elapsed = performance.now() - start;
+      if (elapsed >= duration) {
+        el.textContent = targetNum + suffix;
+        return;
+      }
+      var progress = elapsed / duration;
+      // ease-out-cubic
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(targetNum * eased);
+      el.textContent = current + suffix;
+      requestAnimationFrame(tick);
+    }
+
+    // Start count-up when .visible class is added
+    var mo = new MutationObserver(function(muts) {
+      muts.forEach(function(m) {
+        if (m.attributeName === 'class' && el.classList.contains('visible')) {
+          mo.disconnect();
+          el.textContent = '0' + suffix;
+          requestAnimationFrame(tick);
+        }
+      });
+    });
+    mo.observe(el, { attributes: true });
+  });
+})();
+</script>
+<!-- v33 motion system applied -->
 </body>
 </html>

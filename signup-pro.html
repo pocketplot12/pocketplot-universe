@@ -874,4 +874,100 @@ html[data-theme="warm-light"] .tier.featured .btn {
     </div>
   </footer>
 
+<script>
+// v33 motion: scroll-triggered reveals + count-up animations
+(function() {
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // If reduced motion, reveal everything immediately and bail
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      el.classList.add('visible');
+    });
+    document.querySelectorAll('.stat .n').forEach(function(el) {
+      el.classList.add('visible');
+    });
+    return;
+  }
+
+  // IntersectionObserver: add .visible when 15% in view
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -60px 0px'  // trigger slightly before fully visible
+    });
+
+    // Observe all .reveal elements
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    // Observe stat numbers (have their own .n class)
+    document.querySelectorAll('.stat .n').forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: just show everything
+    document.querySelectorAll('.reveal, .stat .n').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+
+  // Toggle button: add spinning class momentarily on click
+  var toggleBtn = document.getElementById('theme-toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function() {
+      toggleBtn.classList.add('spinning');
+      setTimeout(function() {
+        toggleBtn.classList.remove('spinning');
+      }, 400);
+    });
+  }
+
+  // Count-up animation for .stat .n when it gets .visible
+  document.querySelectorAll('.stat .n').forEach(function(el) {
+    var targetText = (el.textContent || '').trim();
+    var targetNum = parseFloat(targetText.replace(/[^0-9.]/g, ''));
+    if (isNaN(targetNum)) return;
+    var duration = 1200;
+    var start = performance.now();
+    var origText = targetText;
+    var suffix = targetText.replace(/[0-9.]/g, '').trim();
+
+    function tick() {
+      var elapsed = performance.now() - start;
+      if (elapsed >= duration) {
+        el.textContent = targetNum + suffix;
+        return;
+      }
+      var progress = elapsed / duration;
+      // ease-out-cubic
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(targetNum * eased);
+      el.textContent = current + suffix;
+      requestAnimationFrame(tick);
+    }
+
+    // Start count-up when .visible class is added
+    var mo = new MutationObserver(function(muts) {
+      muts.forEach(function(m) {
+        if (m.attributeName === 'class' && el.classList.contains('visible')) {
+          mo.disconnect();
+          el.textContent = '0' + suffix;
+          requestAnimationFrame(tick);
+        }
+      });
+    });
+    mo.observe(el, { attributes: true });
+  });
+})();
+</script>
+<!-- v33 motion system applied -->
 </body></html>
