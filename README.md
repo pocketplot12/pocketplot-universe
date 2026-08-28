@@ -373,3 +373,7 @@ Two reading-friendly themes added to https://pocketplot.app:
 - **warm-light**: Kindle paper feel — warm cream background + warm dark brown text, NO pure white
 
 Sun/moon toggle in nav. Choice persists via localStorage. First-visit uses system preference. Both themes preserve the brass/Tech-Victorian palette + Fraunces serif typography. 64 tests still passing.
+
+### v30 - Design system tokens (2026-08-27)
+
+Complete semantic token system applied to BOTH marketing pages and in-product templates. All components (buttons, cards, inputs, links, status) now share the same tokens across both warm-light and warm-dark themes. 4-tier text hierarchy, 3-tier button hierarchy, success/warning/danger status colors. 64 tests pass. Live at pocketplot.app.

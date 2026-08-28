@@ -1421,3 +1421,91 @@ This is the **right** version of PocketPlot's visual identity. The v22→v27 Tec
 - Adds reading-friendly themes instead of harsh white/black
 
 What didn't change: brand mark, content, schema, routes, 64 tests still passing.
+
+
+## v30 - Design system tokens (2026-08-27)
+
+Live at https://pocketplot.app. A complete semantic token system, applied across
+the marketing site AND in-product pages. Both themes use the same token names.
+
+### What changed
+
+**New token system (4 categories):**
+
+```
+Backgrounds (5 tiers):
+  --bg              page background
+  --bg-elevated     cards, raised UI
+  --bg-overlay      modals, nav backdrop
+  --surface         hover states
+  --surface-strong  pressed/active
+
+Text hierarchy (4 tiers):
+  --text-heading    h1, h2, page titles — strongest ink
+  --text-body       paragraphs, default
+  --text-caption    hints, timestamps
+  --text-faint      footers, near-invisible
+
+Brand & actions:
+  --brand           brass — single token for ALL brand touches
+  --brand-light     hover, focus
+  --brand-deep      pressed state
+  --brand-soft      selection bg (low opacity)
+  --brand-text      text on brass backgrounds (always dark)
+  --accent          alias of brand for clarity
+
+Status (3 tiers):
+  --success         emerald - done, success
+  --warning         amber - caution
+  --danger          rust - delete, error
+
+Surfaces:
+  --border          hairline
+  --border-strong   heavier border for focus
+  --shadow-sm/base/lg  layered shadows
+```
+
+**Component styles (all use semantic tokens):**
+- Buttons: `.btn-primary` (filled brass), `.btn-secondary` (border brass), `.btn-tertiary` (text-only with underline)
+- Status badges: `.status-success`, `.status-warning`, `.status-danger`
+- Cards: clean hairline border, surface gradient on hover
+- Inputs: focused with brand-soft glow
+- Links: brass with underline-on-hover
+- Selection: brand-soft background
+
+### Pages updated
+
+Marketing (9 pages):
+- index.html, pricing.html, faq.html, terms.html, how-it-works.html
+- 404.html, 500.html, signup.html, signup-pro.html
+
+In-product templates (12 templates):
+- LIBRARY_HTML, PLAY_HTML, READ_HTML, INVENTORY_HTML
+- ME_HTML, STREAK_HTML, GRAPH_HTML
+- ADMIN_HTML, ADMIN_SEGMENTS_HTML, ADMIN_PROMO_HTML, ADMIN_NEWSLETTER_HTML
+
+### Both themes share the same tokens
+
+`html[data-theme="warm-dark"]` and `html[data-theme="warm-light"]` both:
+- Define ALL the same semantic tokens
+- Differ only in VALUES (warm cream paper vs deep navy)
+- Mean every component (button, card, input, link) automatically adapts
+
+### New files
+
+- `theme_v30.py` — Token definitions
+- `apply_v30_design_system.py` — Injects tokens into marketing pages
+- `apply_v30_product_styles.py` — Injects tokens into in-product templates
+
+### Verified
+
+- ✓ 64 automated tests pass
+- ✓ Both themes render correctly with consistent visual hierarchy
+- ✓ Marketing + in-product pages use the same design system
+- ✓ Deployed to https://pocketplot.app
+
+### Known caveats
+
+1. **In-product templates got CSS-only updates** — they still use their v22-class visual hierarchy (cards, lists). What changed: their COLORS now match the marketing site. Full structural redesign (Phase 4 of polish) is deferred.
+2. **Status colors are used in only a few places** — most pages don't currently surface errors/successes prominently. The tokens are there for when they do.
+3. **No new accessibility checks** — the token names are semantic but I didn't audit WCAG AA/AAA contrast in both themes. Both should pass for normal usage but worth verifying.
