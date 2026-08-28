@@ -830,6 +830,74 @@ h1, h2, h3, h4, h5, h6, .hero h1, .hero h2, .section h2, .page-head h1 { font-fa
 button, input, textarea, select, .btn, .theme-toggle, .nav-links a, .cta,
 .stat .label, .feature .label, .eyebrow, .badge, .tag, .pill { font-family: var(--font-ui); }
 code, kbd, samp, pre { font-family: var(--font-mono); }
+/* v33: Pricing tier polish */
+
+/* v33: Pricing tier animations */
+.tier {
+  transition: transform var(--dur) var(--ease-out),
+              border-color var(--dur) var(--ease-out),
+              background var(--dur-slow) var(--ease-out);
+}
+.tier:hover {
+  transform: translateY(-6px) scale(1.015);
+  border-color: var(--brand);
+}
+.tier.featured {
+  position: relative;
+}
+.tier.featured::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--brand), var(--brand-light), var(--brand));
+  background-size: 200% 200%;
+  opacity: 0.35;
+  animation: tierShimmer 5s ease-in-out infinite;
+  z-index: -1;
+}
+.tier .num-per-month {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 64px;
+  display: block;
+  color: var(--brand);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.tier .price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.tier .price-label {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+  margin-bottom: 8px;
+}
+.tier .btn-pulse {
+  position: relative;
+  overflow: hidden;
+}
+.tier .btn-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -30%;
+  width: 30%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: btnShine 4s ease-in-out infinite;
+}
+@keyframes tierShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes btnShine {
+  0%, 70%, 100% { left: -30%; }
+  35% { left: 100%; }
+}
 .v31-test-strip {
   position: fixed;
   bottom: 0; left: 0; right: 0;
