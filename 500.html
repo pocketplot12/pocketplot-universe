@@ -6,13 +6,13 @@
   const STORAGE_KEY = 'pocketplot-theme';
   // Valid themes
   const THEMES = ['warm-dark', 'warm-light'];
-  const DEFAULT_THEME = 'warm-dark';
+  const DEFAULT_THEME = 'warm-light';
   try {
     let theme = localStorage.getItem(STORAGE_KEY);
     if (!theme || !THEMES.includes(theme)) {
       // Detect system preference
       const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-      theme = prefersLight ? 'warm-light' : DEFAULT_THEME;
+      theme = DEFAULT_THEME;
       localStorage.setItem(STORAGE_KEY, theme);
     }
     document.documentElement.setAttribute('data-theme', theme);
