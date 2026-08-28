@@ -1,6 +1,29 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  // Valid themes
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-dark';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      // Detect system preference
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = prefersLight ? 'warm-light' : DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+    // Also expose theme on a CSS class for legacy support (if anyone uses it)
+    document.documentElement.classList.add('theme-' + theme);
+  } catch (e) {
+    // localStorage might fail (private mode, etc) — fallback to default
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pricing — PocketPlot Universe</title>
@@ -73,7 +96,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  background: var(--navy-deepest);
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--type-base);
@@ -91,12 +114,12 @@ header.nav { position:sticky; top:0; z-index:100; background:var(--glass); backd
 .nav-links a { color:var(--ink-soft); text-decoration:none; padding:8px 14px; border-radius:var(--radius-sm); font-weight:500; }
 .nav-links a:hover { color:var(--ink); background:rgba(232,200,121,.06); }
 .nav-links a.active { color:var(--ink); }
-.nav-links a.cta { color:#1a1410; background:linear-gradient(180deg,var(--brass-l),var(--brass) 80%); padding:8px 16px; border-radius:var(--radius-pill); margin-left:8px; font-weight:600; }
-.nav-links a.cta:hover { color:#1a1410; background:linear-gradient(180deg,var(--brass-l),var(--brass) 60%); }
+.nav-links a.cta { color:#1a1410; background:linear-gradient(180deg,var(--accent-light),var(--accent) 80%); padding:8px 16px; border-radius:var(--radius-pill); margin-left:8px; font-weight:600; }
+.nav-links a.cta:hover { color:#1a1410; background:linear-gradient(180deg,var(--accent-light),var(--accent) 60%); }
 @media (max-width:760px){.nav-links .link{display:none;}.nav-links .cta{display:inline-flex;}}
 
 .page-head { max-width:880px; margin:0 auto; padding:var(--space-8) 32px var(--space-6); text-align:center; }
-.page-head .eyebrow { font-size:var(--type-xs); letter-spacing:var(--tracking-caps); text-transform:uppercase; color:var(--brass-l); margin-bottom:var(--space-3); font-weight:500; }
+.page-head .eyebrow { font-size:var(--type-xs); letter-spacing:var(--tracking-caps); text-transform:uppercase; color:var(--accent-light); margin-bottom:var(--space-3); font-weight:500; }
 .page-head h1 { font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:clamp(2.5rem,7vw,5rem); line-height:var(--lh-tight); letter-spacing:var(--tracking-tight); margin:0 0 var(--space-3); }
 .page-head p { font-size:var(--type-md); color:var(--ink-soft); margin:0 auto; max-width:36em; }
 
@@ -104,16 +127,16 @@ header.nav { position:sticky; top:0; z-index:100; background:var(--glass); backd
 @media (max-width:880px){.tiers{grid-template-columns:1fr;}}
 .tier { padding:var(--space-5) var(--space-4); border:1px solid var(--hairline); border-radius:var(--radius-lg); display:flex; flex-direction:column; }
 .tier.featured { border-color:var(--hairline-strong); background:linear-gradient(180deg,rgba(201,160,78,.04),transparent); position:relative; }
-.tier.featured::before { content:'Most popular'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--brass); color:#1a1410; padding:4px 12px; border-radius:var(--radius-pill); font-size:11px; font-weight:600; letter-spacing:.05em; }
+.tier.featured::before { content:'Most popular'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--accent); color:#1a1410; padding:4px 12px; border-radius:var(--radius-pill); font-size:11px; font-weight:600; letter-spacing:.05em; }
 .tier .name { font-family:var(--font-serif); font-style:italic; font-size:var(--type-md); color:var(--ink); margin-bottom:4px; }
-.tier .price { font-family:var(--font-serif); font-size:var(--type-2xl); color:var(--brass-l); margin-bottom:var(--space-1); line-height:1; }
+.tier .price { font-family:var(--font-serif); font-size:var(--type-2xl); color:var(--accent-light); margin-bottom:var(--space-1); line-height:1; }
 .tier .price-sub { font-size:var(--type-sm); color:var(--ink-faint); margin-bottom:var(--space-3); }
 .tier ul { list-style:none; padding:0; margin:0 0 var(--space-4); border-top:1px solid var(--hairline); padding-top:var(--space-3); }
 .tier li { padding:8px 0; font-size:var(--type-sm); color:var(--ink-soft); position:relative; padding-left:18px; }
-.tier li::before { content:''; position:absolute; left:0; top:14px; width:6px; height:6px; background:var(--brass); border-radius:50%; }
+.tier li::before { content:''; position:absolute; left:0; top:14px; width:6px; height:6px; background:var(--accent); border-radius:50%; }
 .tier .btn { display:block; text-align:center; padding:14px; border-radius:var(--radius-pill); text-decoration:none; font-weight:600; font-size:var(--type-sm); margin-top:auto; }
-.tier.featured .btn { background:var(--brass); color:#1a1410; }
-.tier.featured .btn:hover { background:var(--brass-l); }
+.tier.featured .btn { background:var(--accent); color:#1a1410; }
+.tier.featured .btn:hover { background:var(--accent-light); }
 .tier:not(.featured) .btn { background:transparent; color:var(--ink); border:1px solid var(--hairline-2); }
 .tier:not(.featured) .btn:hover { border-color:var(--hairline-strong); background:rgba(232,200,121,.06); }
 
@@ -123,22 +146,131 @@ header.nav { position:sticky; top:0; z-index:100; background:var(--glass); backd
 .compare-row.header { font-weight:600; color:var(--ink-faint); font-size:var(--type-xs); letter-spacing:var(--tracking-caps); text-transform:uppercase; padding-bottom:var(--space-2); }
 .compare-row > div { font-size:var(--type-sm); color:var(--ink-soft); }
 .compare-row > div:first-child { color:var(--ink); }
-@media (max-width:760px){.compare-row{grid-template-columns:1fr;gap:8px;padding:8px 0;}.compare-row > div:first-child{font-weight:600;color:var(--brass-l);}}
+@media (max-width:760px){.compare-row{grid-template-columns:1fr;gap:8px;padding:8px 0;}.compare-row > div:first-child{font-weight:600;color:var(--accent-light);}}
 
 footer { border-top:1px solid var(--hairline); padding:var(--space-5) 32px; text-align:center; font-size:var(--type-sm); color:var(--ink-faint); margin-top:var(--space-8); }
 footer .links { display:flex; justify-content:center; gap:var(--space-4); margin-bottom:var(--space-3); flex-wrap:wrap; }
 footer a { color:var(--ink-faint); text-decoration:none; }
-footer a:hover { color:var(--brass-l); }
+footer a:hover { color:var(--accent-light); }
 
 .mobile-bottom-nav { display:none; }
 @media (max-width:760px) {
   body { padding-bottom:60px; }
   .mobile-bottom-nav { display:flex; position:fixed; bottom:0; left:0; right:0; height:56px; background:var(--glass); backdrop-filter:var(--glass-blur); -webkit-backdrop-filter:var(--glass-blur); border-top:1px solid var(--hairline); z-index:90; justify-content:space-around; align-items:center; padding-bottom:env(safe-area-inset-bottom,0); }
   .mobile-bottom-nav a { display:flex; flex-direction:column; align-items:center; gap:2px; color:var(--ink-faint); text-decoration:none; font-size:11px; padding:6px 12px; min-width:56px; min-height:44px; justify-content:center; }
-  .mobile-bottom-nav a.active { color:var(--brass-l); }
+  .mobile-bottom-nav a.active { color:var(--accent-light); }
   .mobile-bottom-nav .icon { width:22px; height:22px; }
 }
 @media (min-width:761px){.mobile-bottom-nav{display:none;}}
+
+/* Theme toggle button — visible on both themes */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: color 200ms, border-color 200ms, background 200ms;
+  padding: 0;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--border-strong);
+  color: var(--accent-light);
+  background: rgba(201, 160, 78, 0.06);
+}
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: opacity 200ms, transform 200ms;
+}
+/* Show sun when in dark mode (click to go to light) */
+.theme-toggle .icon-moon { display: none; }
+.theme-toggle .icon-sun { display: inline-block; }
+html[data-theme="warm-light"] .theme-toggle .icon-sun { display: none; }
+html[data-theme="warm-light"] .theme-toggle .icon-moon { display: inline-block; }
+
+
+/* v29 theme system (Kindle-e-ink warm themes) */
+
+/* ============================================================
+   THEME TOKENS - v29: Kindle-e-ink warm themes
+   Each semantic variable gets values for BOTH themes.
+   ============================================================ */
+:root {
+  /* Defaults = warm-dark (the "default" Apple-restrained look) */
+  --bg:            #0a0f1c;        /* page background */
+  --bg-elevated:   #15243f;        /* card background */
+  --bg-overlay:    rgba(15, 26, 46, 0.78);  /* nav backdrop blur */
+  --surface:       #1f3460;        /* hover states, secondary surfaces */
+  --border:        rgba(201, 160, 78, 0.14);  /* hairline */
+  --border-strong: rgba(201, 160, 78, 0.45);
+
+  --ink:           #f5ecd6;        /* primary text — warm cream */
+  --ink-soft:      #d8cba8;        /* body text — slight fade */
+  --ink-muted:     #9eb6d4;        /* tertiary text */
+  --ink-faint:     #6c7891;        /* footer, hints */
+
+  --accent:        #c9a04e;        /* brass */
+  --accent-light:  #e8c879;        /* lighter brass */
+  --accent-deep:   #8a6a26;        /* deeper brass */
+  --accent-warm:   #f0b54a;        /* amber — secondary accent */
+
+  --button-text:   #1a1410;        /* dark text on brass buttons */
+
+  --shadow:        0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg:     0 14px 32px rgba(0, 0, 0, 0.55);
+
+  --hero-gradient:
+    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(93,222,240,0.05), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(240,181,74,0.05), transparent 60%),
+    var(--bg);
+}
+
+/* WARM-LIGHT theme = Kindle paper / e-ink look
+   Warm cream background (not white) + warm dark brown text (not black)
+   Easier on the eyes for long reading than pure white */
+html[data-theme="warm-light"] {
+  --bg:            #f4ecd8;        /* warm cream — like a paperback page */
+  --bg-elevated:   #faf3e0;        /* lighter cream for cards */
+  --bg-overlay:    rgba(244, 236, 216, 0.85);
+  --surface:       #ebe0c8;        /* hover state — slightly deeper cream */
+  --border:        rgba(122, 98, 56, 0.18);  /* warm brown hairline */
+  --border-strong: rgba(122, 98, 56, 0.55);
+
+  --ink:           #3d2e1f;        /* warm dark brown — like book ink */
+  --ink-soft:      #6b5840;        /* softer brown for body */
+  --ink-muted:     #8b7558;        /* tertiary text — like aged paper */
+  --ink-faint:     #a89579;        /* footer, hints */
+
+  --accent:        #b8842a;        /* brass — slightly warmer/darker for cream */
+  --accent-light:  #d4a04d;        /* lighter brass */
+  --accent-deep:   #7a5518;
+  --accent-warm:   #c89030;        /* amber */
+
+  --button-text:   #fef9ec;        /* light text on brass buttons (inverted for cream bg) */
+  /* Better: dark text on warm brass button for cream theme */
+
+  --shadow:        0 1px 3px rgba(60, 40, 15, 0.10), 0 4px 10px rgba(60, 40, 15, 0.06);
+  --shadow-lg:     0 4px 12px rgba(60, 40, 15, 0.18), 0 14px 28px rgba(60, 40, 15, 0.12);
+
+  --hero-gradient:
+    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(184, 132, 42, 0.04), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(184, 132, 42, 0.04), transparent 60%),
+    var(--bg);
+}
+
+/* Override button text for warm-light theme — keep dark text on brass */
+html[data-theme="warm-light"] .cta-primary,
+html[data-theme="warm-light"] button.btn-primary,
+html[data-theme="warm-light"] .tier.featured .btn {
+  color: #1a1410;  /* dark text on brass */
+}
 </style>
 </head>
 <body>
@@ -153,7 +285,38 @@ footer a:hover { color:var(--brass-l); }
       <a href="/seed" class="link">Seed</a>
       <a href="/faq" class="link">FAQ</a>
       <a href="/signup" class="cta">Begin</a>
-    </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle reading theme" title="Toggle theme (Kindle light / warm dark)">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+<script>
+  // Bind handler AFTER window.pocketplot is defined
+  (function bindThemeToggle() {
+    function tryBind() {
+      var btn = document.getElementById('theme-toggle-btn');
+      if (!btn || btn._ppBound) return;
+      if (!window.pocketplot || typeof window.pocketplot.toggleTheme !== 'function') {
+        setTimeout(tryBind, 5);
+        return;
+      }
+      btn.addEventListener('click', function() { window.pocketplot.toggleTheme(); });
+      btn._ppBound = true;
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryBind);
+    } else if (document.body) {
+      tryBind();
+    } else {
+      document.addEventListener('DOMContentLoaded', tryBind);
+    }
+  })();
+</script>
+  </nav>
   </div>
 </header>
 
