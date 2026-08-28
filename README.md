@@ -377,3 +377,7 @@ Sun/moon toggle in nav. Choice persists via localStorage. First-visit uses syste
 ### v30 - Design system tokens (2026-08-27)
 
 Complete semantic token system applied to BOTH marketing pages and in-product templates. All components (buttons, cards, inputs, links, status) now share the same tokens across both warm-light and warm-dark themes. 4-tier text hierarchy, 3-tier button hierarchy, success/warning/danger status colors. 64 tests pass. Live at pocketplot.app.
+
+### v32 - typographic system (2026-08-27)
+
+Three-font typographic system: **Fraunces** display (headlines), **EB Garamond** body (reading), **Inter** UI (buttons/nav). Toggle labels renamed: **Paper** / **Night** (instead of Kindle/Dark). The reading experience on warm-light now genuinely feels like a paperback. Live at pocketplot.app.

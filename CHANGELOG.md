@@ -1509,3 +1509,61 @@ In-product templates (12 templates):
 1. **In-product templates got CSS-only updates** — they still use their v22-class visual hierarchy (cards, lists). What changed: their COLORS now match the marketing site. Full structural redesign (Phase 4 of polish) is deferred.
 2. **Status colors are used in only a few places** — most pages don't currently surface errors/successes prominently. The tokens are there for when they do.
 3. **No new accessibility checks** — the token names are semantic but I didn't audit WCAG AA/AAA contrast in both themes. Both should pass for normal usage but worth verifying.
+
+
+## v32 - typographic system (2026-08-27)
+
+Live at https://pocketplot.app. Three-font system + Paper/Night toggle labels.
+
+### What's new
+
+**Font system:**
+- **Fraunces** (--font-serif): display headlines like "Create. Roleplay. Explore."
+  - Modern literary serif with variable axes
+  - Italic/regular, multiple weights
+- **EB Garamond** (--font-body): body text for long reading
+  - Old-style serif, Kindle/paperback feel
+  - Easy on eyes for 30+ minute reading sessions
+- **Inter** (--font-ui): buttons, navigation, captions, form labels
+  - Geometric, modern, crisp
+  - Never competes with body text
+- **JetBrains Mono** (--font-mono): code blocks (kept from earlier)
+
+**Theme toggle labels:**
+- Warm-light (Kindle paper) → button label = **"Paper"**
+- Warm-dark → button label = **"Night"**
+
+Both labels appear based on the active theme, with corresponding icons.
+
+### Body text now uses EB Garamond
+
+The body of every page now reads in **EB Garamond** — a serif typeface modeled on 16th-century French printer Robert Granjon's work. Long passages feel like a real book rather than a screen.
+
+Combined with the warm cream paper background, the reading experience is genuinely close to reading on a real Kindle.
+
+### Where each font is used
+
+| Element | Font | Class |
+|---|---|---|
+| `h1` "Create." "Roleplay." "Explore." | Fraunces italic | `--font-serif` |
+| `h2`, `h3`, page titles | Fraunces | `--font-serif` |
+| Body paragraphs | EB Garamond | `--font-body` |
+| Description text, captions | EB Garamond | `--font-body` |
+| Nav links, button text | Inter | `--font-ui` |
+| Eyebrows ("PORTAL TO STORIES") | Inter | `--font-ui` |
+| Form inputs, captions | Inter | `--font-ui` |
+| Stat numbers ("3 / 16 / 1000s") | Fraunces serif | `--font-serif` (display) |
+| Code blocks | JetBrains Mono | `--font-mono` |
+
+### Files updated
+
+- `index.html`, `pricing.html`, `faq.html`, `terms.html`, `how-it-works.html`, `404.html`, `500.html`, `signup.html`, `signup-pro.html`
+- `style.css` (font token definitions + assignments)
+- Toggle button (labels + a11y updates)
+
+### Verified
+
+- ✓ 64 tests still pass
+- ✓ Fonts load from Google Fonts CDN
+- ✓ All themes (Paper/Night) render correctly
+- ✓ Live at https://pocketplot.app
