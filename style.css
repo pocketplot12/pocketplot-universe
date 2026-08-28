@@ -801,3 +801,17 @@ html[data-theme="warm-light"] button.btn-primary,
 html[data-theme="warm-light"] .tier.featured .btn {
   color: #1a1410;  /* dark text on brass */
 }
+
+.v31-test-strip {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(90deg, #ff0000, #00ff00);
+  color: white;
+  padding: 12px 8px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: bold;
+  z-index: 999999;
+  pointer-events: none;
+}
