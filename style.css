@@ -458,37 +458,45 @@ footer a:hover { color: var(--accent-light); }
   .mobile-bottom-nav { display: none; }
 }
 
-/* Theme toggle button — visible on both themes */
+/* v31: BIG, OBVIOUS theme toggle - Kindle vs Dark */
 .theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  width: 40px;
-  height: 40px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+  background: var(--bg-elevated);
+  border: 2px solid var(--brand);
+  border-radius: var(--radius-pill, 999px);
+  padding: 8px 16px 8px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-body);
   cursor: pointer;
-  color: var(--ink-soft);
-  transition: color 200ms, border-color 200ms, background 200ms;
-  padding: 0;
+  transition: all 200ms ease;
+  white-space: nowrap;
   flex-shrink: 0;
 }
 .theme-toggle:hover {
-  border-color: var(--border-strong);
-  color: var(--accent-light);
-  background: rgba(201, 160, 78, 0.06);
+  border-color: var(--brand-light);
+  background: var(--brand-soft);
+  color: var(--text-heading);
+  transform: translateY(-1px);
+}
+.theme-toggle .label {
+  font-size: 13px;
+  letter-spacing: 0.02em;
 }
 .theme-toggle svg {
   width: 18px;
   height: 18px;
-  transition: opacity 200ms, transform 200ms;
+  flex-shrink: 0;
 }
-/* Show sun when in dark mode (click to go to light) */
 .theme-toggle .icon-moon { display: none; }
 .theme-toggle .icon-sun { display: inline-block; }
+.theme-toggle .icon-paper { display: none; }
 html[data-theme="warm-light"] .theme-toggle .icon-sun { display: none; }
 html[data-theme="warm-light"] .theme-toggle .icon-moon { display: inline-block; }
+html[data-theme="warm-light"] .theme-toggle .label { color: var(--brand); }
 
 
 /* v29 theme system (Kindle-e-ink warm themes) */
