@@ -1567,3 +1567,60 @@ Combined with the warm cream paper background, the reading experience is genuine
 - ✓ Fonts load from Google Fonts CDN
 - ✓ All themes (Paper/Night) render correctly
 - ✓ Live at https://pocketplot.app
+
+
+## v33 - Motion system + animated SVG illustrations (2026-08-27)
+
+Live at https://pocketplot.app. Pages now feel alive.
+
+### What's new
+
+**Phase 1 — Scroll reveal animations:**
+- Every `.section`, `.feature`, `.tier`, `.stat` element fades + slides up on scroll
+- 80ms stagger between sibling elements
+- One-shot animation (doesn't loop)
+- IntersectionObserver with 15% threshold
+
+**Phase 2 — Micro-animations:**
+- Buttons: subtle lift on hover, press-down on click
+- Cards: lift on hover (4px translateY)
+- Sun/moon icon: rotates 360° on toggle click
+- Stat numbers: count up from 0 when scrolled into view
+- Hero text: subtle staggered entrance animation
+
+**Phase 3a — Animated SVG: Branching story visualization:**
+- New SVG in the hero showing a branching story tree
+- 9 nodes connected by animated paths
+- Path strokes "draw in" with stroke-dasharray animation
+- Endpoints pulse gently (6-second loop)
+- Staggered animation across 4 paths so different paths animate at different times
+- Theme-aware: uses CSS custom properties so it looks right in both Paper and Night
+- Subtle "MULTIPLE ENDINGS · ONE STORY · YOUR CHOICES" eyebrow text
+
+### Accessibility
+
+- Honors `prefers-reduced-motion: reduce` (animations disabled, content shown immediately)
+- All SVG content has `role="img"` and `aria-label`
+- Smooth, non-jarring transitions only — nothing flashes or moves violently
+
+### Performance
+
+- IntersectionObserver only animates once per element (unobserved after .visible added)
+- Will-change hints for animated properties (GPU acceleration)
+- requestAnimationFrame for the count-up animation
+- Total CSS addition: ~3KB
+- Total JS addition: ~2KB
+
+### Files added
+
+- `motion_v33.py` — animation tokens + observer JS
+- `apply_v33_motion.py` — adds .reveal classes to all marketing pages
+- `branching_svg.py` — the new animated hero illustration (source)
+
+### Verified
+
+- ✓ 64 tests pass
+- ✓ Animations work on all marketing pages
+- ✓ Reduced motion respected
+- ✓ Branching SVG animation loops smoothly
+- ✓ Live at https://pocketplot.app

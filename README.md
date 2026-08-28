@@ -381,3 +381,7 @@ Complete semantic token system applied to BOTH marketing pages and in-product te
 ### v32 - typographic system (2026-08-27)
 
 Three-font typographic system: **Fraunces** display (headlines), **EB Garamond** body (reading), **Inter** UI (buttons/nav). Toggle labels renamed: **Paper** / **Night** (instead of Kindle/Dark). The reading experience on warm-light now genuinely feels like a paperback. Live at pocketplot.app.
+
+### v33 - Motion system + animated SVG illustrations (2026-08-27)
+
+Scroll-reveal animations (fade+slide up on scroll), micro-animations on buttons/cards (lift on hover, press on click), count-up numbers on stats, theme toggle spin animation. Plus an animated SVG in the hero showing a branching story tree with 9 nodes and animated paths. Honors `prefers-reduced-motion` for accessibility. Live at pocketplot.app.
