@@ -3913,7 +3913,60 @@ what you think.
 — PocketPlot Universe
 """
 
-EMAIL_WELCOME_HTML = """<!doctype html><html><body style="margin:0;padding:0;background:#0e1a2e;font-family:Georgia,serif;">
+EMAIL_WELCOME_HTML = """
+
+<style>
+/* v30 in-product styling - uses semantic tokens from the design system */
+body { background: var(--bg); color: var(--text-body); }
+h1, h2, h3 { color: var(--text-heading); font-family: var(--font-serif, Georgia, serif); }
+
+/* Cards & surfaces */
+.card, .surface {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 16px);
+  color: var(--text-body);
+}
+
+/* Buttons - 3 tiers */
+.btn-primary, button.primary, .primary {
+  background: linear-gradient(180deg, var(--brand-light), var(--brand), var(--brand-deep));
+  color: var(--brand-text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+  font-weight: 600;
+}
+.btn-secondary, button.secondary, .secondary {
+  background: transparent;
+  color: var(--text-body);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+}
+.btn-ghost, button.ghost, .ghost {
+  background: transparent;
+  color: var(--brand);
+  border: none;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { border-bottom: 1px solid var(--brand); }
+
+/* Status */
+.success { color: var(--success-light); }
+.warning { color: var(--warning); }
+.danger  { color: var(--danger-light); }
+
+/* Inputs */
+input, textarea, select {
+  background: var(--bg-elevated);
+  color: var(--text-heading);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius, 8px);
+}
+input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+
+.muted { color: var(--text-caption); }
+.faint { color: var(--text-faint); }
+</style><!doctype html><html><body style="margin:0;padding:0;background:#0e1a2e;font-family:Georgia,serif;">
 <div style="max-width:560px;margin:0 auto;padding:36px 28px;color:#f3e9d2;">
   <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#e6c879;margin-bottom:8px;">Welcome</div>
   <h1 style="font-family:Georgia,serif;font-size:28px;margin:0 0 14px;color:#f3e9d2;font-style:italic;">Welcome to PocketPlot Universe.</h1>
@@ -6977,7 +7030,60 @@ h1 i{color:var(--gold-l);font-style:italic}
 </body></html>"""
 
 
-PLAY_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+PLAY_HTML = """
+
+<style>
+/* v30 in-product styling - uses semantic tokens from the design system */
+body { background: var(--bg); color: var(--text-body); }
+h1, h2, h3 { color: var(--text-heading); font-family: var(--font-serif, Georgia, serif); }
+
+/* Cards & surfaces */
+.card, .surface {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 16px);
+  color: var(--text-body);
+}
+
+/* Buttons - 3 tiers */
+.btn-primary, button.primary, .primary {
+  background: linear-gradient(180deg, var(--brand-light), var(--brand), var(--brand-deep));
+  color: var(--brand-text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+  font-weight: 600;
+}
+.btn-secondary, button.secondary, .secondary {
+  background: transparent;
+  color: var(--text-body);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+}
+.btn-ghost, button.ghost, .ghost {
+  background: transparent;
+  color: var(--brand);
+  border: none;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { border-bottom: 1px solid var(--brand); }
+
+/* Status */
+.success { color: var(--success-light); }
+.warning { color: var(--warning); }
+.danger  { color: var(--danger-light); }
+
+/* Inputs */
+input, textarea, select {
+  background: var(--bg-elevated);
+  color: var(--text-heading);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius, 8px);
+}
+input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+
+.muted { color: var(--text-caption); }
+.faint { color: var(--text-faint); }
+</style><!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title} - Play</title>
 <link rel="manifest" href="/manifest.json">
@@ -7135,7 +7241,60 @@ body{{margin:0;background:linear-gradient(180deg,#0a0f1c 0%,#0e1a2e 100%);backgr
 
 
 
-READ_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+READ_HTML = """
+
+<style>
+/* v30 in-product styling - uses semantic tokens from the design system */
+body { background: var(--bg); color: var(--text-body); }
+h1, h2, h3 { color: var(--text-heading); font-family: var(--font-serif, Georgia, serif); }
+
+/* Cards & surfaces */
+.card, .surface {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 16px);
+  color: var(--text-body);
+}
+
+/* Buttons - 3 tiers */
+.btn-primary, button.primary, .primary {
+  background: linear-gradient(180deg, var(--brand-light), var(--brand), var(--brand-deep));
+  color: var(--brand-text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+  font-weight: 600;
+}
+.btn-secondary, button.secondary, .secondary {
+  background: transparent;
+  color: var(--text-body);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+}
+.btn-ghost, button.ghost, .ghost {
+  background: transparent;
+  color: var(--brand);
+  border: none;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { border-bottom: 1px solid var(--brand); }
+
+/* Status */
+.success { color: var(--success-light); }
+.warning { color: var(--warning); }
+.danger  { color: var(--danger-light); }
+
+/* Inputs */
+input, textarea, select {
+  background: var(--bg-elevated);
+  color: var(--text-heading);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius, 8px);
+}
+input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+
+.muted { color: var(--text-caption); }
+.faint { color: var(--text-faint); }
+</style><!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title} - Page {page_num}</title>
 <link rel="manifest" href="/manifest.json">
@@ -7466,7 +7625,60 @@ h1 i{color:var(--gold-l);font-style:italic}
 # ===================== v25 template definitions =====================
 """v25 World Inventory template - place/pick up items in a Minecraft-style world."""
 
-WORLD_INVENTORY_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+WORLD_INVENTORY_HTML = """
+
+<style>
+/* v30 in-product styling - uses semantic tokens from the design system */
+body { background: var(--bg); color: var(--text-body); }
+h1, h2, h3 { color: var(--text-heading); font-family: var(--font-serif, Georgia, serif); }
+
+/* Cards & surfaces */
+.card, .surface {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 16px);
+  color: var(--text-body);
+}
+
+/* Buttons - 3 tiers */
+.btn-primary, button.primary, .primary {
+  background: linear-gradient(180deg, var(--brand-light), var(--brand), var(--brand-deep));
+  color: var(--brand-text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+  font-weight: 600;
+}
+.btn-secondary, button.secondary, .secondary {
+  background: transparent;
+  color: var(--text-body);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+}
+.btn-ghost, button.ghost, .ghost {
+  background: transparent;
+  color: var(--brand);
+  border: none;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { border-bottom: 1px solid var(--brand); }
+
+/* Status */
+.success { color: var(--success-light); }
+.warning { color: var(--warning); }
+.danger  { color: var(--danger-light); }
+
+/* Inputs */
+input, textarea, select {
+  background: var(--bg-elevated);
+  color: var(--text-heading);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius, 8px);
+}
+input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+
+.muted { color: var(--text-caption); }
+.faint { color: var(--text-faint); }
+</style><!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Inventory - World {{ world_id }} - PocketPlot Universe</title>
 <style>
@@ -9617,7 +9829,60 @@ These are appended to app.py via the @library @seed_page @remix_page
 """
 import pathlib
 
-LIBRARY_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+LIBRARY_HTML = """
+
+<style>
+/* v30 in-product styling - uses semantic tokens from the design system */
+body { background: var(--bg); color: var(--text-body); }
+h1, h2, h3 { color: var(--text-heading); font-family: var(--font-serif, Georgia, serif); }
+
+/* Cards & surfaces */
+.card, .surface {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 16px);
+  color: var(--text-body);
+}
+
+/* Buttons - 3 tiers */
+.btn-primary, button.primary, .primary {
+  background: linear-gradient(180deg, var(--brand-light), var(--brand), var(--brand-deep));
+  color: var(--brand-text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+  font-weight: 600;
+}
+.btn-secondary, button.secondary, .secondary {
+  background: transparent;
+  color: var(--text-body);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+}
+.btn-ghost, button.ghost, .ghost {
+  background: transparent;
+  color: var(--brand);
+  border: none;
+}
+a { color: var(--brand); text-decoration: none; }
+a:hover { border-bottom: 1px solid var(--brand); }
+
+/* Status */
+.success { color: var(--success-light); }
+.warning { color: var(--warning); }
+.danger  { color: var(--danger-light); }
+
+/* Inputs */
+input, textarea, select {
+  background: var(--bg-elevated);
+  color: var(--text-heading);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius, 8px);
+}
+input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+
+.muted { color: var(--text-caption); }
+.faint { color: var(--text-faint); }
+</style><!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Library \u00b7 PocketPlot Universe</title>
 <style>
