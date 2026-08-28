@@ -10497,6 +10497,7 @@ _BRAND_FILES = {
     'logo-halo-400.png', 'logo-halo-240.png',
     'manifest.json',
     'sw.js',
+    'style.css',
 }
 @app.route('/<path:filename>', methods=['GET'])
 def _serve_brand_asset(filename):
