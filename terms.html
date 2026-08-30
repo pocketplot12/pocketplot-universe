@@ -383,6 +383,30 @@ nav.main-nav .nav-link.active::after {
   .legal-note { background: rgba(230, 200, 121, .08); border: 1px solid var(--gold); border-radius: 12px; padding: 18px 22px; margin: 24px 0; color: var(--cream); font-size: 14px; }
   footer { margin-top: 60px; padding: 28px 0; border-top: 1px solid var(--surface); color: var(--faint); font-size: 13px; text-align: center; }
   footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
+
+/* v35: v18-mini nav flex layout (Charcoal QC bug 2 follow-up) */
+header.v18-mini {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+header.v18-mini > .brand {
+  flex-shrink: 0;
+}
+header.v18-mini > nav.v18 {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+header.v18-mini > .theme-toggle {
+  flex-shrink: 0;
+  align-self: center;
+}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
