@@ -19,3 +19,7 @@ venv/
 audio/
 .pocketplot-debug.log
 *.tmp
+
+# Charcoal brand art (kept despite .jpg extension)
+!charcoal_art/
+!charcoal_art/*.jpg
