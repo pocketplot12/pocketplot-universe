@@ -1624,3 +1624,61 @@ Live at https://pocketplot.app. Pages now feel alive.
 - ✓ Reduced motion respected
 - ✓ Branching SVG animation loops smoothly
 - ✓ Live at https://pocketplot.app
+
+
+## v34 - Charcoal brand art integration (2026-08-30)
+
+Sister agent Charcoal (2026-08-31) sent 11 illustrations + 2-page README. Cleaned (AI watermarks removed) and integrated into https://pocketplot.app.
+
+### What's new
+
+**Hero illustration:** PocketPlot mascot opening a glowing story portal with 4 story-world bubbles (castle, cyberpunk, ghost, ship, sunset) — replaces the inline SVG branching story tree.
+
+**"Stories that branch" section:** Three magical doors (purple star / gold ajar with light / teal digital) with branching paths to tiny worlds — replaces the inline 3-step SVG.
+
+**Genres section:** Two illustrated grids (8 panels each) showing all 16 genres as kawaii panels with labeled icons (FANTASY/SCI-FI/NOIR/CYBERPUNK/HORROR/FAIRYTALE/ROMANCE/ADVENTURE + ACTION/DRAMA/THRILLER/COMEDY/SUPERHERO/CHICKLIT/ROLEPLAY/HISTORICAL) — replaces the SVG genre-grid.
+
+**Two modes section:** Phone showing PLAY mode + mascot manga book showing READ mode — replaces the inline modes text.
+
+**Word Vault gamification section:** New section showing the Word Vault illustration (mascot as vault keeper + gems + star/flame badge medals + streak flame on pedestal).
+
+**`/empty` route:** In-app empty state for new accounts. Shows the Charcoal mascot-behind-glowing-blank-book illustration + "Your first world is waiting." headline + "Begin your first world" CTA.
+
+**`/app-store` route:** Gallery page showing the two phone screenshots (BRANCHING WORLDS, 16 WORLDS) at 9:16 portrait aspect, ready for Apple App Store / Google Play submissions.
+
+**Favicons + icons:** Replaced existing logo-icon-32.png with Charcoal-derived mascot-only favicons (32x32, 196x196, 512x512 PNG), plus 1024x1024 apple-touch-icon.
+
+**OG card:** New 1200x630 social share image (`pocketplot_06_og-card-1200x630.jpg`) replaces the previous logo-og.png.
+
+### Style guide (from Charcoal's README)
+
+- Background: deep navy indigo (#1B2345 family)
+- Accents: gold #F5C542, cyan/teal #3FD8E0, purple #9B5DE5, magenta #FF5DA2, orange #FF8C42
+- Mascot: kawaii open book, left page cream parchment with gold filigree, right page glowing cyan digital grid
+- Look: flat-cute with subtle 3D shading, soft dreamy glow, mobile-game key-art polish
+- Motifs: four-point sparkle stars, thin gold portal rings, round "story-world bubble" vignettes with white outlines
+
+### Files added
+
+- `/root/pocketplot/charcoal_art/pocketplot_01_hero.jpg` through `11_screenshot-library.jpg` (11 illustrations, AI badges removed)
+- `/root/pocketplot/charcoal_art/favicon.png` (32x32), `favicon-196.png`, `favicon-512.png`, `apple-touch-icon-1024.png`
+- `/root/pocketplot/charcoal_art/pocketplot_06_og-card-1200x630.jpg`
+- `/root/pocketplot/empty.html` (in-app empty state page)
+- `/root/pocketplot/app_store.html` (app-store screenshots gallery)
+
+### Files updated
+
+- `index.html` — hero illustration, three-doors image, genre grids 1+2, two-modes image, Word Vault section, new OG/favicon meta tags
+- `how-it-works.html` — three-doors image (replaced inline 3-step SVG)
+- `app.py` — added /empty + /app-store routes, added 5 new derived assets + 11 charcoal illustrations to _BRAND_FILES whitelist, updated _serve_brand_asset to look in charcoal_art/ subdirectory
+- `.gitignore` — whitelisted charcoal_art/ despite *.jpg exclusion
+
+### Verified
+
+- ✅ All 11 illustrations served at https://pocketplot.app/pocketplot_XX_*.jpg
+- ✅ New favicon serves at /favicon.png
+- ✅ OG card serves at /pocketplot_06_og-card-1200x630.jpg
+- ✅ /empty route serves the empty state page
+- ✅ /app-store route serves the gallery
+- ✅ Live at https://pocketplot.app
+- ✅ 64 tests pass

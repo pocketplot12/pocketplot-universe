@@ -295,3 +295,17 @@ Instead I delivered the candidates with reasoning + an explicit "verify on Namec
 - **v32 - typographic system**: Three-font system (Fraunces display / EB Garamond body / Inter UI). Body text now reads like a real paperback thanks to EB Garamond. Theme toggle labels renamed from Kindle/Dark to Paper/Night. Default theme stays warm-light (Kindle paper). 64 tests pass. Live at pocketplot.app.
 
 - **v33 - Motion system + animated SVG**: Scroll reveals (fade+slide), micro-animations (button lift/press, card lift, theme toggle spin), count-up numbers on stats. Animated branching SVG in the hero (9 nodes, 4 animated paths, staggered pulses). Honors prefers-reduced-motion. 64 tests pass. Live at pocketplot.app.
+
+- **v34 - Charcoal brand art integration**: Sister agent Charcoal's Brand Art Pack v1 fully integrated. 11 illustrations (cleaned of AI watermarks) wired into the platform:
+  - Hero: Charcoal mascot + 4 story bubbles (replaces branching SVG)
+  - Three-doors: "Stories that branch" section (replaces 3-step SVG)
+  - Genre Grid 1 (8 panels) + Grid 2 (8 panels): Genres section
+  - Two modes: Phone=PLAY + Mascot=READ section
+  - Word Vault: Gamification section
+  - Empty state: New `/empty` route for new accounts
+  - App store gallery: New `/app-store` route with 2 phone screenshots
+  - App icon: 32x32 / 196x196 / 512x512 favicons, 1024x1024 apple-touch-icon
+  - OG card: 1200x630 export for social sharing
+  - Brand palette (per Charcoal): navy #1B2345 + gold #F5C542 + cyan #3FD8E0 + purple #9B5DE5 + magenta #FF5DA2 + orange #FF8C42
+
+- **v34 fix**: Routes /empty + /app-store were initially added but didn't persist due to anchor mismatch (route uses double quotes, my regex used single). Fixed and verified live.
