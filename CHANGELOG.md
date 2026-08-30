@@ -1682,3 +1682,65 @@ Sister agent Charcoal (2026-08-31) sent 11 illustrations + 2-page README. Cleane
 - ✅ /app-store route serves the gallery
 - ✅ Live at https://pocketplot.app
 - ✅ 64 tests pass
+
+
+## v35 - Charcoal QC fixes (2026-08-30)
+
+Sister agent Charcoal sent an 8-finding QC report after v34 integration. All 8 issues addressed.
+
+### Bug fixes
+
+**Bug 1 (HIGH) — Mobile hero CTA clipped by bottom dock:**
+Added @media (max-width: 720px) rule: body gets padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px)), .hero gets padding-bottom: max(var(--space-8), 32px). The "Begin your first world" CTA no longer hides behind the mobile dock.
+
+**Bug 2 (HIGH) — /how-it-works dual nav headers + stacked toggle:**
+- Removed the duplicate cream sub-header entirely (was at offset 28344 in how-it-works.html)
+- Moved theme toggle button into the proper v18-mini header
+- Added v35 flex layout rule: header.v18-mini uses display:flex + space-between, nav.v18 flex:1, theme-toggle flex-shrink:0
+- Added the same v35 flex layout to inline-style pages (faq.html, terms.html, signup.html) since they don't load /style.css
+- Added the full .theme-toggle v31 styling (inline-flex, brass border, padding, gap) to those inline pages
+
+**Bug 3 (HIGH) — /how-it-works body text near-invisible:**
+The page was using legacy v22 tokens (var(--cream), var(--muted), var(--gold)) that don't exist in style.css. Replaced 23 references:
+- var(--cream) → var(--text-body)  (3 instances)
+- var(--muted) → var(--text-body)  (6 instances)
+- var(--gold) → var(--brand)  (14 instances)
+All FAQ answers, step bodies, comparison card descriptions now use the v30 semantic text tokens.
+
+**Bug 4 (MEDIUM) — Mobile stats row orphans 24/7:**
+Added @media (max-width: 480px) rule that switches .stats from flex-wrap to grid-template-columns: 1fr 1fr. Four stats now display in 2×2 grid on mobile instead of 24/7 wrapping alone.
+
+**Bug 5 (MEDIUM) — /app_store returns 404:**
+Charcoal used /app_store (underscore) in the QC report. Added /app_store as alias for /app-store. Both URLs now serve the gallery.
+
+**Bug 6 (MEDIUM) — og:image not set on all pages:**
+Injected Charcoal OG card (1200×630) meta into 6 marketing pages that had missing or old og:image references:
+- pricing.html (had logo-og.png)
+- faq.html, terms.html, how-it-works.html, signup.html (had NONE)
+- Also added og meta to SIGNUP_HTML template in app.py + /signup-pro redirect to /signup
+
+**Bug 7 (LOW) — /empty stray outline artifact:**
+Re-cleaned empty-state JPG image. The original cleanup covered only the "AI 生成" badge but missed a secondary outline element. Re-processed with a larger navy-fill area covering 18% of top-left.
+
+**Bug 8 (LOW) — Footers inconsistent:**
+Removed duplicate "Tech-Victorian Edition" footer from how-it-works.html (was the second <footer> block at offset 24022).
+
+### Files updated
+
+- `style.css` — mobile bottom nav clearance (Bug 1), mobile stats 2x2 grid (Bug 4), CSS cache version bump
+- `how-it-works.html` — removed duplicate sub-header, fixed v22→v30 token refs, removed duplicate footer, added inline v35 flex + dual-label + full toggle rule
+- `faq.html`, `terms.html`, `signup.html` — added inline v35 flex + dual-label + full toggle rule
+- `index.html`, `empty.html`, `app_store.html` — bumped CSS version ?v=30 → ?v=35
+- `pricing.html` — added Charcoal OG card meta (had old logo-og.png)
+- `app.py` — added SIGNUP_HTML og meta block, added /signup-pro redirect, added /app_store alias
+- `charcoal_art/pocketplot_09_empty-state.jpg` — re-cleaned with deeper navy fill on top-left
+
+### Verified
+
+- ✅ All 8 bugs fixed
+- ✅ Mobile bottom nav clearance works (CTA visible above dock)
+- ✅ All 9 pages have Charcoal OG card (1200×630)
+- ✅ /app-store, /app_store, /signup-pro all serve correctly
+- ✅ /how-it-works has 1 header, 1 footer, legible body text, single "Paper" toggle label
+- ✅ Mobile stats display in 2×2 grid under 480px
+- ✅ Live at https://pocketplot.app

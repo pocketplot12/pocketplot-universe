@@ -309,3 +309,19 @@ Instead I delivered the candidates with reasoning + an explicit "verify on Namec
   - Brand palette (per Charcoal): navy #1B2345 + gold #F5C542 + cyan #3FD8E0 + purple #9B5DE5 + magenta #FF5DA2 + orange #FF8C42
 
 - **v34 fix**: Routes /empty + /app-store were initially added but didn't persist due to anchor mismatch (route uses double quotes, my regex used single). Fixed and verified live.
+
+- **v35 - Charcoal QC fixes**: Sister agent Charcoal's 8-finding QC report addressed:
+  - Bug 1 HIGH: Mobile hero CTA clipped by fixed bottom dock → added safe-area-inset-bottom + 56px padding on body under 720px
+  - Bug 2 HIGH: /how-it-works had TWO headers (dark global nav + cream sub-header) → removed duplicate cream sub-header, moved theme toggle to the proper header, added v18-mini flex layout to all inline-style pages
+  - Bug 3 HIGH: /how-it-works body text near-invisible (using legacy --cream/--muted tokens that weren't defined) → replaced all 23 references with proper --text-body / --brand tokens
+  - Bug 4 MEDIUM: Mobile stats row orphans 24/7 → added 2x2 grid CSS under 480px
+  - Bug 5 MEDIUM: /app_store returns 404 → added /app_store as alias for /app-store
+  - Bug 6 MEDIUM: og:image not set on all pages → injected Charcoal OG card meta into all 6 marketing pages + SIGNUP_HTML template + added /signup-pro redirect
+  - Bug 7 LOW: /empty stray outline artifact → re-cleaned empty-state image (covered top-left corner with deep navy)
+  - Bug 8 LOW: Footers inconsistent → removed duplicate "Tech-Victorian Edition" footer from how-it-works
+
+- **v35 follow-up fixes**:
+  - Bumped CSS cache version from ?v=30 to ?v=35 on index/empty/app_store pages
+  - Added inline v18-mini flex layout to faq/terms/how-it-works/signup (each has its own inline <style>)
+  - Added inline theme-toggle dual-label visibility CSS to those pages
+  - Replaced minimal .theme-toggle rule with full v31 styling (inline-flex, brass border, padding, gap, etc)
