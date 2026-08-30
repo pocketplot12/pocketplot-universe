@@ -3467,6 +3467,24 @@ def admin_queue():
     return render_template_string(
         queue_templates.QUEUE_LIST_HTML, rows=rows, status=status or "all", counts=counts
     )
+@app.route('/empty')
+def empty_route():
+    """Charcoal-designed empty state for new accounts."""
+    try:
+        return send_file('empty.html', conditional=True)
+    except Exception:
+        abort(404)
+
+
+@app.route('/app-store')
+def app_store_route():
+    """Charcoal app-store screenshots gallery."""
+    try:
+        return send_file('app_store.html', conditional=True)
+    except Exception:
+        abort(404)
+
+
 @app.route("/version")
 def version_route():
     """Diagnostic: shows what's actually deployed."""
