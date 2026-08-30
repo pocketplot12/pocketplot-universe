@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-light';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.add('theme-' + theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>App Store Screenshots - PocketPlot Universe</title>
+<link rel="canonical" href="/app-store">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+<meta property="og:image" content="/pocketplot_06_og-card-1200x630.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v=30">
+<style>
+.store-page { max-width: 1200px; margin: 0 auto; padding: 120px 24px 80px; }
+.store-eyebrow { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.15em; color: var(--brand); text-transform: uppercase; text-align: center; margin: 0 0 16px; }
+.store-title { font-family: var(--font-serif); font-size: clamp(36px, 6vw, 56px); font-style: italic; color: var(--text-heading); text-align: center; margin: 0 0 12px; font-weight: 500; line-height: 1.1; }
+.store-lede { font-family: var(--font-body); font-size: 18px; color: var(--text-body); text-align: center; max-width: 36em; margin: 0 auto 48px; line-height: 1.6; }
+.store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+.store-shot { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; transition: transform 0.4s var(--ease-out); }
+.store-shot:hover { transform: translateY(-4px); }
+.store-shot img { width: 100%; height: auto; display: block; border-radius: var(--radius-md); }
+.store-shot-label { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.1em; color: var(--brand); text-transform: uppercase; margin-top: 16px; }
+.store-shot-title { font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--text-heading); margin: 4px 0 8px; }
+.store-shot-specs { font-family: var(--font-ui); font-size: 12px; color: var(--text-caption); }
+@media (max-width: 768px) { .store-grid { grid-template-columns: 1fr 1fr; gap: 16px; } }
+@media (max-width: 480px) { .store-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a href="/" class="brand-mark"><img src="/logo-240.png" alt="" /><span class="word">PocketPlot Universe</span></a>
+  <nav class="nav-links">
+    <a href="/how-it-works" class="link">How it works</a>
+    <a href="/pricing" class="link">Pricing</a>
+    <a href="/library" class="link">Library</a>
+    <a href="/seed" class="link">Seed</a>
+    <a href="/faq" class="link">FAQ</a>
+    <a href="/signup" class="cta">Begin</a>
+  </nav>
+  <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="icon-paper" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span class="label label-dark">Night</span><span class="label label-light">Paper</span>
+  </button>
+</header>
+<main class="store-page">
+  <p class="store-eyebrow">App Store Screenshots</p>
+  <h1 class="store-title">Marketing visuals, ready to ship.</h1>
+  <p class="store-lede">9:16 portrait screenshots for Apple App Store (1290x2796) and Google Play (1080x1920). Illustrations by sister agent Charcoal.</p>
+  <div class="store-grid">
+    <div class="store-shot reveal">
+      <img src="/pocketplot_10_screenshot-play.jpg" alt="App store screenshot 1: phone showing a visual-novel scene with castle and 3 glowing choice buttons. Headline: BRANCHING WORLDS / Multiple endings. Your choices.">
+      <div class="store-shot-label">Screenshot 01</div>
+      <div class="store-shot-title">Branching Worlds</div>
+      <div class="store-shot-specs">9:16 - iOS 1290x2796 / Android 1080x1920</div>
+    </div>
+    <div class="store-shot reveal">
+      <img src="/pocketplot_11_screenshot-library.jpg" alt="App store screenshot 2: phone showing the world-library card grid. Headline: 16 WORLDS / Fantasy to cyberpunk. Pick yours.">
+      <div class="store-shot-label">Screenshot 02</div>
+      <div class="store-shot-title">16 Worlds</div>
+      <div class="store-shot-specs">9:16 - iOS 1290x2796 / Android 1080x1920</div>
+    </div>
+  </div>
+  <p style="font-family: var(--font-ui); font-size: 13px; color: var(--text-caption); text-align: center; margin: 48px 0 0;">
+    More screenshot themes planned: MANGA READ mode (page-flip panel), BYOB engine settings, Word Vault screen.
+  </p>
+</main>
+<script>
+window.pocketplot = window.pocketplot || {};
+window.pocketplot.setTheme = function(theme) {
+  if (!['warm-dark', 'warm-light'].includes(theme)) theme = 'warm-dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('pocketplot-theme', theme); } catch (e) {}
+  return theme;
+};
+window.pocketplot.toggleTheme = function() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  window.pocketplot.setTheme(cur === 'warm-light' ? 'warm-dark' : 'warm-light');
+};
+document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+  window.pocketplot.toggleTheme();
+});
+(function() {
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

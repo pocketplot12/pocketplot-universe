@@ -878,91 +878,11 @@ html[data-theme="warm-light"] .tier.featured .btn {
   </section>
 
   <div style="margin:48px auto 32px;text-align:center;max-width:880px;">
-<svg class="steps-illustration reveal" viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three step story building process" style="max-width:100%;height:auto;color:#c9a04e">
-  <style>
-    .steps-illustration .step-card { fill: var(--bg-elevated, #faf3e0); stroke: currentColor; stroke-width: 1.5; }
-    .steps-illustration .step-line { stroke: currentColor; stroke-width: 2; stroke-linecap: round; fill: none; opacity: 0.8; }
-    .steps-illustration .step-line.write { stroke-dasharray: 200; stroke-dashoffset: 200; animation: drawLine 4s ease-in-out infinite; }
-    .steps-illustration .step-line.branch { stroke-dasharray: 5 5; animation: flowDash 1.6s linear infinite; }
-    .steps-illustration .step-label { font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.15em; fill: currentColor; text-transform: uppercase; text-anchor: middle; }
-    .steps-illustration .step-arrow { stroke: currentColor; stroke-width: 1.5; fill: currentColor; }
-    .steps-illustration .pencil { transform-origin: 80px 110px; transform-box: fill-box; animation: popIn 2s ease-in-out infinite; }
-    .steps-illustration .branch-node { transform-origin: center; transform-box: fill-box; }
-    .steps-illustration .branch-node-1 { animation: popIn 3s ease-in-out 0s infinite; }
-    .steps-illustration .branch-node-2 { animation: popIn 3s ease-in-out 0.5s infinite; }
-    .steps-illustration .branch-node-3 { animation: popIn 3s ease-in-out 1s infinite; }
-    .steps-illustration .envelope-flap { transform-origin: 150px 70px; transform-box: fill-box; animation: flapWave 3s ease-in-out infinite; }
-    @keyframes drawLine { 0% { stroke-dashoffset: 200; } 50% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -200; } }
-    @keyframes flowDash { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -20; } }
-    @keyframes popIn { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-    @keyframes flapWave { 0%, 90%, 100% { transform: rotate(0deg); } 45% { transform: rotate(-8deg); } }
-    @media (prefers-reduced-motion: reduce) {
-      .steps-illustration * { animation: none !important; }
-      .steps-illustration .step-line.write { stroke-dashoffset: 0; }
-    }
-  </style>
-
-  <g transform="translate(75, 80)">
-    <text class="step-label" x="75" y="-20" text-anchor="middle">01 - WRITE</text>
-    <rect class="step-card" x="15" y="0" width="120" height="140" rx="4" />
-    <line class="step-line write" x1="30" y1="25" x2="120" y2="25" style="animation-delay: 0s" />
-    <line class="step-line write" x1="30" y1="50" x2="110" y2="50" style="animation-delay: 0.4s" />
-    <line class="step-line write" x1="30" y1="75" x2="115" y2="75" style="animation-delay: 0.8s" />
-    <line class="step-line write" x1="30" y1="100" x2="100" y2="100" style="animation-delay: 1.2s" />
-    <g class="pencil" transform="translate(70, 95)">
-      <line x1="0" y1="0" x2="20" y2="-15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-      <polygon points="20,-15 25,-12" fill="currentColor" />
-    </g>
-  </g>
-
-  <g transform="translate(225, 130)">
-    <line class="step-arrow" x1="0" y1="0" x2="55" y2="0" />
-    <polygon class="step-arrow" points="55,0 45,-5 45,5" />
-  </g>
-
-  <g transform="translate(330, 60)">
-    <text class="step-label" x="75" y="-10" text-anchor="middle">02 - BRANCH</text>
-    <circle class="branch-node branch-node-1" cx="75" cy="20" r="6" fill="currentColor" />
-    <path class="step-line branch" d="M 75,30 Q 35,40 15,80" style="animation-delay: 0s" />
-    <path class="step-line branch" d="M 75,30 Q 75,55 75,80" style="animation-delay: 0.3s" />
-    <path class="step-line branch" d="M 75,30 Q 115,40 135,80" style="animation-delay: 0.6s" />
-    <circle class="branch-node branch-node-2" cx="15" cy="100" r="5" fill="none" stroke="currentColor" stroke-width="1.5" />
-    <circle class="branch-node branch-node-3" cx="75" cy="100" r="5" fill="none" stroke="currentColor" stroke-width="1.5" />
-    <circle class="branch-node" cx="135" cy="100" r="5" fill="none" stroke="currentColor" stroke-width="1.5" />
-    <text x="15" y="125" font-family="Inter, sans-serif" font-size="9" fill="currentColor" text-anchor="middle">A</text>
-    <text x="75" y="125" font-family="Inter, sans-serif" font-size="9" fill="currentColor" text-anchor="middle">B</text>
-    <text x="135" y="125" font-family="Inter, sans-serif" font-size="9" fill="currentColor" text-anchor="middle">C</text>
-    <circle class="branch-node branch-node-3" cx="75" cy="155" r="5" fill="currentColor" />
-    <line class="step-line branch" x1="15" y1="105" x2="75" y2="148" style="animation-delay: 0.4s" />
-    <line class="step-line branch" x1="75" y1="105" x2="75" y2="148" style="animation-delay: 0.7s" />
-    <line class="step-line branch" x1="135" y1="105" x2="75" y2="148" style="animation-delay: 1.0s" />
-  </g>
-
-  <g transform="translate(485, 130)">
-    <line class="step-arrow" x1="0" y1="0" x2="55" y2="0" />
-    <polygon class="step-arrow" points="55,0 45,-5 45,5" />
-  </g>
-
-  <g transform="translate(590, 60)">
-    <text class="step-label" x="75" y="-10" text-anchor="middle">03 - SHARE</text>
-    <g transform="translate(0, 35)">
-      <rect x="0" y="20" width="150" height="100" fill="var(--bg-elevated)" stroke="currentColor" stroke-width="2" />
-      <polygon class="envelope-flap" points="0,20 75,70 150,20" fill="var(--bg-elevated)" stroke="currentColor" stroke-width="2" />
-      <rect x="40" y="40" width="60" height="50" fill="var(--bg)" stroke="currentColor" stroke-width="1" />
-      <line x1="50" y1="55" x2="90" y2="55" stroke="currentColor" stroke-width="0.5" opacity="0.5" />
-      <line x1="50" y1="65" x2="90" y2="65" stroke="currentColor" stroke-width="0.5" opacity="0.5" />
-      <line x1="50" y1="75" x2="80" y2="75" stroke="currentColor" stroke-width="0.5" opacity="0.5" />
-    </g>
-    <g transform="translate(160, 60)">
-      <line class="step-line branch" x1="0" y1="0" x2="40" y2="-20" style="animation-delay: 0s" />
-      <line class="step-line branch" x1="0" y1="20" x2="40" y2="0" style="animation-delay: 0.3s" />
-      <line class="step-line branch" x1="0" y1="40" x2="40" y2="20" style="animation-delay: 0.6s" />
-    </g>
-    <circle cx="215" cy="40" r="3" fill="currentColor" />
-    <circle cx="220" cy="65" r="3" fill="currentColor" />
-    <circle cx="225" cy="90" r="3" fill="currentColor" />
-  </g>
-</svg>
+<figure class="how-it-works-art reveal" style="margin:48px auto 32px;max-width:900px;text-align:center">
+  <img src="/pocketplot_02_three-doors.jpg" alt="Three magical doors — purple star, gold ajar with light, teal digital — branching paths forking to tiny worlds"
+       loading="lazy"
+       style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);box-shadow:0 30px 80px -20px rgba(0,0,0,0.45)">
+</figure>
 </div>
 
 <section>

@@ -10509,6 +10509,11 @@ _BRAND_FILES = {
     'pocketplot_09_empty-state.jpg',
     'pocketplot_10_screenshot-play.jpg',
     'pocketplot_11_screenshot-library.jpg',
+    'pocketplot_06_og-card-1200x630.jpg',
+    'favicon.png',
+    'favicon-512.png',
+    'favicon-196.png',
+    'apple-touch-icon-1024.png',
 }
 @app.route('/<path:filename>', methods=['GET'])
 def _serve_brand_asset(filename):

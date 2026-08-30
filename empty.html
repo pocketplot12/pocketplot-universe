@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-light';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.add('theme-' + theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>No stories yet - PocketPlot Universe</title>
+<meta name="description" content="Your first world is waiting to be written.">
+<link rel="canonical" href="/empty">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180.png">
+<meta name="theme-color" content="#1B2345">
+<meta property="og:title" content="No stories yet - PocketPlot Universe">
+<meta property="og:description" content="Your first world is waiting to be written.">
+<meta property="og:image" content="/pocketplot_06_og-card-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/pocketplot_06_og-card-1200x630.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v=30">
+<style>
+.empty-state-page { min-height: calc(100vh - 80px); display: flex; align-items: center; justify-content: center; padding: 80px 24px; background: var(--bg); }
+.empty-hero { text-align: center; max-width: 560px; }
+.empty-title { font-family: var(--font-serif); font-size: clamp(36px, 6vw, 56px); font-style: italic; color: var(--text-heading); margin: 24px 0 16px; font-weight: 500; line-height: 1.1; }
+.empty-lede { font-family: var(--font-body); font-size: 18px; color: var(--text-body); line-height: 1.6; margin: 0 0 32px; }
+.empty-cta { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.empty-cta .link { font-family: var(--font-ui); font-size: 14px; color: var(--text-caption); text-decoration: none; transition: color 200ms; }
+.empty-cta .link:hover { color: var(--brand); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a href="/" class="brand-mark"><img src="/logo-240.png" alt="" /><span class="word">PocketPlot Universe</span></a>
+  <nav class="nav-links">
+    <a href="/how-it-works" class="link">How it works</a>
+    <a href="/pricing" class="link">Pricing</a>
+    <a href="/library" class="link">Library</a>
+    <a href="/seed" class="link">Seed</a>
+    <a href="/faq" class="link">FAQ</a>
+    <a href="/signup" class="cta">Begin</a>
+  </nav>
+  <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="icon-paper" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span class="label label-dark">Night</span><span class="label label-light">Paper</span>
+  </button>
+</header>
+<main class="empty-state-page">
+  <div class="empty-hero">
+    <figure class="reveal" style="margin:0 auto 24px;max-width:480px;text-align:center">
+      <img src="/pocketplot_09_empty-state.jpg" alt="PocketPlot mascot behind a glowing blank book with a sparkly pen - your first world is waiting to be written"
+           loading="eager"
+           style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);box-shadow:0 30px 80px -20px rgba(0,0,0,0.45)">
+    </figure>
+    <h1 class="empty-title">Your first world is waiting.</h1>
+    <p class="empty-lede">Pick a genre, set a tone, write the opening scene. PocketPlot handles the art, the branching, and the world memory - you handle the story.</p>
+    <div class="empty-cta">
+      <a href="/signup" class="cta-primary">Begin your first world</a>
+      <a href="/" class="link">Back to homepage</a>
+    </div>
+  </div>
+</main>
+<script>
+window.pocketplot = window.pocketplot || {};
+window.pocketplot.setTheme = function(theme) {
+  if (!['warm-dark', 'warm-light'].includes(theme)) theme = 'warm-dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('pocketplot-theme', theme); } catch (e) {}
+  return theme;
+};
+window.pocketplot.toggleTheme = function() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  window.pocketplot.setTheme(cur === 'warm-light' ? 'warm-dark' : 'warm-light');
+};
+document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+  window.pocketplot.toggleTheme();
+});
+(function() {
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>
