@@ -1043,3 +1043,24 @@ a.cta-primary:active {
     transform: none !important;
   }
 }
+
+/* v35: Mobile bottom nav clearance (Charcoal QC bug 1) */
+@media (max-width: 720px) {
+  body {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+  .hero {
+    padding-bottom: max(var(--space-8), 32px);
+  }
+}
+
+/* v35: Mobile stats grid (Charcoal QC bug 4) */
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px;
+  }
+  .stat {
+    text-align: center;
+  }
+}

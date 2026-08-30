@@ -3485,6 +3485,15 @@ def app_store_route():
         abort(404)
 
 
+@app.route('/app_store')
+def app_store_underscore_route():
+    """Charcoal used /app_store in the QC report — alias for /app-store."""
+    try:
+        return send_file('app_store.html', conditional=True)
+    except Exception:
+        abort(404)
+
+
 @app.route("/version")
 def version_route():
     """Diagnostic: shows what's actually deployed."""

@@ -356,27 +356,27 @@ nav.main-nav .nav-link.active::after {
   :root { --navy:#0e1a2e; --navy-2:#15243f; --navy-3:#1f3460; --gold:#e6c879;
           --gold-2:#d4b566; --cream:#f3e9d2; --muted:#9eb6d4; --faint:#7a8aa8; }
   * { box-sizing:border-box; }
-  body { margin:0; padding:0; background:var(--bg); color:var(--cream);
+  body { margin:0; padding:0; background:var(--bg); color:var(--text-body);
          font-family:Karla, system-ui, sans-serif; line-height:1.6; }
   .wrap { max-width:880px; margin:0 auto; padding:0 28px; }
   header { padding:22px 0; border-bottom:1px solid var(--surface); }
   .wordmark { font-family:'Fraunces', Georgia, serif; font-style:italic;
-              color:var(--gold); font-size:22px; font-weight:600; display:inline-block; }
-  .wordmark i { color:var(--muted); font-style:italic; font-weight:400; }
+              color:var(--brand); font-size:22px; font-weight:600; display:inline-block; }
+  .wordmark i { color:var(--text-body); font-style:italic; font-weight:400; }
   nav { float:right; margin-top:8px; }
-  nav a { color:var(--muted); text-decoration:none; margin-left:22px; font-size:13px;
+  nav a { color:var(--text-body); text-decoration:none; margin-left:22px; font-size:13px;
          letter-spacing:.05em; text-transform:uppercase; }
-  nav a:hover { color:var(--gold); }
-  nav a.cta { color:var(--bg); background:var(--gold); padding:10px 20px;
+  nav a:hover { color:var(--brand); }
+  nav a.cta { color:var(--bg); background:var(--brand); padding:10px 20px;
               border-radius:99px; text-transform:none; letter-spacing:0; font-weight:700; }
   section { padding:56px 0; border-top:1px solid var(--surface); }
   h1 { font-family:'Fraunces', Georgia, serif; font-size:48px; margin:48px 0 16px; font-weight:600; line-height:1.1; }
-  h1 i { color:var(--gold); font-style:italic; }
+  h1 i { color:var(--brand); font-style:italic; }
   h2 { font-family:'Fraunces', Georgia, serif; font-size:32px; margin:0 0 16px; font-weight:600; }
-  h2 i { color:var(--gold); font-style:italic; }
+  h2 i { color:var(--brand); font-style:italic; }
   .eyebrow { font-size:11px; letter-spacing:.16em; text-transform:uppercase;
-             color:var(--gold); font-weight:700; margin-bottom:8px; display:block; }
-  .lead { font-family:'Fraunces', Georgia, serif; font-style:italic; color:var(--muted);
+             color:var(--brand); font-weight:700; margin-bottom:8px; display:block; }
+  .lead { font-family:'Fraunces', Georgia, serif; font-style:italic; color:var(--text-body);
           font-size:18px; max-width:680px; margin:0 0 36px; }
 
   /* Step blocks */
@@ -384,10 +384,10 @@ nav.main-nav .nav-link.active::after {
           border-radius:14px; padding:32px; margin-bottom:18px;
           display:grid; grid-template-columns:120px 1fr; gap:24px; align-items:start; }
   .step .num { font-family:'Fraunces', Georgia, serif; font-style:italic;
-               font-size:72px; color:var(--gold); line-height:1; margin:0; }
+               font-size:72px; color:var(--brand); line-height:1; margin:0; }
   .step h2 { margin:0 0 12px; font-size:24px; }
-  .step p { color:var(--muted); font-size:14px; margin:0 0 12px; line-height:1.6; }
-  .step ul { margin:8px 0 0; padding-left:20px; color:var(--muted); font-size:13px; }
+  .step p { color:var(--text-body); font-size:14px; margin:0 0 12px; line-height:1.6; }
+  .step ul { margin:8px 0 0; padding-left:20px; color:var(--text-body); font-size:13px; }
   .step li { margin-bottom:4px; }
 
   /* Side-by-side comparison */
@@ -395,29 +395,29 @@ nav.main-nav .nav-link.active::after {
   .compare .col { background:var(--bg-elevated); border:1px solid var(--surface);
                   border-radius:12px; padding:24px; }
   .compare h3 { font-family:'Fraunces', Georgia, serif; font-size:18px;
-                color:var(--gold); margin:0 0 8px; font-weight:600; }
+                color:var(--brand); margin:0 0 8px; font-weight:600; }
   .compare p { font-family:'Fraunces', Georgia, serif; font-style:italic;
-                color:var(--cream); font-size:14px; margin:0 0 12px; line-height:1.5; }
+                color:var(--text-body); font-size:14px; margin:0 0 12px; line-height:1.5; }
   .compare .pill { display:inline-block; padding:3px 10px; border-radius:99px;
-                   background:var(--surface); color:var(--muted); font-size:11px;
+                   background:var(--surface); color:var(--text-body); font-size:11px;
                    font-weight:700; letter-spacing:.08em; text-transform:uppercase;
                    margin-bottom:10px; }
 
   /* Q&A */
   .qa { background:var(--bg-elevated); border:1px solid var(--surface);
         border-radius:10px; padding:20px 24px; margin-bottom:12px; }
-  .qa h3 { font-family:'Fraunces', Georgia, serif; font-size:16px; color:var(--gold);
+  .qa h3 { font-family:'Fraunces', Georgia, serif; font-size:16px; color:var(--brand);
            margin:0 0 6px; font-weight:600; }
-  .qa p { margin:0; color:var(--cream); font-size:14px; }
+  .qa p { margin:0; color:var(--text-body); font-size:14px; }
 
   .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
-  .btn { display:inline-block; background:var(--gold); color:var(--bg);
+  .btn { display:inline-block; background:var(--brand); color:var(--bg);
          padding:14px 28px; border-radius:99px;
          font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:15px;
-         text-decoration:none; border:1px solid var(--gold); cursor:pointer; }
+         text-decoration:none; border:1px solid var(--brand); cursor:pointer; }
   .btn:hover { background:var(--gold-2); }
-  .btn.secondary { background:transparent; color:var(--gold); border:1px solid var(--gold); }
-  .btn.secondary:hover { background:var(--gold); color:var(--bg); }
+  .btn.secondary { background:transparent; color:var(--brand); border:1px solid var(--brand); }
+  .btn.secondary:hover { background:var(--brand); color:var(--bg); }
 
   footer { margin-top:60px; padding:28px 0; border-top:1px solid var(--surface);
            color:var(--faint); font-size:13px; text-align:center; }
@@ -432,6 +432,16 @@ nav.main-nav .nav-link.active::after {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:title" content="How it works - PocketPlot Universe">
+<meta property="og:description" content="From idea to a world in three doors: branching-first narrative with BYOB and visual scene art.">
+<meta property="og:image" content="/pocketplot_06_og-card-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How it works - PocketPlot Universe">
+<meta name="twitter:description" content="From idea to a world in three doors: branching-first narrative with BYOB and visual scene art.">
+<meta name="twitter:image" content="/pocketplot_06_og-card-1200x630.jpg">
 </head>
 <body>
 
@@ -446,392 +456,7 @@ nav.main-nav .nav-link.active::after {
       <a href="/faq">FAQ</a>
       <a href="/signup" class="cta">Begin →</a>
     </nav>
-  </header>
-  <style>
-    .v18-mini {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 24px;
-      border-bottom: 1px solid rgba(201,160,78,.25);
-      background: #0a0f1c;
-    }
-    .v18-mini .brand svg { width: 200px; height: 44px; }
-    .v18-mini nav { display: flex; gap: 18px; align-items: center; }
-    .v18-mini nav a {
-      color: #c9bfa8; text-decoration: none;
-      font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 500;
-      letter-spacing: .04em;
-      padding: 4px 2px;
-      border-bottom: 1px solid transparent;
-      transition: color .2s, border-color .2s;
-    }
-    .v18-mini nav a:hover { color: #ffd47a; border-bottom-color: #c9a04e; }
-    .v18-mini nav a.cta {
-      font-family: 'DM Sans',sans-serif; font-weight: 700; font-size: 12px;
-      letter-spacing: .12em; text-transform: uppercase;
-      background: linear-gradient(180deg, #e8c879 0%, #c9a04e 50%, #8a6a26 100%);
-      color: #0a0f1c;
-      padding: 8px 16px; border-radius: 3px;
-      border: 1px solid #8a6a26;
-      box-shadow: 0 0 0 1px #e8c879 inset, 0 4px 12px rgba(0,0,0,.4);
-    }
-    .v18-mini nav a.cta:hover {
-      box-shadow: 0 0 0 1px #ffd47a inset, 0 0 16px #f0b54a;
-    }
-  
-/* Theme toggle button — visible on both themes */
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--ink-soft);
-  transition: color 200ms, border-color 200ms, background 200ms;
-  padding: 0;
-  flex-shrink: 0;
-}
-.theme-toggle:hover {
-  border-color: var(--border-strong);
-  color: var(--accent-light);
-  background: rgba(201, 160, 78, 0.06);
-}
-.theme-toggle svg {
-  width: 18px;
-  height: 18px;
-  transition: opacity 200ms, transform 200ms;
-}
-/* Show sun when in dark mode (click to go to light) */
-.theme-toggle .icon-moon { display: none; }
-.theme-toggle .icon-sun { display: inline-block; }
-html[data-theme="warm-light"] .theme-toggle .icon-sun { display: none; }
-html[data-theme="warm-light"] .theme-toggle .icon-moon { display: inline-block; }
-
-
-/* v29 theme system (Kindle-e-ink warm themes) */
-
-v30 design system - layered on top of v29 */
-
-:root, html[data-theme="warm-dark"] {
-  /* === Backgrounds === */
-  --bg:              #0a0f1c;       /* page background */
-  --bg-elevated:     #15243f;       /* cards, surfaces, raised UI */
-  --bg-overlay:      rgba(15, 26, 46, 0.78);  /* nav backdrop blur */
-  --surface:         #1f3460;       /* hover states */
-  --surface-strong:  #2a4275;       /* pressed/active */
-
-  /* === Text hierarchy (4 tiers) === */
-  --text-heading:    #f5ecd6;       /* h1, h2, page titles */
-  --text-body:       #d8cba8;       /* paragraphs */
-  --text-caption:    #9eb6d4;       /* hints, timestamps */
-  --text-faint:      #6c7891;       /* footer, near-invisible */
-
-  /* === Brand & actions === */
-  --brand:           #c9a04e;       /* brass — the single brand color */
-  --brand-light:     #e8c879;       /* hover, focus */
-  --brand-deep:      #8a6a26;       /* pressed state */
-  --brand-soft:      rgba(201, 160, 78, 0.18);  /* selection bg */
-  --brand-text:      #1a1410;       /* text color on brass backgrounds */
-  --accent:          #c9a04e;       /* alias of brand for clarity */
-
-  /* === Status === */
-  --success:         #1d6b50;       /* emerald - done, success */
-  --success-light:   #3a8c6c;
-  --warning:         #f0b54a;       /* amber - caution */
-  --warning-deep:    #8a5e1a;
-  --danger:          #a02020;       /* rust - delete, error */
-  --danger-light:    #e07070;
-
-  /* === Surfaces === */
-  --border:          rgba(201, 160, 78, 0.18);
-  --border-strong:   rgba(201, 160, 78, 0.45);
-  --shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.20);
-  --shadow:          0 4px 12px rgba(0, 0, 0, 0.45);
-  --shadow-lg:       0 14px 32px rgba(0, 0, 0, 0.55);
-}
-
-
-html[data-theme="warm-light"] {
-  /* === Backgrounds === */
-  --bg:              #f4ecd8;       /* warm cream paper */
-  --bg-elevated:     #faf3e0;       /* lighter cream for cards */
-  --bg-overlay:      rgba(244, 236, 216, 0.85);
-  --surface:         #ebe0c8;
-  --surface-strong:  #d8c8a8;
-
-  /* === Text hierarchy === */
-  --text-heading:    #3d2e1f;       /* warm dark brown - strongest */
-  --text-body:       #5a4a35;       /* warm brown body */
-  --text-caption:    #8b7558;       /* tertiary warm brown */
-  --text-faint:      #a89579;       /* near-invisible warm brown */
-
-  /* === Brand & actions === */
-  --brand:           #b8842a;       /* brass - warmer/darker for cream bg */
-  --brand-light:     #d4a04d;
-  --brand-deep:      #7a5518;
-  --brand-soft:      rgba(184, 132, 42, 0.14);
-  --brand-text:      #fef9ec;       /* light text on brass button */
-  --accent:          #b8842a;
-
-  /* === Status === */
-  --success:         #2d8a5e;       /* slightly darker emerald for cream */
-  --success-light:   #4ca97a;
-  --warning:         #c89030;       /* darker amber for cream */
-  --warning-deep:    #a07020;
-  --danger:          #b03030;       /* slightly brighter rust for cream */
-  --danger-light:    #d05050;
-
-  /* === Surfaces === */
-  --border:          rgba(122, 98, 56, 0.20);
-  --border-strong:   rgba(122, 98, 56, 0.55);
-  --shadow-sm:       0 1px 3px rgba(60, 40, 15, 0.10);
-  --shadow:          0 1px 3px rgba(60, 40, 15, 0.12), 0 4px 10px rgba(60, 40, 15, 0.06);
-  --shadow-lg:       0 4px 12px rgba(60, 40, 15, 0.18), 0 14px 28px rgba(60, 40, 15, 0.12);
-}
-
-
-/* === Base typography (resets existing colors to use new tokens) === */
-html, body {
-  background: var(--bg);
-  color: var(--text-body);
-  transition: background 220ms ease, color 220ms ease;
-}
-h1, h2, h3, h4 {
-  color: var(--text-heading);
-  font-family: var(--font-serif, Georgia, serif);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-p, li {
-  color: var(--text-body);
-}
-small, .text-caption {
-  color: var(--text-caption);
-}
-.text-faint {
-  color: var(--text-faint);
-}
-
-/* === Buttons (3 tiers) === */
-.btn-primary, button.btn-primary, a.btn-primary {
-  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 70%, var(--brand-deep) 100%);
-  color: var(--brand-text);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: var(--radius-pill, 999px);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  padding: 14px 28px;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.20) inset,
-    0 0 0 1px var(--border-strong),
-    0 6px 18px var(--brand-soft),
-    0 2px 6px var(--shadow-sm);
-  transition: transform 200ms var(--ease-out), box-shadow 200ms;
-}
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.30) inset,
-    0 0 0 1px var(--brand-light),
-    0 10px 24px rgba(201, 160, 78, 0.28),
-    0 3px 8px var(--shadow);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--text-body);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-pill, 999px);
-  padding: 13px 26px;
-  font-weight: 600;
-  transition: background 200ms, border-color 200ms, color 200ms;
-}
-.btn-secondary:hover {
-  background: var(--brand-soft);
-  border-color: var(--brand);
-  color: var(--text-heading);
-}
-
-.btn-tertiary {
-  background: transparent;
-  color: var(--brand);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 8px 4px;
-  border: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 200ms;
-}
-.btn-tertiary:hover {
-  border-bottom-color: var(--brand);
-}
-
-/* === Status badges === */
-.status-success, .badge-success {
-  background: var(--brand-soft);
-  color: var(--success-light);
-  border: 1px solid var(--success);
-}
-.status-warning, .badge-warning {
-  background: rgba(240, 181, 74, 0.10);
-  color: var(--warning);
-  border: 1px solid var(--warning);
-}
-.status-danger, .badge-danger {
-  background: rgba(160, 32, 32, 0.10);
-  color: var(--danger-light);
-  border: 1px solid var(--danger);
-}
-html[data-theme="warm-light"] .status-warning {
-  color: var(--warning-deep);
-}
-
-/* === Cards === */
-.card, .panel {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg, 16px);
-  padding: var(--space-6, 2rem);
-  box-shadow: var(--shadow-sm);
-}
-.card:hover {
-  border-color: var(--border-strong);
-  background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--surface) 100%);
-}
-
-/* === Links === */
-a {
-  color: var(--brand);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 200ms;
-}
-a:hover {
-  border-bottom-color: var(--brand);
-}
-
-/* === Nav === */
-.nav, header.nav {
-  background: var(--bg-overlay);
-  border-bottom: 1px solid var(--border);
-}
-
-/* === Inputs === */
-input, textarea, select {
-  background: var(--bg-elevated);
-  color: var(--text-heading);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius, 8px);
-}
-input:focus, textarea:focus {
-  border-color: var(--brand);
-  outline: none;
-  box-shadow: 0 0 0 3px var(--brand-soft);
-}
-::placeholder {
-  color: var(--text-faint);
-}
-
-/* === Buttons (interactive ink) === */
-button, a.btn {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* === Selection === */
-::selection {
-  background: var(--brand-soft);
-  color: var(--text-heading);
-}
-
-
-
-/* ============================================================
-   THEME TOKENS - v29: Kindle-e-ink warm themes
-   Each semantic variable gets values for BOTH themes.
-   ============================================================ */
-:root {
-  /* Defaults = warm-dark (the "default" Apple-restrained look) */
-  --bg:            #0a0f1c;        /* page background */
-  --bg-elevated:   #15243f;        /* card background */
-  --bg-overlay:    rgba(15, 26, 46, 0.78);  /* nav backdrop blur */
-  --surface:       #1f3460;        /* hover states, secondary surfaces */
-  --border:        rgba(201, 160, 78, 0.14);  /* hairline */
-  --border-strong: rgba(201, 160, 78, 0.45);
-
-  --ink:           #f5ecd6;        /* primary text — warm cream */
-  --ink-soft:      #d8cba8;        /* body text — slight fade */
-  --ink-muted:     #9eb6d4;        /* tertiary text */
-  --ink-faint:     #6c7891;        /* footer, hints */
-
-  --accent:        #c9a04e;        /* brass */
-  --accent-light:  #e8c879;        /* lighter brass */
-  --accent-deep:   #8a6a26;        /* deeper brass */
-  --accent-warm:   #f0b54a;        /* amber — secondary accent */
-
-  --button-text:   #1a1410;        /* dark text on brass buttons */
-
-  --shadow:        0 4px 12px rgba(0, 0, 0, 0.45);
-  --shadow-lg:     0 14px 32px rgba(0, 0, 0, 0.55);
-
-  --hero-gradient:
-    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(93,222,240,0.05), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(240,181,74,0.05), transparent 60%),
-    var(--bg);
-}
-
-/* WARM-LIGHT theme = Kindle paper / e-ink look
-   Warm cream background (not white) + warm dark brown text (not black)
-   Easier on the eyes for long reading than pure white */
-html[data-theme="warm-light"] {
-  --bg:            #f4ecd8;        /* warm cream — like a paperback page */
-  --bg-elevated:   #faf3e0;        /* lighter cream for cards */
-  --bg-overlay:    rgba(244, 236, 216, 0.85);
-  --surface:       #ebe0c8;        /* hover state — slightly deeper cream */
-  --border:        rgba(122, 98, 56, 0.18);  /* warm brown hairline */
-  --border-strong: rgba(122, 98, 56, 0.55);
-
-  --ink:           #3d2e1f;        /* warm dark brown — like book ink */
-  --ink-soft:      #6b5840;        /* softer brown for body */
-  --ink-muted:     #8b7558;        /* tertiary text — like aged paper */
-  --ink-faint:     #a89579;        /* footer, hints */
-
-  --accent:        #b8842a;        /* brass — slightly warmer/darker for cream */
-  --accent-light:  #d4a04d;        /* lighter brass */
-  --accent-deep:   #7a5518;
-  --accent-warm:   #c89030;        /* amber */
-
-  --button-text:   #fef9ec;        /* light text on brass buttons (inverted for cream bg) */
-  /* Better: dark text on warm brass button for cream theme */
-
-  --shadow:        0 1px 3px rgba(60, 40, 15, 0.10), 0 4px 10px rgba(60, 40, 15, 0.06);
-  --shadow-lg:     0 4px 12px rgba(60, 40, 15, 0.18), 0 14px 28px rgba(60, 40, 15, 0.12);
-
-  --hero-gradient:
-    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(184, 132, 42, 0.04), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(184, 132, 42, 0.04), transparent 60%),
-    var(--bg);
-}
-
-/* Override button text for warm-light theme — keep dark text on brass */
-html[data-theme="warm-light"] .cta-primary,
-html[data-theme="warm-light"] button.btn-primary,
-html[data-theme="warm-light"] .tier.featured .btn {
-  color: #1a1410;  /* dark text on brass */
-}
-</style>
-
-<div class="wrap">
-  <header>
-    <div class="wordmark">Pocket<i>Plot</i> Universe</div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/faq">FAQ</a>
-      <a href="/signup" class="cta">Begin →</a>
-      <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
+    <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
   <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -846,29 +471,6 @@ html[data-theme="warm-light"] .tier.featured .btn {
   <span class="label label-dark">Night</span>
   <span class="label label-light">Paper</span>
 </button>
-<script>
-  // Bind handler AFTER window.pocketplot is defined
-  (function bindThemeToggle() {
-    function tryBind() {
-      var btn = document.getElementById('theme-toggle-btn');
-      if (!btn || btn._ppBound) return;
-      if (!window.pocketplot || typeof window.pocketplot.toggleTheme !== 'function') {
-        setTimeout(tryBind, 5);
-        return;
-      }
-      btn.addEventListener('click', function() { window.pocketplot.toggleTheme(); });
-      btn._ppBound = true;
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', tryBind);
-    } else if (document.body) {
-      tryBind();
-    } else {
-      document.addEventListener('DOMContentLoaded', tryBind);
-    }
-  })();
-</script>
-  </nav>
   </header>
 
   <section>
@@ -977,16 +579,7 @@ html[data-theme="warm-light"] .tier.featured .btn {
   </footer>
 </div>
 
-  <footer style="margin-top:60px;padding:30px 0;border-top:1px solid rgba(201,160,78,.25);background:#0a0f1c;text-align:center;font-family:'DM Sans',sans-serif;font-size:12px;color:#7a8aa8">
-    <div style="font-family:Fraunces,Georgia,serif;font-style:italic;font-size:13px;color:#c9bfa8;margin-bottom:10px">PocketPlot Universe · 18+ · Tech-Victorian Edition</div>
-    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap">
-      <a href="/faq" style="color:#e8c879;text-decoration:none">FAQ</a>·
-      <a href="/help" style="color:#e8c879;text-decoration:none">Help</a>·
-      <a href="/status" style="color:#e8c879;text-decoration:none">Status</a>·
-      <a href="/contact" style="color:#e8c879;text-decoration:none">Contact</a>·
-      <a href="/terms" style="color:#e8c879;text-decoration:none">Terms</a>
-    </div>
-  </footer>
+  
 
 <script>
 // v33 motion: scroll-triggered reveals + count-up animations
