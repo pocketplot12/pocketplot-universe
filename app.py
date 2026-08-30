@@ -2932,6 +2932,16 @@ SIGNUP_HTML = """<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Start your free story · PocketPlot</title>
+<meta property="og:title" content="Begin - PocketPlot Universe">
+<meta property="og:description" content="Free PocketPlot account: 3 stories/day, branching interactive storytelling. Begin your first world.">
+<meta property="og:image" content="/pocketplot_06_og-card-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Begin - PocketPlot Universe">
+<meta name="twitter:description" content="Free PocketPlot account: 3 stories/day, branching interactive storytelling. Begin your first world.">
+<meta name="twitter:image" content="/pocketplot_06_og-card-1200x630.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -3032,6 +3042,13 @@ def healthz():
     except Exception as e:
         log.exception("healthz check failed: %s", e)
         return (f"unhealthy: {e}", 500)
+
+@app.route("/signup-pro")
+def signup_pro_route():
+    """Redirect old /signup-pro to /signup."""
+    from flask import redirect
+    return redirect("/signup", code=301)
+
 
 @app.route("/signup", methods=["GET"])
 def signup_page():
