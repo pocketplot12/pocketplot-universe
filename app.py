@@ -10498,10 +10498,21 @@ _BRAND_FILES = {
     'manifest.json',
     'sw.js',
     'style.css',
+    'pocketplot_01_hero.jpg',
+    'pocketplot_02_three-doors.jpg',
+    'pocketplot_03_genre-grid.jpg',
+    'pocketplot_04_two-modes.jpg',
+    'pocketplot_05_app-icon.jpg',
+    'pocketplot_06_og-card.jpg',
+    'pocketplot_07_genre-grid-2.jpg',
+    'pocketplot_08_word-vault.jpg',
+    'pocketplot_09_empty-state.jpg',
+    'pocketplot_10_screenshot-play.jpg',
+    'pocketplot_11_screenshot-library.jpg',
 }
 @app.route('/<path:filename>', methods=['GET'])
 def _serve_brand_asset(filename):
-    """Serve brand assets from project root. Whitelisted."""
+    """Serve brand assets from project root or charcoal_art/ subdirectory. Whitelisted."""
     from flask import send_file, abort
     if filename not in _BRAND_FILES:
         abort(404)
@@ -10509,6 +10520,8 @@ def _serve_brand_asset(filename):
     candidates = [
         os.path.join(os.getcwd(), filename),
         os.path.join(os.path.dirname(os.path.abspath(__file__)), filename),
+        os.path.join(os.getcwd(), 'charcoal_art', filename),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), 'charcoal_art', filename),
     ]
     for path in candidates:
         if os.path.isfile(path):
