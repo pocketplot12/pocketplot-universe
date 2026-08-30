@@ -413,8 +413,37 @@ header.v18-mini > nav.v18 {
   flex-wrap: wrap;
 }
 header.v18-mini > .theme-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px;
+  background: var(--bg-elevated);
+  border: 2px solid var(--brand);
+  border-radius: var(--radius-pill, 999px);
+  padding: 8px 16px 8px 14px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: all 200ms ease;
+  white-space: nowrap;
   flex-shrink: 0;
   align-self: center;
+}
+.theme-toggle:hover {
+  border-color: var(--brand-light);
+  background: var(--brand-soft);
+  color: var(--text-heading);
+  transform: translateY(-1px);
+}
+.theme-toggle .label {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 /* v35: v18-mini nav flex layout (Charcoal QC bug 2 follow-up) */
