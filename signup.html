@@ -440,6 +440,12 @@ header.v18-mini > .theme-toggle {
   flex-shrink: 0;
   align-self: center;
 }
+
+/* v35: Theme toggle dual-label visibility */
+.theme-toggle .label-dark { display: inline; }
+.theme-toggle .label-light { display: none; }
+html[data-theme="warm-light"] .theme-toggle .label-dark { display: none; }
+html[data-theme="warm-light"] .theme-toggle .label-light { display: inline; color: var(--brand); }
 </style><meta property="og:title" content="Begin - PocketPlot Universe">
 <meta property="og:description" content="Free PocketPlot account: 3 stories/day, branching interactive storytelling.">
 <meta property="og:image" content="/pocketplot_06_og-card-1200x630.jpg">

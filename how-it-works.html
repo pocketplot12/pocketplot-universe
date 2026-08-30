@@ -477,6 +477,12 @@ header.v18-mini > .theme-toggle {
   flex-shrink: 0;
   align-self: center;
 }
+
+/* v35: Theme toggle dual-label visibility */
+.theme-toggle .label-dark { display: inline; }
+.theme-toggle .label-light { display: none; }
+html[data-theme="warm-light"] .theme-toggle .label-dark { display: none; }
+html[data-theme="warm-light"] .theme-toggle .label-light { display: inline; color: var(--brand); }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
