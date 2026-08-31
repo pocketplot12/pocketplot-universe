@@ -3180,7 +3180,8 @@ tr:last-child td{border-bottom:none}
 .log{font-family:var(--mono);font-size:12px;background:var(--ink);color:var(--hi);padding:14px;border-radius:12px;line-height:1.7;max-height:160px;overflow-y:auto;margin-top:14px}
 .log .ts{color:var(--moss2);font-size:11px;margin-right:8px}
 pre.story{white-space:pre-wrap;font-family:var(--serif);font-size:14px;line-height:1.7;background:var(--paper2);padding:18px;border-radius:12px;color:var(--ink);max-height:300px;overflow-y:auto}
-</style></head><body>
+</style><link rel="stylesheet" href="/style.css?v=35">
+</head><body>
 <header>
   <div class="wordmark">Pocket<i>Plot</i> · Admin</div>
   <nav class="nav">
@@ -3275,7 +3276,8 @@ form{margin-bottom:24px;background:#fff;border:1px solid var(--paper3);border-ra
 .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--paper3);text-decoration:none;display:inline-block;margin-left:6px}
 pre.story{white-space:pre-wrap;font-family:var(--serif);font-size:16px;line-height:1.75;background:#fff;border:1px solid var(--paper3);padding:24px;border-radius:14px;color:var(--ink)}
 .meta{font-family:var(--mono);font-size:12px;color:var(--faint);margin-bottom:14px}
-</style></head><body>
+</style><link rel="stylesheet" href="/style.css?v=35">
+</head><body>
 <header><div class="wordmark">Pocket<i>Plot</i> · Preview</div></header>
 <div class="wrap">
   <h1>Generate a <i>preview</i> story</h1>
@@ -4148,7 +4150,8 @@ input:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px v
 
 .muted { color: var(--text-caption); }
 .faint { color: var(--text-faint); }
-</style><!doctype html><html><body style="margin:0;padding:0;background:#0e1a2e;font-family:Georgia,serif;">
+</style><!doctype html><html><head><link rel="stylesheet" href="/style.css?v=35"></head>
+<body style="margin:0;padding:0;background:#0e1a2e;font-family:Georgia,serif;">
 <div style="max-width:560px;margin:0 auto;padding:36px 28px;color:#f3e9d2;">
   <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#e6c879;margin-bottom:8px;">Welcome</div>
   <h1 style="font-family:Georgia,serif;font-size:28px;margin:0 0 14px;color:#f3e9d2;font-style:italic;">Welcome to PocketPlot Universe.</h1>
@@ -4231,7 +4234,8 @@ input:focus{outline:none;border-color:#7a9a6e;box-shadow:0 0 0 3px rgba(122,154,
 .flash{padding:10px 13px;border-radius:9px;font-size:13px;margin-bottom:14px;background:#fdf5e3;border:1px solid #d4a849;color:#7a6420}
 .flash.ok{background:#ecf3e3;border-color:#7a9a6e;color:#3d5a3a}
 .back{display:block;text-align:center;margin-top:16px;font-size:13px;color:#7a3d20;text-decoration:none}
-</style></head><body><div class="card">
+</style><link rel="stylesheet" href="/style.css?v=35">
+</head><body><div class="card">
 <div class="wordmark">Pocket<i>Plot</i></div>
 <h1>Sign in</h1>
 <p class="lead">Enter your email and we'll send you a one-tap sign-in link. No password to remember.</p>
@@ -5813,7 +5817,8 @@ h1{font-family:Fraunces;font-weight:500;font-size:26px;line-height:1.2;margin:10
 .btn:hover{background:#c46a3f}
 .btn.cancel{background:#fff;color:#1a241d;border:1px solid #d8cfb3}
 .btn.cancel:hover{border-color:#1a241d;color:#1a241d;background:#fff}
-</style></head><body>
+</style><link rel="stylesheet" href="/style.css?v=35">
+</head><body>
 <div class="card">
 <div class="tag">★ MOCK MODE</div>
 <div class="wordmark">Pocket<i>Plot</i></div>
