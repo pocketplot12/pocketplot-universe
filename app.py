@@ -2930,95 +2930,101 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
 
 SIGNUP_HTML = """<!doctype html>
 <html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Start your free story · PocketPlot</title>
-<meta property="og:title" content="Begin - PocketPlot Universe">
-<meta property="og:description" content="Free PocketPlot account: 3 stories/day, branching interactive storytelling. Begin your first world.">
-<meta property="og:image" content="/pocketplot_16_launch_banner.jpg">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Begin · PocketPlot Universe</title>
+<meta name="description" content="Begin your PocketPlot account. 18+ only.">
+<link rel="canonical" href="/signup">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+<meta property="og:title" content="Begin · PocketPlot Universe">
+<meta property="og:description" content="Begin your PocketPlot account. 18+ only.">
+<meta property="og:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
 <meta property="og:image:width" content="2560">
 <meta property="og:image:height" content="1414">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Begin - PocketPlot Universe">
-<meta name="twitter:description" content="Free PocketPlot account: 3 stories/day, branching interactive storytelling. Begin your first world.">
-<meta name="twitter:image" content="/pocketplot_16_launch_banner.jpg">
+<meta name="twitter:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --cream:#fdf6ec; --cream2:#f6ecd8; --cream3:#ecdfc3;
-  --ink:#2c2c2c; --body:#4a4a4a; --body2:#6a5d4a; --faint:#a89a85;
-  --moss:#5c7c5a; --mossD:#3e5a3c; --mossL:#a8c0a3;
-  --gold:#e2b45c; --goldD:#8a6420;
-  --terracotta:#c47a5a; --terracottaD:#a85a3a;
-  --serif:"Fraunces",Georgia,serif;
-  --sans:"Inter","Helvetica Neue",-apple-system,sans-serif;
-}
+:root{--bg:#1a1410;--bg-el:#211a14;--ink:#f4e8d3;--ink2:#d8cba8;--muted:#8a7a64;--brand:#e8b85c;--brand-dim:#b88a3a;--serif:"Fraunces",Georgia,serif;--body:"EB Garamond",Georgia,serif;--sans:"Inter",sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--body);background:var(--cream);line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(180deg,var(--cream) 0%, var(--cream2) 100%)}
-a{color:inherit;text-decoration:none}
-h1,h2,h3{font-family:var(--serif);color:var(--ink);font-weight:500;line-height:1.15;letter-spacing:-.01em}
-h1{font-size:28px;margin-bottom:6px}
-h1 em{font-style:italic;color:var(--moss);font-weight:500}
-.lede{font-size:15px;color:var(--body2);font-family:var(--serif);font-style:italic;line-height:1.55;margin-bottom:24px}
-.card{background:#fff;border:1px solid var(--cream3);border-radius:18px;padding:32px 30px;width:100%;max-width:420px;box-shadow:0 24px 50px rgba(60,40,20,.08), 0 2px 8px rgba(60,40,20,.04);position:relative}
-.card::before{content:"Free to start";position:absolute;top:-10px;left:30px;background:var(--moss);color:#fff;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:4px 12px;border-radius:99px}
-.card.pro::before{content:"Upgrade to Pro";background:var(--gold);color:#3a2a10}
-.brand{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink);margin-bottom:20px;display:flex;align-items:center;gap:8px}
-.brand .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--terracotta))}
-.brand em{color:var(--moss);font-style:italic;font-weight:500}
+body{font-family:var(--body);color:var(--ink);background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased}
+.card{max-width:440px;width:100%;background:var(--bg-el);border:1px solid var(--brand-dim);border-radius:12px;padding:32px 28px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.6)}
+.brand{font-family:var(--serif);font-size:20px;font-weight:500;color:var(--ink);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--brand)}
+.brand em{font-style:italic;color:var(--brand);font-weight:400}
+.eyebrow{font-family:var(--sans);font-size:11px;letter-spacing:0.18em;color:var(--brand);text-transform:uppercase;margin-bottom:6px;font-weight:600}
+h1{font-family:var(--serif);font-style:italic;font-size:30px;color:var(--ink);margin-bottom:10px;line-height:1.2;font-weight:500}
+.lede{font-family:var(--body);font-style:italic;font-size:15px;color:var(--ink2);margin-bottom:22px;line-height:1.5}
 .field{margin-bottom:14px}
-.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mossD);margin-bottom:5px}
-.field input{width:100%;padding:13px 14px;border:1.5px solid var(--cream3);border-radius:10px;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--cream);transition:all .15s;box-sizing:border-box}
-.field input:focus{outline:none;border-color:var(--moss);background:#fff;box-shadow:0 0 0 4px rgba(92,124,90,.12)}
-.field-row{display:grid;grid-template-columns:1fr 90px;gap:10px}
-.btn{width:100%;background:var(--terracotta);color:#fff;border:none;padding:14px;border-radius:10px;font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:.02em;cursor:pointer;margin-top:6px;transition:background .12s}
-.btn:hover{background:var(--terracottaD)}
-.privacy{font-size:11.5px;color:var(--faint);text-align:center;margin-top:10px;line-height:1.5}
-.privacy a{color:var(--mossD);text-decoration:underline;text-decoration-color:var(--mossL);text-underline-offset:2px}
-.flash{padding:11px 14px;border-radius:9px;font-size:13.5px;margin-bottom:14px;background:#fdf5e3;border:1px solid var(--gold);color:#7a6420}
-.flash.ok{background:#ecf3e3;border-color:var(--moss);color:var(--mossD)}
-.flash.err{background:#fbe5e1;border-color:var(--terracotta);color:#7a3d20}
-.alt{text-align:center;margin-top:18px;font-size:13px;color:var(--body2)}
-.alt a{color:var(--mossD);text-decoration:underline;text-decoration-color:var(--mossL);text-underline-offset:2px}
-.plan-note{font-size:12.5px;color:var(--body2);margin-top:8px;padding:10px 12px;background:var(--cream2);border-radius:8px;font-style:italic;font-family:var(--serif)}
-</style></head>
-<body>
-<div class="card {% if plan == 'pro' %}pro{% endif %}">
+.field label{display:block;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;text-transform:uppercase}
+.field input{width:100%;padding:12px 13px;border:1.5px solid #3a2e1f;border-radius:8px;font-family:var(--body);font-size:15px;color:var(--ink);background:var(--bg);transition:border-color 200ms}
+.field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(232,184,92,0.18)}
+.checkbox{display:flex;gap:10px;margin:14px 0;padding:12px;background:rgba(232,184,92,0.08);border:1px solid var(--brand-dim);border-radius:8px}
+.checkbox input{width:16px;height:16px;margin-top:2px;accent-color:var(--brand);flex-shrink:0;cursor:pointer}
+.checkbox label{font-family:var(--body);font-size:13px;color:var(--ink2);line-height:1.5;cursor:pointer}
+.checkbox a{color:var(--brand);text-decoration:underline}
+.btn{width:100%;background:var(--brand);color:var(--bg);border:none;padding:13px;border-radius:8px;font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background 200ms, transform 100ms}
+.btn:hover{background:var(--brand-dim);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.foot{text-align:center;font-family:var(--body);font-size:13px;color:var(--muted);margin-top:18px}
+.foot a{color:var(--brand);text-decoration:underline}
+.flash{padding:10px 13px;border-radius:8px;font-size:13.5px;margin-bottom:14px}
+.flash-err{background:rgba(232,92,92,0.12);border:1px solid #e85c5c;color:#ff8e8e}
+.flash-ok{background:rgba(108,184,108,0.12);border:1px solid #6cb86c;color:#8ed68e}
+</style>
+</head><body>
+<div class="card">
   <div class="brand"><span class="dot"></span>Pocket<em>Plot</em></div>
-  <h1>Start your <em>{% if plan == 'pro' %}Pro trial{% else %}free story{% endif %}</em></h1>
-  <p class="lede">Your first branching world, ready in minutes. Takes 90 seconds.</p>
+  <p class="eyebrow">{% if plan == "pro" %}Pro plan{% else %}Free tier{% endif %}</p>
+  <h1>{% if plan == "pro" %}Begin your Pro trial{% else %}Begin your account{% endif %}</h1>
+  <p class="lede">18+ only. No parental controls. No kids' content. Branching interactive storytelling.</p>
+
   {% with messages = get_flashed_messages(with_categories=true) %}
-    {% for cat, msg in messages %}<div class="flash {{cat}}">{{msg}}</div>{% endfor %}
-  {% endwith %}
-  <form method="post" action="/subscribe">
-    {% if plan == 'pro' %}<input type="hidden" name="plan" value="pro">{% endif %}
-    <div class="field">
-      <label>Parent email</label>
-      <input type="email" name="email" required placeholder="you@example.com" autocomplete="email">
-    </div>
-    <div class="field field-row">
-      <div>
-        <label>Child's name</label>
-        <input type="text" name="child_name" required placeholder="e.g. Wren" minlength="1" maxlength="40">
-      </div>
-      <div>
-        <label>Age</label>
-        <input type="number" name="child_age" min="2" max="12" required placeholder="5">
-      </div>
-    </div>
-    {% if plan == 'pro' %}
-      <div class="plan-note">After signup you'll be redirected to a secure Stripe Checkout for the $4.99/month Pro plan. Cancel any time.</div>
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="flash-{{ "err" if category == "err" else "ok" }}">{{ msg }}</div>
+      {% endfor %}
     {% endif %}
-    <button class="btn" type="submit">{% if plan == 'pro' %}Continue to Pro checkout &rarr;{% else %}Send my first story now &rarr;{% endif %}</button>
+  {% endwith %}
+
+  <form method="post" action="/begin">
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label for="display_name">Display name</label>
+      <input type="text" id="display_name" name="display_name" required minlength="2" maxlength="32" placeholder="How you will appear in stories">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
+    </div>
+
+    <div class="checkbox">
+      <input type="checkbox" id="age_confirmed" name="age_confirmed" value="1" required>
+      <label for="age_confirmed">I am 18 or older. PocketPlot is an adults-only platform with branching interactive storytelling that may include mature themes.</label>
+    </div>
+
+    <div class="checkbox">
+      <input type="checkbox" id="terms_accepted" name="terms_accepted" value="1" required>
+      <label for="terms_accepted">I agree to the <a href="/terms">Terms of Service</a> and <a href="/terms">Privacy Notice</a>.</label>
+    </div>
+
+    <button type="submit" class="btn">{% if plan == "pro" %}Start Pro trial{% else %}Begin account{% endif %}</button>
   </form>
-  <p class="privacy">By signing up you agree to receive a PocketPlot story notification. You can pause or unsubscribe from your <a href="/me">account page</a> any time. We never share your data.</p>
-  <p class="alt">Already have an account? <a href="/login">Sign in &rarr;</a></p>
+
+  <p class="foot">
+    Already have an account? <a href="/login">Sign in</a>
+    &nbsp;·&nbsp;
+    See <a href="/pricing">plans</a>
+  </p>
 </div>
-</body></html>
-"""
+</body></html>"""
 
 @app.route("/", methods=["GET"])
 def index():
@@ -3462,6 +3468,87 @@ def admin_csv():
         for r in rows:
             w.writerow([r["id"], r["email"], r["child_name"], r["child_age"], r["active"], r["created_at"], r["last_sent_at"]])
     return send_from_directory(APP_DIR, "subscribers.csv", as_attachment=True)
+
+
+# =====================================================================
+# ADULT ONBOARDING (v38)
+# =====================================================================
+
+def _ensure_v38_schema():
+    conn = db()
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(subscribers)").fetchall()]
+    if "display_name" not in cols:
+        conn.execute("ALTER TABLE subscribers ADD COLUMN display_name TEXT DEFAULT ''")
+    if "password_hash" not in cols:
+        conn.execute("ALTER TABLE subscribers ADD COLUMN password_hash TEXT DEFAULT ''")
+    conn.commit()
+    conn.close()
+
+try:
+    _ensure_v38_schema()
+except Exception as e:
+    log.warning("v38 schema migration failed: %s", e)
+
+
+def _hash_password(pw):
+    import hashlib
+    salt = b"pocketplot-v38"
+    return hashlib.pbkdf2_hmac("sha256", pw.encode("utf-8"), salt, 100000).hex()
+
+
+
+
+@app.route("/begin", methods=["POST"])
+def begin_signup():
+    email = (request.form.get("email") or "").strip().lower()
+    display_name = (request.form.get("display_name") or "").strip()
+    password = request.form.get("password") or ""
+    age_confirmed = request.form.get("age_confirmed") in ("1", "on", "true")
+    terms_accepted = request.form.get("terms_accepted") in ("1", "on", "true")
+
+    if not age_confirmed:
+        flash("You must confirm you are 18+ to use PocketPlot.", "err")
+        return redirect(url_for("signup_page"))
+    if not terms_accepted:
+        flash("You must accept the Terms of Service to continue.", "err")
+        return redirect(url_for("signup_page"))
+    if not email or "@" not in email or "." not in email:
+        flash("Please enter a valid email address.", "err")
+        return redirect(url_for("signup_page"))
+    if len(display_name) < 2 or len(display_name) > 32:
+        flash("Display name must be 2-32 characters.", "err")
+        return redirect(url_for("signup_page"))
+    if len(password) < 8:
+        flash("Password must be at least 8 characters.", "err")
+        return redirect(url_for("signup_page"))
+
+    pw_hash = _hash_password(password)
+    conn = db()
+    try:
+        conn.execute(
+            "INSERT INTO subscribers(email, child_name, child_age, active, created_at, display_name, password_hash) VALUES (?,?,?,1,?,?,?)",
+            (email, display_name, 18, dt.datetime.utcnow().isoformat(timespec="seconds"),
+             display_name, pw_hash)
+        )
+        conn.commit()
+    except sqlite3.IntegrityError:
+        conn.close()
+        flash("That email is already registered. Try signing in.", "err")
+        return redirect(url_for("login"))
+    conn.close()
+
+    conn = db()
+    row = conn.execute("SELECT * FROM subscribers WHERE email=?", (email,)).fetchone()
+    conn.close()
+    if row:
+        session["subscriber_id"] = row["id"]
+        session["email"] = email
+        session["display_name"] = display_name
+
+    flash(f"Welcome to PocketPlot, {display_name}.", "ok")
+    return redirect(url_for("me"))
+
+
 
 # =====================================================================
 # REVIEW QUEUE (Phase 4 — admin approval before stories are sent)
