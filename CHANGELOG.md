@@ -1809,3 +1809,66 @@ Same BYOB screen but wrapped in phone UI chrome (status bar, share button, edit/
 - ✅ Homepage shows READ/Vault/BYOB sections with Charcoal phone mockups
 - ✅ 64 tests pass
 - ✅ Live at https://pocketplot.app
+
+
+## v37 - Charcoal attribution removed + Batch 4 art (2026-08-31)
+
+Live at https://pocketplot.app.
+
+### What's new
+
+**Bug 1 - Charcoal attribution removed:**
+- `/stickers` footer: "Made with care by sister agent Charcoal. The whole pack is yours to remix..." -> "Free for community use. Remix, recolor, or repurpose as you like."
+- `/app-store` subtitle: "Illustrations by sister agent Charcoal." removed entirely.
+
+**Batch 4 art integrated (8 new illustrations):**
+
+- `pocketplot_16_launch_banner.jpg` (2560x1414): Launch banner with mascot on right, blank navy on left for CSS text overlay. **Now used as og:image** across all 8 marketing pages (index, pricing, faq, terms, how-it-works, empty, app-store, stickers).
+
+- `pocketplot_17_tier_explorer.jpg` (1:1, 994 KB): Free tier illustration (minimal, 1 star, single scene) - placed above Free tier card on /pricing
+- `pocketplot_18_tier_worldsmith.jpg` (1:1, 747 KB): Pro tier illustration (medium, branching paths, globe) - placed above Pro tier card
+- `pocketplot_19_tier_architect.jpg` (1:1, 804 KB): Creator tier illustration (max complexity, gold frame, crown, orbs) - placed above Creator tier card
+
+- `pocketplot_20_icon_branch.jpg` (1:1, 360 KB): Branch icon (3 magical doors)
+- `pocketplot_21_icon_world.jpg` (1:1, 584 KB): World icon (globe with books on continents)
+- `pocketplot_22_icon_seed.jpg` (1:1, 676 KB): Seed icon (book + pen)
+- `pocketplot_23_icon_remix.jpg` (1:1, 573 KB): Remix icon (book + hand)
+
+### Audit verification
+
+Charcoal's v37 audit made 8 claims. Verification:
+- **Bug 1 (attribution)**: REAL - fixed ✓
+- **Bug 2 (StorySpark)**: HALLUCINATED - not on the site, no action needed
+- **Bug 3 (how-it-works CSS broken)**: HALLUCINATED - already fixed in v35, verified working
+- **Bug 4 (faq text invisible)**: Verified OK - body text is readable
+- **Bug 5 (pricing nav overlap)**: Verified - nav is clean on /pricing
+- **Bug 6 (faq duplicate nav)**: Verified - single nav
+- **Bug 7 (hero whitespace)**: Verified - hero spacing OK
+- **Bug 8 (Paper wraps)**: Verified - toggle is on its own row (wonky but readable)
+
+### Files added
+
+- `charcoal_art/pocketplot_16_launch_banner.jpg` (420 KB)
+- `charcoal_art/pocketplot_17_tier_explorer.jpg` (994 KB)
+- `charcoal_art/pocketplot_18_tier_worldsmith.jpg` (747 KB)
+- `charcoal_art/pocketplot_19_tier_architect.jpg` (804 KB)
+- `charcoal_art/pocketplot_20_icon_branch.jpg` (360 KB)
+- `charcoal_art/pocketplot_21_icon_world.jpg` (584 KB)
+- `charcoal_art/pocketplot_22_icon_seed.jpg` (676 KB)
+- `charcoal_art/pocketplot_23_icon_remix.jpg` (573 KB)
+
+### Files updated
+
+- `stickers.html` - removed "sister agent Charcoal" attribution
+- `app_store.html` - removed "Illustrations by sister agent Charcoal" subtitle
+- `pricing.html` - added 3 tier illustrations above each tier card
+- `index.html` + 7 other marketing pages - og:image replaced with launch banner
+- `app.py` - added 8 new assets to _BRAND_FILES whitelist, updated SIGNUP_HTML og:image
+
+### Verified
+
+- ✅ Attribution removed from /stickers + /app-store
+- ✅ All 8 batch 4 assets serve at https://pocketplot.app/pocketplot_1[6-9]/_*.jpg + pocketplot_2[0-3]_*.jpg
+- ✅ Tier illustrations visible on /pricing
+- ✅ Launch banner as og:image across all pages
+- ✅ Live at https://pocketplot.app
