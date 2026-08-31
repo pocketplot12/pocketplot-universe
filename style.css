@@ -1057,11 +1057,15 @@ a.cta-primary:active {
 /* v35: Mobile stats grid (Charcoal QC bug 4) */
 @media (max-width: 480px) {
   .stats {
+    display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 16px;
   }
   .stat {
     text-align: center;
+  }
+  .stat .n {
+    white-space: nowrap;
   }
 }
 
