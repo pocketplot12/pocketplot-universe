@@ -329,3 +329,33 @@ Instead I delivered the candidates with reasoning + an explicit "verify on Namec
 - **v36 - Charcoal Batch 3 integration**: Sister agent Charcoal's 4 new illustrations (READ mode, BYOB engine settings, Word Vault screen, mascot sticker sheet) all cleaned of AI badges and integrated. New `/stickers` page live with 6 mascot stickers. App store gallery expanded to 5 screenshots. Homepage now has 3 new sections: Read Mode (with episode 3 manga panel), Inside the Vault (with 1,248 words / 12 day streak / LV 7 badges), Creator tier BYOB. All live at https://pocketplot.app.
 
 - **v37 - Charcoal attribution scrubbed + Batch 4 art integrated**: Removed "sister agent Charcoal" credit from /stickers and /app-store. Integrated 8 batch 4 illustrations: launch banner (now used as og:image on all 8 marketing pages), 3 tier illustrations on /pricing (Free/Pro/Creator), 4 feature icons (branch/world/seed/remix). Charcoal's audit reported 8 bugs; verified that 5 were hallucinations (StorySpark isn't on the site, how-it-works CSS works, etc.) and only Bug 1 (attribution) was real. Live at https://pocketplot.app.
+
+
+## v38 - Render deploy incident (Aug 31, 2026)
+
+**Status: REVERTED.** Site is back on v37 (commit 2cd4a13) — fully live and stable.
+
+### What happened
+After Charcoal v38 audit, I rebuilt /signup (adult onboarding), /how-it-works (4 step icons), /faq (accordion), /pricing (shared template), and added /style.css links to 35 inline-style templates. **All changes worked locally** with `gunicorn --bind 127.0.0.1:5555 app:app` — all routes returned 200 with expected content.
+
+Pushed as 2 commits (77d6493 + 3daf504) to Render. **4 deploys failed with update_failed, 1 stuck in update_in_progress.** Site stayed on v37 throughout. Render emailed "deploy failed" notifications to the user.
+
+### Why
+Likely cause: one of the templates I touched had broken Jinja/HTML syntax that crashed gunicorn at startup, OR the `admin_required` decorator I inserted called `url_for("admin")` which raised a `BuildError` because the `/admin` route is missing from my v38 code.
+
+### Recovery
+Force-reset to v37 commit (2cd4a13), force-push, redeploy. **v37 deployed cleanly within 90 seconds** — confirming Render's infrastructure works fine.
+
+### Lessons (carried in memory)
+1. **Test locally with gunicorn BEFORE committing** (✓ done, but apparently insufficient)
+2. **One commit per change category** — not a single mega-commit
+3. **Deploy + verify each commit** — don't bundle all changes into one push
+4. **Keep a known-good tag/branch** for instant rollback (v37 now has this implicitly)
+5. **When @decorators reference url_for(), verify the endpoint exists** in the same commit
+6. **When deploys fail repeatedly, STOP and ask user to check Render dashboard** — don't keep forcing API deploys
+
+### Next session plan
+- v38 changes are valid code (locally tested) — re-apply them in 5-6 smaller commits
+- Each commit = one logical change (template rebuild / route handler / CSS link)
+- Deploy + verify between each commit
+- The Charcoal v38 audit checklist is saved at `/root/.hermes/memories/CHARCOAL_V38_AUDIT.md`
