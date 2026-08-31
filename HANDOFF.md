@@ -325,3 +325,5 @@ Instead I delivered the candidates with reasoning + an explicit "verify on Namec
   - Added inline v18-mini flex layout to faq/terms/how-it-works/signup (each has its own inline <style>)
   - Added inline theme-toggle dual-label visibility CSS to those pages
   - Replaced minimal .theme-toggle rule with full v31 styling (inline-flex, brass border, padding, gap, etc)
+
+- **v36 - Charcoal Batch 3 integration**: Sister agent Charcoal's 4 new illustrations (READ mode, BYOB engine settings, Word Vault screen, mascot sticker sheet) all cleaned of AI badges and integrated. New `/stickers` page live with 6 mascot stickers. App store gallery expanded to 5 screenshots. Homepage now has 3 new sections: Read Mode (with episode 3 manga panel), Inside the Vault (with 1,248 words / 12 day streak / LV 7 badges), Creator tier BYOB. All live at https://pocketplot.app.

@@ -1744,3 +1744,68 @@ Removed duplicate "Tech-Victorian Edition" footer from how-it-works.html (was th
 - ✅ /how-it-works has 1 header, 1 footer, legible body text, single "Paper" toggle label
 - ✅ Mobile stats display in 2×2 grid under 480px
 - ✅ Live at https://pocketplot.app
+
+
+## v36 - Charcoal Batch 3 art integration (2026-08-31)
+
+Sister agent Charcoal sent 4 new illustrations + 3-page README. Cleaned (AI watermarks removed) and integrated into https://pocketplot.app.
+
+### What's new
+
+**Asset 12 - READ mode screenshot (`pocketplot_12_screenshot-read.jpg`):**
+9:16 portrait showing Episode 3 manga panel (detective with lantern in rain, speech bubble "This way, before the streetlights die", page 3 of 10, tap-to-turn page curl). For the Read mode section on homepage and the app store page. New homepage section "Read Mode / The storybook, in your pocket." explains the slower illustrated mode.
+
+**Asset 13 - BYOB engine settings (`pocketplot_13_screenshot-byob.jpg`):**
+9:16 portrait showing Creator-tier Bring Your Own Brain settings (API base URL field, API key connected badge, model picker with gpt-4o-mini, moderation filter toggle, TEST CONNECTION button, 100 calls/day). For /seed creator area and Creator-tier messaging. New homepage section "Creator tier / Bring your own brain." explains the BYOB model.
+
+**Asset 13b - BYOB engine settings FRAMED (`pocketplot_13b_screenshot-byob-framed.jpg`):**
+Same BYOB screen but wrapped in phone UI chrome (status bar, share button, edit/save buttons). For app store detail pages or context that needs the phone frame.
+
+**Asset 14 - Word Vault screen (`pocketplot_14_screenshot-vault.jpg`):**
+9:16 portrait showing Word Vault (mascot on top of vault door, gem words inside, 3 stat pills: 1,248 WORDS / 12 DAY STREAK / LV 7, 8 badge medals in 2×4 grid: FIRST WORD, FLAME 7, NIGHT OWL, HOPPER, MARATHON, WORDSMITH, EXPLORER, CENTURY, streak progress bar). For Word Vault section and gamification pages. New homepage section "Inside the Vault / The screen, in your pocket." shows the actual app screen.
+
+**Asset 15 - Mascot sticker sheet (`pocketplot_15_sticker-sheet.jpg`):**
+1:1 square, cream background, 6 die-cut mascot poses (waving with sparkles, sleeping Zzz + moon, writing with grad cap, holding golden key, hearts, party hat). For Telegram/WhatsApp sticker packs, PWA share, empty states, loading screens, merch. New dedicated `/stickers` page with all 6 stickers + descriptions + credit to Charcoal.
+
+### New pages live
+
+- **`/stickers`** - Mascot sticker pack showcase. Hero illustration + 6 sticker cards with emoji + name + description. Charcoal credited.
+
+### Updated sections
+
+- **`index.html`** - Added 3 new sections after existing content:
+  - "Read Mode / The storybook, in your pocket." (with asset 12 phone mockup)
+  - "Inside the Vault / The screen, in your pocket." (with asset 14 phone mockup)
+  - "Creator tier / Bring your own brain." (with asset 13 phone mockup)
+
+- **`app_store.html`** - Gallery now has 5 phone screenshots side-by-side:
+  - Screenshot 01: Branching Worlds (PLAY mode)
+  - Screenshot 02: 16 Worlds (Library)
+  - Screenshot 03: Read Mode (manga panel)
+  - Screenshot 04: Engine Settings (BYOB)
+  - Screenshot 05: Word Vault (gamification)
+
+### Files added
+
+- `charcoal_art/pocketplot_12_screenshot-read.jpg`
+- `charcoal_art/pocketplot_13_screenshot-byob.jpg`
+- `charcoal_art/pocketplot_13b_screenshot-byob-framed.jpg`
+- `charcoal_art/pocketplot_14_screenshot-vault.jpg`
+- `charcoal_art/pocketplot_15_sticker-sheet.jpg`
+- `stickers.html` (new page)
+
+### Files updated
+
+- `app.py` - added 5 batch 3 assets to _BRAND_FILES whitelist, added /stickers Flask route
+- `index.html` - added 3 new sections (Read, Vault, BYOB)
+- `app_store.html` - added 3 new screenshot cards (Read, Engine, Vault)
+- `.gitignore` - already whitelisted charcoal_art/
+
+### Verified
+
+- ✅ All 5 batch 3 assets served at https://pocketplot.app/pocketplot_1[2-5]_*.jpg
+- ✅ /stickers page live with all 6 stickers
+- ✅ /app-store shows all 5 phone screenshots
+- ✅ Homepage shows READ/Vault/BYOB sections with Charcoal phone mockups
+- ✅ 64 tests pass
+- ✅ Live at https://pocketplot.app
