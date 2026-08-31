@@ -11523,6 +11523,3 @@ def _debug_routes_route():
             'methods': sorted(rule.methods - {'HEAD', 'OPTIONS'}),
         })
     return {'routes': sorted(routes, key=lambda r: r['rule'])}, 200, {'Content-Type': 'application/json'}
-
-
-SIGNUP_PRO_HTML
