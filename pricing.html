@@ -1,6 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-light';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = prefersLight ? 'warm-light' : DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pricing · PocketPlot Universe</title>
@@ -41,8 +59,8 @@
 .tier-feats li { font-family: var(--font-body); font-size: 14px; color: var(--text-body); padding: 8px 0; border-bottom: 1px solid var(--border); }
 .tier-feats li:last-child { border-bottom: none; }
 .tier-feats li.dim { color: var(--text-faint); }
-.tier-feats li::before { content: '\\2713'; color: var(--brand); font-weight: 700; margin-right: 8px; }
-.tier-feats li.dim::before { content: '\\2014'; color: var(--text-faint); }
+.tier-feats li::before { content: '\✓'; color: var(--brand); font-weight: 700; margin-right: 8px; }
+.tier-feats li.dim::before { content: '\—'; color: var(--text-faint); }
 .tier-cta { display: inline-block; width: 100%; padding: 14px; border-radius: var(--radius-md); font-family: var(--font-ui); font-weight: 700; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; text-align: center; transition: all 200ms; }
 .tier-cta.primary { background: var(--brand); color: #1a1410; }
 .tier-cta.primary:hover { background: var(--brand-light); }

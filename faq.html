@@ -1,6 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-light';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = prefersLight ? 'warm-light' : DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>FAQ · PocketPlot Universe</title>
@@ -31,7 +49,7 @@
 .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; cursor: pointer; font-family: var(--font-ui); font-size: 15px; font-weight: 600; color: var(--text-heading); background: transparent; border: none; width: 100%; text-align: left; transition: background 200ms; }
 .faq-q:hover { background: var(--brand-soft); }
 .faq-q::after { content: "+"; font-size: 22px; color: var(--brand); font-weight: 300; margin-left: 12px; flex-shrink: 0; }
-.faq-item.open .faq-q::after { content: "\\2212"; }
+.faq-item.open .faq-q::after { content: "\−"; }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height 300ms ease; font-family: var(--font-body); font-size: 16px; color: #3a2d1f; line-height: 1.65; background: var(--bg); }
 .faq-item.open .faq-a { max-height: 800px; }
 .faq-a-inner { padding: 4px 22px 22px; }

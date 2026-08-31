@@ -2930,6 +2930,24 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
 
 SIGNUP_HTML = """<!doctype html>
 <html lang="en"><head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-light';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = prefersLight ? 'warm-light' : DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>Begin · PocketPlot Universe</title>
@@ -2948,33 +2966,32 @@ SIGNUP_HTML = """<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v=35">
 <style>
-:root{--bg:#1a1410;--bg-el:#211a14;--ink:#f4e8d3;--ink2:#d8cba8;--muted:#8a7a64;--brand:#e8b85c;--brand-dim:#b88a3a;--serif:"Fraunces",Georgia,serif;--body:"EB Garamond",Georgia,serif;--sans:"Inter",sans-serif}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--body);color:var(--ink);background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased}
-.card{max-width:440px;width:100%;background:var(--bg-el);border:1px solid var(--brand-dim);border-radius:12px;padding:32px 28px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.6)}
-.brand{font-family:var(--serif);font-size:20px;font-weight:500;color:var(--ink);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{max-width:440px;width:100%;border:1px solid var(--brand-dim);border-radius:12px;padding:32px 28px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.45)}
+.brand{font-family:var(--font-display);font-size:20px;font-weight:500;color:var(--text-heading);margin-bottom:20px;display:flex;align-items:center;gap:8px}
 .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--brand)}
 .brand em{font-style:italic;color:var(--brand);font-weight:400}
-.eyebrow{font-family:var(--sans);font-size:11px;letter-spacing:0.18em;color:var(--brand);text-transform:uppercase;margin-bottom:6px;font-weight:600}
-h1{font-family:var(--serif);font-style:italic;font-size:30px;color:var(--ink);margin-bottom:10px;line-height:1.2;font-weight:500}
-.lede{font-family:var(--body);font-style:italic;font-size:15px;color:var(--ink2);margin-bottom:22px;line-height:1.5}
+.eyebrow{font-family:var(--font-ui);font-size:11px;letter-spacing:0.18em;color:var(--brand);text-transform:uppercase;margin-bottom:6px;font-weight:600}
+h1{font-family:var(--font-display);font-style:italic;font-size:30px;color:var(--text-heading);margin-bottom:10px;line-height:1.2;font-weight:500}
+.lede{font-family:var(--font-body);font-style:italic;font-size:15px;color:var(--text-body);margin-bottom:22px;line-height:1.5}
 .field{margin-bottom:14px}
-.field label{display:block;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;text-transform:uppercase}
-.field input{width:100%;padding:12px 13px;border:1.5px solid #3a2e1f;border-radius:8px;font-family:var(--body);font-size:15px;color:var(--ink);background:var(--bg);transition:border-color 200ms}
-.field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(232,184,92,0.18)}
-.checkbox{display:flex;gap:10px;margin:14px 0;padding:12px;background:rgba(232,184,92,0.08);border:1px solid var(--brand-dim);border-radius:8px}
+.field label{display:block;font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--text-caption);margin-bottom:6px;text-transform:uppercase}
+.field input{width:100%;padding:12px 13px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:15px;color:var(--text-heading);background:var(--bg);transition:border-color 200ms}
+.field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.checkbox{display:flex;gap:10px;margin:14px 0;padding:12px;background:var(--brand-soft);border:1px solid var(--brand-dim);border-radius:8px}
 .checkbox input{width:16px;height:16px;margin-top:2px;accent-color:var(--brand);flex-shrink:0;cursor:pointer}
-.checkbox label{font-family:var(--body);font-size:13px;color:var(--ink2);line-height:1.5;cursor:pointer}
+.checkbox label{font-family:var(--font-body);font-size:13px;color:var(--text-body);line-height:1.5;cursor:pointer}
 .checkbox a{color:var(--brand);text-decoration:underline}
-.btn{width:100%;background:var(--brand);color:var(--bg);border:none;padding:13px;border-radius:8px;font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background 200ms, transform 100ms}
-.btn:hover{background:var(--brand-dim);transform:translateY(-1px)}
+.btn{width:100%;background:var(--brand);color:var(--bg);border:none;padding:13px;border-radius:8px;font-family:var(--font-ui);font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background 200ms, transform 100ms}
+.btn:hover{background:var(--brand-light);transform:translateY(-1px)}
 .btn:active{transform:translateY(0)}
-.foot{text-align:center;font-family:var(--body);font-size:13px;color:var(--muted);margin-top:18px}
+.foot{text-align:center;font-family:var(--font-body);font-size:13px;color:var(--text-caption);margin-top:18px}
 .foot a{color:var(--brand);text-decoration:underline}
 .flash{padding:10px 13px;border-radius:8px;font-size:13.5px;margin-bottom:14px}
-.flash-err{background:rgba(232,92,92,0.12);border:1px solid #e85c5c;color:#ff8e8e}
-.flash-ok{background:rgba(108,184,108,0.12);border:1px solid #6cb86c;color:#8ed68e}
+.flash-err{background:var(--bg-elevated);border:1px solid var(--danger);color:var(--danger)}
+.flash-ok{background:var(--bg-elevated);border:1px solid var(--success);color:var(--success)}
 </style>
 </head><body>
 <div class="card">
@@ -4218,38 +4235,85 @@ def send_magic_link_email(subscriber_row, token):
     return _send_raw_email(subscriber_row["email"], subject, plain, html)
 
 # ---- /login routes ----
-LOGIN_REQUEST_HTML = """<!doctype html><html><head><meta charset="utf-8"><title>Sign in · PocketPlot</title>
+LOGIN_REQUEST_HTML = """<!doctype html>
+<html lang="en"><head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-light';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = prefersLight ? 'warm-light' : DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sign in · PocketPlot</title>
+<link rel="canonical" href="/login">
+<meta name="description" content="Sign in to PocketPlot Universe. Branching interactive storytelling for adults.">
+<meta property="og:title" content="Sign in · PocketPlot">
+<meta property="og:description" content="Sign in to your PocketPlot account.">
+<meta property="og:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
+<meta property="og:image:width" content="2560">
+<meta property="og:image:height" content="1414">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
-<style>body{font-family:Karla;background:#f6f0e1;color:#1a241d;margin:0;padding:0;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.card{background:#fff;border:1px solid #d8cfb3;border-radius:18px;padding:36px 32px;max-width:420px;width:90%;box-shadow:0 24px 50px rgba(26,36,29,.08)}
-.wordmark{font-family:Fraunces;font-size:22px;margin-bottom:8px}.wordmark i{color:#7a9a6e;font-style:italic}
-h1{font-family:Fraunces;font-weight:500;font-size:28px;line-height:1.2;margin:8px 0 12px}
-.lead{color:#5a6a4a;font-size:14px;line-height:1.5;margin-bottom:24px}
-label{display:block;font-size:11px;letter-spacing:.06em;font-weight:600;text-transform:uppercase;color:#3d5a3a;margin-bottom:5px}
-input{width:100%;padding:11px 13px;border:1px solid #d8cfb3;border-radius:9px;font-family:Karla;font-size:15px;background:#f6f0e1;box-sizing:border-box}
-input:focus{outline:none;border-color:#7a9a6e;box-shadow:0 0 0 3px rgba(122,154,110,.18)}
-.btn{width:100%;margin-top:14px;background:#c46a3f;color:#fff;border:none;padding:13px;border-radius:9px;font-family:Karla;font-weight:700;font-size:14px;cursor:pointer}
-.btn:hover{background:#a8572f}
-.flash{padding:10px 13px;border-radius:9px;font-size:13px;margin-bottom:14px;background:#fdf5e3;border:1px solid #d4a849;color:#7a6420}
-.flash.ok{background:#ecf3e3;border-color:#7a9a6e;color:#3d5a3a}
-.back{display:block;text-align:center;margin-top:16px;font-size:13px;color:#7a3d20;text-decoration:none}
-</style><link rel="stylesheet" href="/style.css?v=35">
-</head><body><div class="card">
-<div class="wordmark">Pocket<i>Plot</i></div>
-<h1>Sign in</h1>
-<p class="lead">Enter your email and we'll send you a one-tap sign-in link. No password to remember.</p>
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% for cat,msg in messages %}<div class="flash {{cat}}">{{msg}}</div>{% endfor %}
-{% endwith %}
-<form method="post" action="/login">
-<label>Your email</label>
-<input type="email" name="email" required value="{{email or ''}}" placeholder="you@example.com">
-<button class="btn" type="submit">Send sign-in link</button>
-</form>
-<a class="back" href="/">← Back to home</a>
-</div></body></html>
-"""
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v=35">
+<style>
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{max-width:420px;width:100%;border:1px solid var(--brand-dim);border-radius:12px;padding:32px 28px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.45)}
+.brand{font-family:var(--font-display);font-size:20px;font-weight:500;color:var(--text-heading);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--brand)}
+.brand em{font-style:italic;color:var(--brand);font-weight:400}
+h1{font-family:var(--font-display);font-style:italic;font-size:30px;color:var(--text-heading);margin-bottom:10px;line-height:1.2;font-weight:500}
+.lead{font-family:var(--font-body);font-style:italic;font-size:15px;color:var(--text-body);margin-bottom:22px;line-height:1.5}
+.field{margin-bottom:14px}
+.field label{display:block;font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--text-caption);margin-bottom:6px;text-transform:uppercase}
+.field input{width:100%;padding:12px 13px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:15px;color:var(--text-heading);background:var(--bg);transition:border-color 200ms;box-sizing:border-box}
+.field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.btn{width:100%;background:var(--brand);color:var(--bg);border:none;padding:13px;border-radius:8px;font-family:var(--font-ui);font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background 200ms, transform 100ms}
+.btn:hover{background:var(--brand-light);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.foot{text-align:center;font-family:var(--font-body);font-size:13px;color:var(--text-caption);margin-top:18px}
+.foot a{color:var(--brand);text-decoration:underline}
+.flash{padding:10px 13px;border-radius:8px;font-size:13.5px;margin-bottom:14px;background:var(--bg-elevated);border:1px solid var(--brand);color:var(--text-heading)}
+</style>
+</head><body>
+<div class="card">
+  <div class="brand"><span class="dot"></span>Pocket<em>Plot</em></div>
+  <h1>Sign in</h1>
+  <p class="lead">Enter your email and we will send you a one-time sign-in link. No password needed.</p>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}{% for cat, msg in messages %}<div class="flash">{{msg}}</div>{% endfor %}{% endif %}
+  {% endwith %}
+
+  <form method="post" action="/login">
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autofocus placeholder="you@example.com">
+    </div>
+    <button type="submit" class="btn">Send sign-in link</button>
+  </form>
+
+  <p class="foot">
+    Don't have an account? <a href="/signup">Begin</a>
+  </p>
+</div>
+</body></html>"""
 
 @app.route("/audio/<int:sub_id>/<path:filename>", methods=["GET"])
 def serve_audio(sub_id: int, filename: str):
