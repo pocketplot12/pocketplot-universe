@@ -50,6 +50,14 @@
 .sticker-emoji { font-size: 56px; line-height: 1; margin-bottom: 12px; }
 .sticker-card-name { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--text-heading); margin-bottom: 4px; }
 .sticker-card-desc { font-family: var(--font-body); font-size: 14px; color: var(--text-body); line-height: 1.5; }
+
+.sticker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 32px; }
+.sticker-card { display: block; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; text-align: center; text-decoration: none; color: inherit; transition: transform 200ms, border-color 200ms; }
+.sticker-card:hover { transform: translateY(-4px); border-color: var(--brand); }
+.sticker-img { width: 140px; height: 140px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
+.sticker-img img { width: 100%; height: 100%; object-fit: contain; }
+.sticker-card h3 { font-family: var(--font-display); font-style: italic; font-size: 20px; color: var(--text-heading); margin: 0 0 6px; }
+.sticker-card p { font-family: var(--font-body); font-size: 13px; color: var(--text-body); margin: 0; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -81,37 +89,37 @@
   </figure>
 
   <div class="sticker-grid">
-    <div class="sticker-card reveal">
-      <div class="sticker-emoji">📖✨</div>
+    <a href="/sticker_png_01_wave.png" download="Hi!.png" class="sticker-card reveal">
+      <div class="sticker-emoji"><img src="/sticker_png_01_wave.png" alt="Hi! sticker" loading="lazy"></div>
       <div class="sticker-card-name">Hi!</div>
       <div class="sticker-card-desc">Waving with sparkles. Use for "hello", "welcome", or "great to meet you".</div>
     </div>
-    <div class="sticker-card reveal">
-      <div class="sticker-emoji">🌙💤</div>
+    <a href="/sticker_png_03_sleep.png" download="Sleepy.png" class="sticker-card reveal">
+      <div class="sticker-emoji"><img src="/sticker_png_03_sleep.png" alt="Sleepy sticker" loading="lazy"></div>
       <div class="sticker-card-name">Sleepy</div>
       <div class="sticker-card-desc">Mid-story, late-night reading, when you're between worlds.</div>
-    </div>
-    <div class="sticker-card reveal">
-      <div class="sticker-emoji">🎓✍️</div>
+    </a>
+    <a href="/sticker_png_04_think.png" download="Writing.png" class="sticker-card reveal">
+      <div class="sticker-emoji"><img src="/sticker_png_04_think.png" alt="Writing sticker" loading="lazy"></div>
       <div class="sticker-card-name">Writing</div>
       <div class="sticker-card-desc">For when you're authoring your next chapter or stuck on a plot point.</div>
-    </div>
-    <div class="sticker-card reveal">
-      <div class="sticker-emoji">🔑✨</div>
+    </a>
+    <a href="/sticker_png_05_dance.png" download="Unlocked.png" class="sticker-card reveal">
+      <div class="sticker-emoji"><img src="/sticker_png_05_dance.png" alt="Unlocked sticker" loading="lazy"></div>
       <div class="sticker-card-name">Unlocked</div>
       <div class="sticker-card-desc">New world opened. Achievement unlocked. A choice has consequences.</div>
-    </div>
-    <div class="sticker-card reveal">
-      <div class="sticker-emoji">💕</div>
+    </a>
+    <a href="/sticker_png_02_read.png" download="Hearts.png" class="sticker-card reveal">
+      <div class="sticker-emoji"><img src="/sticker_png_02_read.png" alt="Hearts sticker" loading="lazy"></div>
       <div class="sticker-card-name">Hearts</div>
       <div class="sticker-card-desc">Romance genre active. Ship just sailed. Two characters, one timeline.</div>
-    </div>
-    <div class="sticker-card reveal">
-      <div class="sticker-emoji">🎉</div>
-      <div class="sticker-card-name">Celebrate</div>
+    </a>
+    <a href="/sticker_png_06_celebrate.png" download="Celebrate.png" class="sticker-card reveal">
+      <div class="sticker-emoji"><img src="/sticker_png_06_celebrate.png" alt="Celebrate sticker" loading="lazy"></div>
+     </a>class="sticker-card-name">Celebrate</div>
       <div class="sticker-card-desc">Badge unlocked. Streak extended. Story completed. Just because.</div>
     </div>
-  </div>
+  </a>
 
   <p style="text-align:center;font-family:var(--font-body);color:var(--text-caption);max-width:32em;margin:0 auto 24px;">
     Free for community use. Remix, recolor, or repurpose as you like.
