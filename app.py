@@ -2934,14 +2934,14 @@ SIGNUP_HTML = """<!doctype html>
 <title>Start your free story · PocketPlot</title>
 <meta property="og:title" content="Begin - PocketPlot Universe">
 <meta property="og:description" content="Free PocketPlot account: 3 stories/day, branching interactive storytelling. Begin your first world.">
-<meta property="og:image" content="/pocketplot_06_og-card-1200x630.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="/pocketplot_16_launch_banner.jpg">
+<meta property="og:image:width" content="2560">
+<meta property="og:image:height" content="1414">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Begin - PocketPlot Universe">
 <meta name="twitter:description" content="Free PocketPlot account: 3 stories/day, branching interactive storytelling. Begin your first world.">
-<meta name="twitter:image" content="/pocketplot_06_og-card-1200x630.jpg">
+<meta name="twitter:image" content="/pocketplot_16_launch_banner.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
