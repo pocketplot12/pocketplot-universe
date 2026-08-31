@@ -10737,12 +10737,12 @@ _BRAND_FILES = {
     'pocketplot_22_icon_seed.jpg',
     'pocketplot_23_icon_remix.jpg',
     'stickers.html',
-    "sticker_png_01_wave.png":      "sticker_png_01_wave.png",
-    "sticker_png_02_read.png":      "sticker_png_02_read.png",
-    "sticker_png_03_sleep.png":     "sticker_png_03_sleep.png",
-    "sticker_png_04_think.png":     "sticker_png_04_think.png",
-    "sticker_png_05_dance.png":     "sticker_png_05_dance.png",
-    "sticker_png_06_celebrate.png": "sticker_png_06_celebrate.png",
+    'sticker_png_01_wave.png',
+    'sticker_png_02_read.png',
+    'sticker_png_03_sleep.png',
+    'sticker_png_04_think.png',
+    'sticker_png_05_dance.png',
+    'sticker_png_06_celebrate.png',
 
 }
 @app.route('/<path:filename>', methods=['GET'])
