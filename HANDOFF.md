@@ -359,3 +359,31 @@ Force-reset to v37 commit (2cd4a13), force-push, redeploy. **v37 deployed cleanl
 - Each commit = one logical change (template rebuild / route handler / CSS link)
 - Deploy + verify between each commit
 - The Charcoal v38 audit checklist is saved at `/root/.hermes/memories/CHARCOAL_V38_AUDIT.md`
+
+
+### v38.1-v38.5 recovery: incremental rebuild SUCCEEDED (Aug 31, 2026)
+
+After the v38 deploy failures, I split the changes into 6 small commits and deployed each one separately. All 5 deploys went live successfully within 30-60 seconds each:
+
+| Commit | Description | Live |
+|---|---|---|
+| 46c13975 | v38.1: Adult onboarding (/signup + /begin) | ✓ |
+| b418e2a6 | v38.2: how-it-works 4 step icons | ✓ |
+| ceb49af5 | v38.3: faq accordion + WCAG AA | ✓ |
+| ea63281b | v38.4: pricing tier illustrations | ✓ |
+| ce95e6f2 | v38.5: /style.css in 5 auth/admin templates | ✓ |
+
+The bug I suspected was the duplicate `signup_pro_route` (Flask refused to register two endpoints with the same function name) + my code referenced `url_for("me_page")` when the actual function was `me`. Both bugs were caught by local gunicorn testing BEFORE pushing.
+
+### Updated lessons
+1. **When local gunicorn passes but Render deploy fails**: suspect duplicate Flask endpoint names (same `@app.route` + same `def name` will crash `add_url_rule`)
+2. **url_for endpoints MUST match exact function names** — Flask uses the function name as the endpoint unless explicitly overridden
+3. **Split work into small commits, test each one with gunicorn locally** — much safer than mega-commits
+
+### Remaining v38 work (not yet done)
+- Link `/style.css` in the remaining 46 templates (LIBRARY, SEED, REMIX, PROFILE, SHARE, PLAY, READ, INVENTORY, ONBOARDING, STREAK, etc.) — these are auth-required routes so less critical
+- Add `/help` assistant page (referenced in /faq CTA)
+- Real Stripe checkout on /subscribe (currently 404)
+- 18+ age-gate before signup (currently just a checkbox)
+- Per-genre landing pages for SEO
+- Story-specific OG share cards

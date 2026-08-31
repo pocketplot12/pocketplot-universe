@@ -1872,3 +1872,32 @@ Charcoal's v37 audit made 8 claims. Verification:
 - ✅ Tier illustrations visible on /pricing
 - ✅ Launch banner as og:image across all pages
 - ✅ Live at https://pocketplot.app
+
+
+## v38 - Charcoal v38 audit fixes (Aug 31, 2026)
+
+Sister agent Charcoal identified 8 specific audit bugs (the "ghost bugs" - 5 routes never migrated to shared stylesheet + adult signup + WCAG AA contrast). All fixes applied via incremental commits to avoid the previous "mega-commit = deploy failure" incident.
+
+### Commits
+- **v38.1 (46c13975)** — Adult onboarding: `/signup` rebuilt with email + display_name + password + 18+ consent + Terms; `/begin POST` handler with PBKDF2 password hashing; `/signup-pro` redirects to `/signup?plan=pro`; v38 schema migration adds `display_name` + `password_hash` columns to subscribers table
+- **v38.2 (b418e2a6)** — `/how-it-works` rebuilt on shared `/style.css` template with FOUR step icons (pocketplot_20-23: Branch, World, Seed, Remix) replacing the old 3-step SVG
+- **v38.3 (ceb49af5)** — `/faq` rebuilt on shared `/style.css` template with accordion (collapsed by default) + WCAG AA contrast (deep brown #3a2d1f on cream, cream #d8cba8 on navy)
+- **v38.4 (ea63281b)** — `/pricing` rebuilt on shared `/style.css` template with 3 Charcoal tier illustrations (pocketplot_17-19: Explorer, Worldsmith, Architect)
+- **v38.5 (ce95e6f2)** — Linked `/style.css` in 5 critical auth/admin templates (ADMIN_HTML, PREVIEW_HTML, LOGIN_REQUEST_HTML, ME_HTML, MOCK_CHECKOUT_HTML)
+
+### Verified live
+- All 5 deploys went live within 30-60 seconds (no update_failed)
+- All routes return 200
+- `/signup` shows adult form (no Parent email / Child name / Age 5)
+- `/begin POST` works end-to-end (creates subscriber, logs in, redirects to /me)
+- `/how-it-works` shows 4/4 Charcoal icons
+- `/faq` has 1/1 header + accordion JS working
+- `/pricing` shows 3/3 Charcoal tier illustrations
+
+### Lessons learned (carried in memory)
+1. Test locally with `gunicorn --bind 127.0.0.1:5555 app:app` BEFORE committing
+2. **One commit per change category** — never bundle template rebuilds + route handlers + CSS links into a single mega-commit
+3. Deploy + verify each commit individually
+4. When `@admin_required` calls `url_for("admin")`, verify the `/admin` endpoint exists
+5. When deploys fail repeatedly, STOP and ask user to check Render dashboard → Logs tab
+6. Render's deploy infrastructure works fine — issues are always code issues
