@@ -2987,9 +2987,9 @@ h1 em{font-style:italic;color:var(--moss);font-weight:500}
 </style></head>
 <body>
 <div class="card {% if plan == 'pro' %}pro{% endif %}">
-  <div class="brand"><span class="dot"></span>Story<em>Spark</em></div>
+  <div class="brand"><span class="dot"></span>Pocket<em>Plot</em></div>
   <h1>Start your <em>{% if plan == 'pro' %}Pro trial{% else %}free story{% endif %}</em></h1>
-  <p class="lede">A fresh, personalised bedtime story in your inbox by 8 pm tonight. Takes 90 seconds.</p>
+  <p class="lede">Your first branching world, ready in minutes. Takes 90 seconds.</p>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% for cat, msg in messages %}<div class="flash {{cat}}">{{msg}}</div>{% endfor %}
   {% endwith %}
@@ -3014,7 +3014,7 @@ h1 em{font-style:italic;color:var(--moss);font-weight:500}
     {% endif %}
     <button class="btn" type="submit">{% if plan == 'pro' %}Continue to Pro checkout &rarr;{% else %}Send my first story now &rarr;{% endif %}</button>
   </form>
-  <p class="privacy">By signing up you agree to receive a bedtime story each night. You can pause or unsubscribe from your <a href="/me">account page</a> any time. We never share your data.</p>
+  <p class="privacy">By signing up you agree to receive a PocketPlot story notification. You can pause or unsubscribe from your <a href="/me">account page</a> any time. We never share your data.</p>
   <p class="alt">Already have an account? <a href="/login">Sign in &rarr;</a></p>
 </div>
 </body></html>
@@ -4372,7 +4372,7 @@ h1 i{font-style:italic;color:var(--moss);font-weight:400}
    fetched in `me()` from the deliveries table. #}
 <div class="section learning-dashboard">
   <h2>Learning dashboard</h2>
-  <p class="learning-subtitle">Vocabulary your family is building together, one bedtime at a time.</p>
+  <p class="learning-subtitle">Vocabulary your family is building together, one story at a time.</p>
 
   <div class="ld-grid">
     <div class="ld-stat">
@@ -4473,7 +4473,7 @@ h1 i{font-style:italic;color:var(--moss);font-weight:400}
   <h2>Delivery</h2>
   <div class="toggle-row">
     <div>
-      <div class="label">Daily bedtime story</div>
+      <div class="label">Daily branching story</div>
       <div class="desc">{{'Active — one fresh story lands in your inbox at 8 pm UTC.' if sub.active else 'Paused — no stories will be sent until you resume.'}}</div>
     </div>
     <form method="post" action="/me/toggle">
@@ -4822,11 +4822,11 @@ def me():
     elif learning_this_month < 5:
         learning_progress_label = f"Great start! {learning_this_month} word{'s' if learning_this_month != 1 else ''} so far this month."
     elif learning_this_month < 15:
-        learning_progress_label = f"Nice momentum! {learning_this_month} words this month — a healthy bedtime vocabulary."
+        learning_progress_label = f"Nice momentum! {learning_this_month} words this month — a healthy reading vocabulary."
     elif learning_this_month < 30:
         learning_progress_label = f"Almost there — {learning_this_month}/30 for the month. Pro parents average 28."
     else:
-        learning_progress_label = "Bedtime Word Master — 30 words this month! 🎉"
+        learning_progress_label = "Story Word Master — 30 words this month! 🎉"
     # Pull the recent deliveries for the word list
     rows = conn.execute(
         "SELECT word, word_tier, word_definition, sent_at FROM deliveries "
@@ -5388,7 +5388,7 @@ GAME_UPSELL_HTML = """<!doctype html>
   <h1>Tonight\'s Adventure</h1>
   <p><b>Walk through {{child_name}}\'s story.</b> Pick up the Word of the Day, answer Story Talk questions at the story signs, and meet the helper at the end of the path.</p>
   <ul class="features">
-    <li>A new mini-game themed to every bedtime story</li>
+    <li>A new mini-game themed to every branching story</li>
     <li>The Word of the Day appears as a glowing orb to collect</li>
     <li>Story Talk questions surface in dialogue with the helper</li>
     <li>Free for PocketPlot Pro subscribers</li>
@@ -5553,7 +5553,7 @@ ul.feats li .x{color:var(--faint);font-weight:700;font-size:14px;margin-top:2px;
     <div class="price">$0<span class="unit">/mo</span></div>
     <div class="price-sub">Forever.</div>
     <ul class="feats">
-      <li><span class="check">✓</span><span>One fresh bedtime story every night</span></li>
+      <li><span class="check">✓</span><span>One fresh branching story every day</span></li>
       <li><span class="check">✓</span><span>Personalised — your child is the hero</span></li>
       <li><span class="check">✓</span><span>200–300 words, ready for one good yawn</span></li>
       <li><span class="check">✓</span><span>Manage delivery from your account page</span></li>
@@ -11525,4 +11525,4 @@ def _debug_routes_route():
     return {'routes': sorted(routes, key=lambda r: r['rule'])}, 200, {'Content-Type': 'application/json'}
 
 
-
+SIGNUP_PRO_HTML
