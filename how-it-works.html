@@ -1,764 +1,119 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>
-(function() {
-  const STORAGE_KEY = 'pocketplot-theme';
-  // Valid themes
-  const THEMES = ['warm-dark', 'warm-light'];
-  const DEFAULT_THEME = 'warm-light';
-  try {
-    let theme = localStorage.getItem(STORAGE_KEY);
-    if (!theme || !THEMES.includes(theme)) {
-      // Detect system preference
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-      theme = DEFAULT_THEME;
-      localStorage.setItem(STORAGE_KEY, theme);
-    }
-    document.documentElement.setAttribute('data-theme', theme);
-    // Also expose theme on a CSS class for legacy support (if anyone uses it)
-    document.documentElement.classList.add('theme-' + theme);
-  } catch (e) {
-    // localStorage might fail (private mode, etc) — fallback to default
-    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
-  }
-})();
-</script>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>How it works · PocketPlot Universe</title>
-<style>
-
-
-/* v26: Apple-style refinement overlay */
-:root {
-  /* Type scale - tighter, more disciplined */
-  --type-xs:   0.75rem;     /* 12px */
-  --type-sm:   0.875rem;    /* 14px */
-  --type-base: 1rem;        /* 16px */
-  --type-md:   1.125rem;    /* 18px */
-  --type-lg:   1.25rem;     /* 20px */
-  --type-xl:   1.5rem;      /* 24px */
-  --type-2xl:  2rem;        /* 32px */
-  --type-3xl:  2.75rem;     /* 44px */
-  --type-4xl:  3.75rem;     /* 60px */
-  --type-5xl:  5rem;        /* 80px */
-
-  /* Spacing - 4px base */
-  --space-1:   0.25rem;     /* 4px */
-  --space-2:   0.5rem;      /* 8px */
-  --space-3:   0.75rem;     /* 12px */
-  --space-4:   1rem;        /* 16px */
-  --space-5:   1.5rem;      /* 24px */
-  --space-6:   2rem;        /* 32px */
-  --space-7:   3rem;        /* 48px */
-  --space-8:   4rem;        /* 64px */
-  --space-9:   6rem;        /* 96px */
-
-  /* Radii - Apple-style: tighter */
-  --radius-sm:  6px;
-  --radius:     10px;
-  --radius-lg:  16px;
-  --radius-xl:  22px;
-
-  /* Shadows - subtle, layered */
-  --shadow-sm:  0 1px 2px rgba(0,0,0,.18);
-  --shadow:     0 4px 12px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.14);
-  --shadow-lg:  0 14px 32px rgba(0,0,0,.32), 0 4px 10px rgba(0,0,0,.18);
-
-  /* Muted accent (Apple-style: one restrained accent color) */
-  --accent-cyan:    rgba(93, 222, 240, 0.55);
-  --accent-cyan-2:  rgba(93, 222, 240, 0.85);
-  --accent-magenta: rgba(232, 90, 138, 0.45);
-  --accent-glow:    rgba(240, 181, 74, 0.18);
-
-  /* Glass surface (frosted backdrop) */
-  --glass:        rgba(15, 26, 46, 0.72);
-  --glass-blur:   saturate(180%) blur(18px);
-
-  /* Motion */
-  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-fast:    140ms;
-  --dur:         220ms;
-  --dur-slow:    400ms;
-}
-
-/* v26 hero composition - Apple-style restraint */
-.hero {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: var(--space-7);
-  align-items: center;
-  padding: var(--space-9) 0 var(--space-8);
-  position: relative;
-}
-@media (max-width: 880px) {
-  .hero { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-7) 0 var(--space-6); }
-}
-
-/* Subtle gradient mesh behind the hero - replaces ornate corner brackets */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 140%;
-  height: 120%;
-  background:
-    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(93,222,240,0.06), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(240,181,74,0.06), transparent 60%),
-    radial-gradient(ellipse 50% 60% at 50% 30%, rgba(232,200,121,0.04), transparent 70%);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.eyebrow {
-  font-family: var(--font-sans);
-  font-size: var(--type-xs);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent-light);
-  font-weight: 500;
-  margin-bottom: var(--space-3);
-}
-
-h1, .hero h1 {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(2.75rem, 6vw, 5rem);
-  letter-spacing: -0.025em;
-  line-height: 1.05;
-  color: var(--ink);
-  margin: 0 0 var(--space-4);
-}
-.hero h1 em {
-  font-style: italic;
-  color: var(--accent-light);
-  font-weight: 400;
-}
-
-.lead, .hero p {
-  font-family: var(--font-sans);
-  font-size: var(--type-md);
-  line-height: 1.55;
-  color: var(--ink-soft);
-  margin: 0 0 var(--space-5);
-  max-width: 30em;
-}
-
-.hero .art {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.hero-mark {
-  width: 100%;
-  max-width: 460px;
-  height: auto;
-  filter: drop-shadow(0 30px 60px rgba(240,181,74,.18)) drop-shadow(0 6px 12px rgba(0,0,0,.3));
-  animation: hero-mark-float 8s ease-in-out infinite;
-}
-@keyframes hero-mark-float {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50%      { transform: translateY(-8px) rotate(-1deg); }
-}
-
-/* v26 buttons - Apple-style gradient + glow */
-.btn, button.btn, a.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  padding: 14px 26px;
-  font-family: var(--font-sans);
-  font-size: var(--type-base);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  border-radius: var(--radius);
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform var(--dur) var(--ease-out),
-              box-shadow var(--dur) var(--ease-out),
-              background var(--dur) var(--ease-out);
-  position: relative;
-  -webkit-tap-highlight-color: transparent;
-}
-.btn:hover { transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
-
-/* Primary - brass gradient + soft glow */
-.btn-primary, .btn:not(.secondary):not(.ghost) {
-  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent) 60%, var(--accent-warm) 100%);
-  color: #1a1410;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.25) inset,
-    0 0 0 1px rgba(201,160,78,.4),
-    0 8px 22px rgba(240,181,74,.18),
-    0 2px 6px rgba(0,0,0,.3);
-}
-.btn-primary:hover, .btn:not(.secondary):not(.ghost):hover {
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.3) inset,
-    0 0 0 1px rgba(232,200,121,.6),
-    0 14px 32px rgba(240,181,74,.32),
-    0 3px 8px rgba(0,0,0,.3);
-}
-
-/* Secondary - hairline outline, transparent fill */
-.btn-secondary {
-  background: transparent;
-  color: var(--ink);
-  border-color: rgba(232,200,121,.32);
-  backdrop-filter: blur(8px);
-}
-.btn-secondary:hover {
-  background: rgba(232,200,121,.08);
-  border-color: rgba(232,200,121,.55);
-}
-
-/* Ghost - text only with subtle hover */
-.btn-ghost {
-  background: transparent;
-  color: var(--accent-light);
-  border: none;
-  padding: 12px 18px;
-}
-.btn-ghost:hover { color: var(--amber-l); }
-
-/* v26 cards - clean hairline, generous whitespace */
-.card, .panel, .feature {
-  background: var(--bg-elevated);
-  border: 1px solid rgba(201,160,78,.18);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  position: relative;
-  transition: transform var(--dur) var(--ease-out),
-              border-color var(--dur) var(--ease-out),
-              background var(--dur) var(--ease-out);
-}
-.card:hover, .panel:hover, .feature:hover {
-  transform: translateY(-2px);
-  border-color: rgba(232,200,121,.36);
-  background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--surface) 100%);
-}
-
-/* Accent stripe (replaces heavy ornate top border) */
-.card.accent, .feature.accent {
-  position: relative;
-  overflow: hidden;
-}
-.card.accent::before, .feature.accent::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
-  opacity: 0.7;
-}
-
-/* v26 navigation - sticky + frosted glass */
-nav.main-nav, header.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--glass);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid rgba(201,160,78,.15);
-  padding: var(--space-3) var(--space-6);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-sans);
-  font-size: var(--type-sm);
-}
-
-nav.main-nav .nav-link {
-  color: var(--ink-soft);
-  text-decoration: none;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  transition: color var(--dur-fast), background var(--dur-fast);
-  position: relative;
-}
-nav.main-nav .nav-link:hover {
-  color: var(--accent-light);
-  background: rgba(232,200,121,.06);
-}
-nav.main-nav .nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -3px; left: 50%; transform: translateX(-50%);
-  width: 18px; height: 2px;
-  background: var(--accent);
-  border-radius: 1px;
-}
-
-/* v26 mobile bottom nav */
-@media (max-width: 880px) {
-  body { padding-bottom: 60px; }
-  .mobile-bottom-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: 56px;
-    background: var(--glass);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border-top: 1px solid rgba(201,160,78,.15);
-    z-index: 90;
-    justify-content: space-around;
-    align-items: center;
-    padding-bottom: env(safe-area-inset-bottom, 0);
-  }
-  .mobile-bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    color: var(--ink-faint);
-    text-decoration: none;
-    font-size: 11px;
-    font-family: var(--font-sans);
-    padding: 6px 12px;
-    min-width: 56px;
-    min-height: 44px;
-    justify-content: center;
-  }
-  .mobile-bottom-nav a.active { color: var(--accent-light); }
-  .mobile-bottom-nav a .icon { font-size: 18px; line-height: 1; }
-}
-@media (min-width: 881px) {
-  .mobile-bottom-nav { display: none; }
-}
-
-/* v26 section dividers - cleaner horizontal lines */
-.divider, .section-divider, hr {
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(232,200,121,.4) 50%, transparent 100%);
-  border: none;
-  margin: var(--space-6) 0;
-}
-
-/* v26 responsive typography */
-@media (max-width: 880px) {
-  body { font-size: 16px; }
-  h1 { font-size: 2.25rem; }
-  h2 { font-size: 1.75rem; }
-  h3 { font-size: 1.25rem; }
-  .wrap { padding: 0 var(--space-4); }
-}
-
-  :root { --navy:#0e1a2e; --navy-2:#15243f; --navy-3:#1f3460; --gold:#e6c879;
-          --gold-2:#d4b566; --cream:#f3e9d2; --muted:#9eb6d4; --faint:#7a8aa8; }
-  * { box-sizing:border-box; }
-  body { margin:0; padding:0; background:var(--bg); color:var(--text-body);
-         font-family:Karla, system-ui, sans-serif; line-height:1.6; }
-  .wrap { max-width:880px; margin:0 auto; padding:0 28px; }
-  header { padding:22px 0; border-bottom:1px solid var(--surface); }
-  .wordmark { font-family:'Fraunces', Georgia, serif; font-style:italic;
-              color:var(--brand); font-size:22px; font-weight:600; display:inline-block; }
-  .wordmark i { color:var(--text-body); font-style:italic; font-weight:400; }
-  nav { float:right; margin-top:8px; }
-  nav a { color:var(--text-body); text-decoration:none; margin-left:22px; font-size:13px;
-         letter-spacing:.05em; text-transform:uppercase; }
-  nav a:hover { color:var(--brand); }
-  nav a.cta { color:var(--bg); background:var(--brand); padding:10px 20px;
-              border-radius:99px; text-transform:none; letter-spacing:0; font-weight:700; }
-  section { padding:56px 0; border-top:1px solid var(--surface); }
-  h1 { font-family:'Fraunces', Georgia, serif; font-size:48px; margin:48px 0 16px; font-weight:600; line-height:1.1; }
-  h1 i { color:var(--brand); font-style:italic; }
-  h2 { font-family:'Fraunces', Georgia, serif; font-size:32px; margin:0 0 16px; font-weight:600; }
-  h2 i { color:var(--brand); font-style:italic; }
-  .eyebrow { font-size:11px; letter-spacing:.16em; text-transform:uppercase;
-             color:var(--brand); font-weight:700; margin-bottom:8px; display:block; }
-  .lead { font-family:'Fraunces', Georgia, serif; font-style:italic; color:var(--text-body);
-          font-size:18px; max-width:680px; margin:0 0 36px; }
-
-  /* Step blocks */
-  .step { background:var(--bg-elevated); border:1px solid var(--surface);
-          border-radius:14px; padding:32px; margin-bottom:18px;
-          display:grid; grid-template-columns:120px 1fr; gap:24px; align-items:start; }
-  .step .num { font-family:'Fraunces', Georgia, serif; font-style:italic;
-               font-size:72px; color:var(--brand); line-height:1; margin:0; }
-  .step h2 { margin:0 0 12px; font-size:24px; }
-  .step p { color:var(--text-body); font-size:14px; margin:0 0 12px; line-height:1.6; }
-  .step ul { margin:8px 0 0; padding-left:20px; color:var(--text-body); font-size:13px; }
-  .step li { margin-bottom:4px; }
-
-  /* Side-by-side comparison */
-  .compare { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-  .compare .col { background:var(--bg-elevated); border:1px solid var(--surface);
-                  border-radius:12px; padding:24px; }
-  .compare h3 { font-family:'Fraunces', Georgia, serif; font-size:18px;
-                color:var(--brand); margin:0 0 8px; font-weight:600; }
-  .compare p { font-family:'Fraunces', Georgia, serif; font-style:italic;
-                color:var(--text-body); font-size:14px; margin:0 0 12px; line-height:1.5; }
-  .compare .pill { display:inline-block; padding:3px 10px; border-radius:99px;
-                   background:var(--surface); color:var(--text-body); font-size:11px;
-                   font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-                   margin-bottom:10px; }
-
-  /* Q&A */
-  .qa { background:var(--bg-elevated); border:1px solid var(--surface);
-        border-radius:10px; padding:20px 24px; margin-bottom:12px; }
-  .qa h3 { font-family:'Fraunces', Georgia, serif; font-size:16px; color:var(--brand);
-           margin:0 0 6px; font-weight:600; }
-  .qa p { margin:0; color:var(--text-body); font-size:14px; }
-
-  .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
-  .btn { display:inline-block; background:var(--brand); color:var(--bg);
-         padding:14px 28px; border-radius:99px;
-         font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:15px;
-         text-decoration:none; border:1px solid var(--brand); cursor:pointer; }
-  .btn:hover { background:var(--gold-2); }
-  .btn.secondary { background:transparent; color:var(--brand); border:1px solid var(--brand); }
-  .btn.secondary:hover { background:var(--brand); color:var(--bg); }
-
-  footer { margin-top:60px; padding:28px 0; border-top:1px solid var(--surface);
-           color:var(--faint); font-size:13px; text-align:center; }
-
-  @media (max-width:720px) {
-    h1 { font-size:32px; }
-    .step { grid-template-columns:1fr; gap:14px; }
-    .step .num { font-size:48px; }
-    .compare { grid-template-columns:1fr; }
-  }
-
-
-/* v35: v18-mini nav flex layout (Charcoal QC bug 2 follow-up) */
-header.v18-mini {
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: nowrap;
-}
-header.v18-mini > .brand {
-  flex-shrink: 0;
-}
-header.v18-mini > nav.v18 {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-header.v18-mini > .theme-toggle {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px;
-  background: var(--bg-elevated);
-  border: 2px solid var(--brand);
-  border-radius: var(--radius-pill, 999px);
-  padding: 8px 16px 8px 14px;
-  font-family: var(--font-ui);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-body);
-  cursor: pointer;
-  transition: all 200ms ease;
-  white-space: nowrap;
-  flex-shrink: 0;
-  align-self: center;
-}
-.theme-toggle:hover {
-  border-color: var(--brand-light);
-  background: var(--brand-soft);
-  color: var(--text-heading);
-  transform: translateY(-1px);
-}
-.theme-toggle .label {
-  font-size: 13px;
-  letter-spacing: 0.02em;
-}
-.theme-toggle svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
-/* v35: v18-mini nav flex layout (Charcoal QC bug 2 follow-up) */
-header.v18-mini {
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: nowrap;
-}
-header.v18-mini > .brand {
-  flex-shrink: 0;
-}
-header.v18-mini > nav.v18 {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-header.v18-mini > .theme-toggle {
-  flex-shrink: 0;
-  align-self: center;
-}
-
-/* v35: Theme toggle dual-label visibility */
-.theme-toggle .label-dark { display: inline; }
-.theme-toggle .label-light { display: none; }
-html[data-theme="warm-light"] .theme-toggle .label-dark { display: none; }
-html[data-theme="warm-light"] .theme-toggle .label-light { display: inline; color: var(--brand); }
-</style>
+<meta name="description" content="PocketPlot is branching interactive storytelling for adults. Four doors: Branch, World, Seed, Remix.">
+<link rel="canonical" href="/how-it-works">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+<meta property="og:title" content="How it works · PocketPlot Universe">
+<meta property="og:description" content="From idea to a world in four doors: Branch, World, Seed, Remix.">
+<meta property="og:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
+<meta property="og:image:width" content="2560">
+<meta property="og:image:height" content="1414">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta property="og:title" content="How it works - PocketPlot Universe">
-<meta property="og:description" content="From idea to a world in three doors: branching-first narrative with BYOB and visual scene art.">
-<meta property="og:image" content="/pocketplot_16_launch_banner.jpg">
-<meta property="og:image:width" content="2560">
-<meta property="og:image:height" content="1414">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="How it works - PocketPlot Universe">
-<meta name="twitter:description" content="From idea to a world in three doors: branching-first narrative with BYOB and visual scene art.">
-<meta property="og:image" content="/pocketplot_16_launch_banner.jpg">
+<link rel="stylesheet" href="/style.css?v=35">
+<style>
+/* v38: how-it-works — shared template, 4 step icons */
+.hwk-page { max-width: 980px; margin: 0 auto; padding: 140px 24px 80px; }
+.hwk-hero { text-align: center; margin-bottom: 48px; }
+.hwk-eyebrow { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.16em; color: var(--brand); text-transform: uppercase; margin-bottom: 12px; }
+.hwk-title { font-family: var(--font-display); font-style: italic; font-size: clamp(36px, 6vw, 56px); color: var(--text-heading); font-weight: 500; line-height: 1.1; margin: 0 0 16px; }
+.hwk-lede { font-family: var(--font-body); font-style: italic; font-size: 18px; color: var(--text-body); line-height: 1.55; max-width: 38em; margin: 0 auto; }
+.hwk-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin: 56px 0; }
+.hwk-step { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 22px; text-align: center; }
+.hwk-step .step-icon { width: 120px; height: 120px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+.hwk-step .step-icon img { max-width: 100%; max-height: 100%; display: block; }
+.hwk-step .step-num { font-family: var(--font-display); font-style: italic; font-size: 36px; color: var(--brand); margin-bottom: 8px; }
+.hwk-step h3 { font-family: var(--font-display); font-size: 22px; color: var(--text-heading); margin: 8px 0 8px; font-weight: 500; }
+.hwk-step p { font-family: var(--font-body); font-size: 15px; color: var(--text-body); line-height: 1.55; margin: 0; }
+.hwk-three-doors { margin: 56px auto; max-width: 720px; text-align: center; }
+.hwk-three-doors img { width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: 0 30px 80px -20px rgba(0,0,0,0.45); }
+.hwk-faq { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px; margin-top: 56px; }
+.hwk-faq h2 { font-family: var(--font-display); font-style: italic; font-size: 30px; color: var(--text-heading); margin: 0 0 24px; }
+.hwk-faq h3 { font-family: var(--font-ui); font-size: 14px; color: var(--text-caption); text-transform: uppercase; letter-spacing: 0.1em; margin: 24px 0 8px; font-weight: 600; }
+.hwk-faq p { font-family: var(--font-body); font-size: 15px; color: var(--text-body); line-height: 1.6; margin: 0; }
+.hwk-cta { text-align: center; margin: 80px auto 0; padding: 56px 32px; background: var(--bg-elevated); border: 1px solid var(--brand); border-radius: var(--radius-lg); }
+.hwk-cta h2 { font-family: var(--font-display); font-style: italic; font-size: clamp(28px, 5vw, 40px); color: var(--text-heading); margin: 0 0 12px; font-weight: 500; }
+.hwk-cta p { font-family: var(--font-body); font-size: 16px; color: var(--text-body); margin: 0 0 24px; }
+@media (max-width: 720px) { .hwk-page { padding-top: 100px; } }
+</style>
 </head>
 <body>
-
-  <header class="v18-mini">
-    <a href="/" class="brand"><img src="/logo-halo-240.png" alt="PocketPlot Universe" width="40" height="37" class="brand-mark"><div class="wordmark-stack"><div class="wordmark-title">Pocket<em>Plot</em> Universe</div></div></a>
-    <nav class="v18">
-      <a href="/how-it-works" style="color:#e8c879">How it works</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/library">Library</a>
-      <a href="/seed">Seed</a>
-      <a href="/remix">Remix</a>
-      <a href="/faq">FAQ</a>
-      <a href="/signup" class="cta">Begin →</a>
-    </nav>
-    <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
-  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <svg class="icon-paper" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
-    <path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-  <span class="label label-dark">Night</span>
-  <span class="label label-light">Paper</span>
-</button>
-  </header>
-
-  <section>
-    <span class="eyebrow">How it works</span>
-    <h1>From <i>idea</i> to a world in three doors.</h1>
-    <p class="lead">PocketPlot Universe is the only writing platform that builds the story with you — branching choices, original art, and an engine you can shape yourself. Here's the full tour.</p>
+<header class="nav">
+  <a href="/" class="brand-mark"><img src="/logo-240.png" alt="" /><span class="word">PocketPlot Universe</span></a>
+  <nav class="nav-links">
+    <a href="/how-it-works" class="link" style="color:#e8c879">How it works</a>
+    <a href="/pricing" class="link">Pricing</a>
+    <a href="/library" class="link">Library</a>
+    <a href="/seed" class="link">Seed</a>
+    <a href="/remix" class="link">Remix</a>
+    <a href="/faq" class="link">FAQ</a>
+    <a href="/signup" class="cta">Begin →</a>
+  </nav>
+</header>
+<main class="hwk-page">
+  <section class="hwk-hero">
+    <p class="hwk-eyebrow">How it works</p>
+    <h1 class="hwk-title">From <em>idea</em> to a world in four doors.</h1>
+    <p class="hwk-lede">PocketPlot Universe is the only writing platform that builds the story with you — branching choices, original art, and an engine you can shape yourself. Here's the full tour.</p>
   </section>
 
-  <div style="margin:48px auto 32px;text-align:center;max-width:880px;">
-<figure class="how-it-works-art reveal" style="margin:48px auto 32px;max-width:900px;text-align:center">
-  <img src="/pocketplot_02_three-doors.jpg" alt="Three magical doors — purple star, gold ajar with light, teal digital — branching paths forking to tiny worlds"
-       loading="lazy"
-       style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);box-shadow:0 30px 80px -20px rgba(0,0,0,0.45)">
-</figure>
-</div>
+  <figure class="hwk-three-doors">
+    <img src="/pocketplot_02_three-doors.jpg" alt="Three magical doors — purple star, gold ajar with light, teal digital — branching paths forking to tiny worlds" loading="lazy">
+  </figure>
 
-<section>
-    <div class="step">
-      <div class="num">01</div>
-      <div>
-        <h2>Imagine a world.</h2>
-        <p>Open <b>/worlds/new</b> and pick a title, a genre (fantasy, sci-fi, noir, romance, adventure, horror), a tone (hopeful, grim, romantic, mysterious, comedic, epic), and a setting. The world is yours from line one.</p>
-        <p>Free and Pro tiers use the deterministic procedural engine — same seed produces the same story. Creator tier can route through your own LLM for richer output.</p>
-        <ul>
-          <li>Free: 3 short stories / day, max 300 words each</li>
-          <li>Pro: unlimited stories, max 3000 words</li>
-          <li>Creator: unlimited stories, max 5000 words + BYOB LLM</li>
-        </ul>
-      </div>
+  <section class="hwk-steps">
+    <div class="hwk-step">
+      <div class="step-icon"><img src="/pocketplot_20_icon_branch.jpg" alt="Branch icon" loading="lazy"></div>
+      <div class="step-num">01</div>
+      <h3>Branch</h3>
+      <p>Every world is a graph, not a list. Each scene has 2–3 choices that fork the story — and every choice shapes what comes next.</p>
     </div>
 
-    <div class="step">
-      <div class="num">02</div>
-      <div>
-        <h2>Pick an engine.</h2>
-        <p>Two engines, same interface. The default procedural engine draws from in-house word pools — original prose, no LLM, no chance of reproducing copyrighted material. The optional <b>BYOB</b> engine plugs your own OpenAI-compatible endpoint (OpenAI, OpenRouter, LiteLLM, Together, Mistral, Groq, or any local model with an shim) into the prose pipeline.</p>
-        <p>Both engines pass through the same content filter. Both produce original output. Both are yours to export.</p>
-        <p>Privacy &amp; encryption: API keys are stored encrypted at rest with PBKDF2 + HMAC. We never log the plaintext. You can delete them anytime.</p>
-      </div>
+    <div class="hwk-step">
+      <div class="step-icon"><img src="/pocketplot_21_icon_world.jpg" alt="World icon" loading="lazy"></div>
+      <div class="step-num">02</div>
+      <h3>World</h3>
+      <p>Choose a genre (fantasy, sci-fi, noir, romance, horror, and ten more), a tone, and a setting. The world is yours to name.</p>
     </div>
 
-    <div class="step">
-      <div class="num">03</div>
-      <div>
-        <h2>Read, choose, branch.</h2>
-        <p>Each episode opens with a 400-word beat. At the end of the beat, three doors appear — each one a different continuation. You pick one; the world's state updates; the next episode generates from there.</p>
-        <p>Up to ten episodes per world. After ten, the world concludes — you can start a new one, export the whole story as markdown, or just walk away.</p>
-        <p>Along the way, the engine tracks your <b>Word Vault</b> (every unique Word of the Day you've met), your <b>streak</b> (consecutive days of engagement), and eight <b>badges</b> (first story, first game, streak keeper, week-1 wonder, 10/25/50 words, fortnight streak).</p>
-      </div>
+    <div class="hwk-step">
+      <div class="step-icon"><img src="/pocketplot_22_icon_seed.jpg" alt="Seed icon" loading="lazy"></div>
+      <div class="step-num">03</div>
+      <h3>Seed</h3>
+      <p>Open /seed, pick a hook, and let the engine draft an opening scene. Tweak the prose, change a word, fork a path — your world starts to breathe.</p>
+    </div>
+
+    <div class="hwk-step">
+      <div class="step-icon"><img src="/pocketplot_23_icon_remix.jpg" alt="Remix icon" loading="lazy"></div>
+      <div class="step-num">04</div>
+      <h3>Remix</h3>
+      <p>Open any world in your library and fork it. Keep the bones, swap the genre, change the tone. Every world is remixable, nothing is locked.</p>
     </div>
   </section>
 
-  <section>
-    <span class="eyebrow">Side-by-side</span>
-    <h2>How the engines <i>compare</i>.</h2>
-    <div class="compare">
-      <div class="col">
-        <div class="pill">Default · all tiers</div>
-        <h3>Procedural engine</h3>
-        <p>Original prose from curated word pools. Deterministic: same seed produces the same story.</p>
-        <p style="color:var(--muted);font-style:normal;font-size:13px">
-          <b>Strengths:</b> zero external cost, zero hallucination, instant, fully private.<br>
-          <b>Limits:</b> slightly stiffer prose; less variation across genres.
-        </p>
-      </div>
-      <div class="col">
-        <div class="pill">Optional · Creator tier</div>
-        <h3>BYOB LLM engine</h3>
-        <p>Routes to your OpenAI-compatible endpoint. You bring the API key and model; we route the request and apply the content filter.</p>
-        <p style="color:var(--muted);font-style:normal;font-size:13px">
-          <b>Strengths:</b> richer prose, your favorite model, configurable.<br>
-          <b>Limits:</b> 100 external-API calls / day, costs on your provider.
-        </p>
-      </div>
-    </div>
+  <section class="hwk-faq">
+    <h2>Two engines. <em>Same</em> story.</h2>
+    <h3>Procedural (default, all tiers)</h3>
+    <p>The in-house PocketPlot engine writes a fresh scene from your prompt. The same prompt twice gives two different stories — the engine picks characters, sets the scene, and commits to a direction.</p>
+    <h3>BYOB (Creator tier)</h3>
+    <p>Bring Your Own Brain. Connect any OpenAI-compatible model — your API key, your guardrails, your budget. PocketPlot handles the response-side moderation so the story stays on rails.</p>
+    <h3>The 100 calls/day cap (Creator)</h3>
+    <p>Creator tier gets 100 BYOB calls per day. Enough for a writer who sketches daily, not a spammer. Reset at midnight UTC.</p>
   </section>
 
-  <section>
-    <span class="eyebrow">Frequently asked</span>
-    <h2>Top questions, <i>fast answers</i>.</h2>
-    <div class="qa"><h3>How long does it take to start?</h3><p>About 90 seconds. Email, display name, age (18+), check the boxes, hit Begin. Your first story arrives in your inbox (or the outbox folder) immediately.</p></div>
-    <div class="qa"><h3>Will my stories train any model?</h3><p>No. Your stories are yours. We don't train anything on them, we don't sell them, and we don't share them.</p></div>
-    <div class="qa"><h3>What happens to my worlds if I cancel?</h3><p>They stay in your account as read-only archives. Re-subscribe anytime and they're still there.</p></div>
-    <div class="qa"><h3>Can I bring my own LLM and image API?</h3><p>Yes — that's the Creator tier's whole point. Both go through the same content filter as the procedural engine. Paying for Creator doesn't unlock content that violates platform policy.</p></div>
-    <div class="qa"><h3>What content is allowed?</h3><p>Light violence, light romance, mature themes, strong language in moderation. Not allowed: NSFW, graphic gore, anything depicting minors in sexual contexts, hate speech. <a href="/faq#content-policy" style="color:var(--gold)">Full Content Policy →</a></p></div>
+  <section class="hwk-cta">
+    <h2>Ready when <em>you</em> are.</h2>
+    <p>Begin free. Upgrade anytime. Cancel anytime. 18+ only.</p>
+    <a href="/signup" class="cta-primary">Begin your first world</a>
   </section>
-
-  <section style="text-align:center">
-    <h2 style="margin-bottom:8px">Ready when you are.</h2>
-    <p class="lead" style="margin:0 auto 28px">Begin free. Upgrade anytime.</p>
-    <div class="cta-row" style="justify-content:center">
-      <a class="btn" href="/signup">Begin →</a>
-      <a class="btn secondary" href="/pricing">See pricing</a>
-    </div>
-  </section>
-
-  <footer>
-    <a href="/">Home</a>
-    <a href="/pricing">Pricing</a>
-    <a href="/faq">FAQ</a>
-    <a href="/help">Help</a>
-    <a href="/contact">Contact</a>
-    <a href="/status">Status</a>
-    <a href="/roadmap">Roadmap</a>
-    <p style="margin-top:18px">PocketPlot Universe · 18+ · original content only</p>
-  </footer>
-</div>
-
-  
-
-<script>
-// v33 motion: scroll-triggered reveals + count-up animations
-(function() {
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // If reduced motion, reveal everything immediately and bail
-  if (prefersReducedMotion) {
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      el.classList.add('visible');
-    });
-    document.querySelectorAll('.stat .n').forEach(function(el) {
-      el.classList.add('visible');
-    });
-    return;
-  }
-
-  // IntersectionObserver: add .visible when 15% in view
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -60px 0px'  // trigger slightly before fully visible
-    });
-
-    // Observe all .reveal elements
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      observer.observe(el);
-    });
-
-    // Observe stat numbers (have their own .n class)
-    document.querySelectorAll('.stat .n').forEach(function(el) {
-      observer.observe(el);
-    });
-  } else {
-    // Fallback: just show everything
-    document.querySelectorAll('.reveal, .stat .n').forEach(function(el) {
-      el.classList.add('visible');
-    });
-  }
-
-  // Toggle button: add spinning class momentarily on click
-  var toggleBtn = document.getElementById('theme-toggle-btn');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', function() {
-      toggleBtn.classList.add('spinning');
-      setTimeout(function() {
-        toggleBtn.classList.remove('spinning');
-      }, 400);
-    });
-  }
-
-  // Count-up animation for .stat .n when it gets .visible
-  document.querySelectorAll('.stat .n').forEach(function(el) {
-    var targetText = (el.textContent || '').trim();
-    var targetNum = parseFloat(targetText.replace(/[^0-9.]/g, ''));
-    if (isNaN(targetNum)) return;
-    var duration = 1200;
-    var start = performance.now();
-    var origText = targetText;
-    var suffix = targetText.replace(/[0-9.]/g, '').trim();
-
-    function tick() {
-      var elapsed = performance.now() - start;
-      if (elapsed >= duration) {
-        el.textContent = targetNum + suffix;
-        return;
-      }
-      var progress = elapsed / duration;
-      // ease-out-cubic
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var current = Math.floor(targetNum * eased);
-      el.textContent = current + suffix;
-      requestAnimationFrame(tick);
-    }
-
-    // Start count-up when .visible class is added
-    var mo = new MutationObserver(function(muts) {
-      muts.forEach(function(m) {
-        if (m.attributeName === 'class' && el.classList.contains('visible')) {
-          mo.disconnect();
-          el.textContent = '0' + suffix;
-          requestAnimationFrame(tick);
-        }
-      });
-    });
-    mo.observe(el, { attributes: true });
-  });
-})();
-</script>
-<!-- v33 motion system applied -->
-</body></html>
+</main>
+</body>
+</html>
