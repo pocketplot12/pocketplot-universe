@@ -1,775 +1,148 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>
-(function() {
-  const STORAGE_KEY = 'pocketplot-theme';
-  // Valid themes
-  const THEMES = ['warm-dark', 'warm-light'];
-  const DEFAULT_THEME = 'warm-light';
-  try {
-    let theme = localStorage.getItem(STORAGE_KEY);
-    if (!theme || !THEMES.includes(theme)) {
-      // Detect system preference
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-      theme = DEFAULT_THEME;
-      localStorage.setItem(STORAGE_KEY, theme);
-    }
-    document.documentElement.setAttribute('data-theme', theme);
-    // Also expose theme on a CSS class for legacy support (if anyone uses it)
-    document.documentElement.classList.add('theme-' + theme);
-  } catch (e) {
-    // localStorage might fail (private mode, etc) — fallback to default
-    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
-  }
-})();
-</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Pricing — PocketPlot Universe</title>
-<meta name="description" content="Three tiers. Free, Pro $7.99/mo, Creator $19.99/mo. Bring Your Own Brain. 18+.">
+<title>Pricing · PocketPlot Universe</title>
+<meta name="description" content="PocketPlot pricing: Free, Pro $4.99/mo, Creator $19.99/mo. Branching interactive storytelling, BYOB engine, 18+ only.">
+<link rel="canonical" href="/pricing">
 <link rel="manifest" href="/manifest.json">
-<link rel="icon" type="image/png" href="/logo-icon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="/logo-icon-180.png">
-<meta name="theme-color" content="#0a0f1c">
-
-
-
-
-<style>
-/* v27 Apple-style system — same as index.html */
-:root {
-  --navy-deepest:  #050811;
-  --navy-deep:     #0a0f1c;
-  --navy:          #0e1a2e;
-  --navy-2:        #15243f;
-  --navy-3:        #1f3460;
-  --navy-4:        #2a4275;
-  --ink:           #f5ecd6;
-  --ink-soft:      #d8cba8;
-  --ink-muted:     #9eb6d4;
-  --ink-faint:     #6c7891;
-  --brass:         #c9a04e;
-  --brass-l:       #e8c879;
-  --brass-d:       #8a6a26;
-  --amber:         #f0b54a;
-  --accent:        #c9a04e;
-  --hairline:      rgba(232, 200, 121, 0.14);
-  --hairline-2:    rgba(232, 200, 121, 0.28);
-  --hairline-strong: rgba(232, 200, 121, 0.45);
-  --glass:         rgba(15, 26, 46, 0.78);
-  --glass-blur:    saturate(180%) blur(20px);
-  --type-xs:       0.75rem;
-  --type-sm:       0.875rem;
-  --type-base:     1.0625rem;
-  --type-md:       1.25rem;
-  --type-lg:       1.5rem;
-  --type-xl:       2rem;
-  --type-2xl:      2.75rem;
-  --type-3xl:      3.75rem;
-  --type-display:  5rem;
-  --font-serif:    'Fraunces', 'Playfair Display', Georgia, serif;
-  --font-sans:     'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  --space-1:  0.5rem;
-  --space-2:  1rem;
-  --space-3:  1.5rem;
-  --space-4:  2rem;
-  --space-5:  3rem;
-  --space-6:  4rem;
-  --space-7:  6rem;
-  --space-8:  8rem;
-  --lh-tight:  1.05;
-  --lh-snug:   1.2;
-  --lh-normal: 1.5;
-  --lh-loose:  1.7;
-  --tracking-tight:  -0.035em;
-  --tracking-snug:   -0.015em;
-  --tracking-caps:   0.18em;
-  --radius-sm:  4px;
-  --radius:     8px;
-  --radius-lg:  14px;
-  --radius-pill: 999px;
-  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-fast:    120ms;
-  --dur:         220ms;
-}
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--type-base);
-  line-height: var(--lh-loose);
-  -webkit-font-smoothing: antialiased;
-}
-
-.brand-mark { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
-.brand-mark img { width:32px; height:30px; border-radius:4px; }
-.brand-mark .word { font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:16px; letter-spacing:var(--tracking-snug); }
-
-header.nav { position:sticky; top:0; z-index:100; background:var(--glass); backdrop-filter:var(--glass-blur); -webkit-backdrop-filter:var(--glass-blur); border-bottom:1px solid var(--hairline); }
-.nav-row { max-width:1200px; margin:0 auto; padding:14px 32px; display:flex; align-items:center; justify-content:space-between; font-size:var(--type-sm); }
-.nav-links { display:flex; gap:4px; align-items:center; }
-.nav-links a { color:var(--ink-soft); text-decoration:none; padding:8px 14px; border-radius:var(--radius-sm); font-weight:500; }
-.nav-links a:hover { color:var(--ink); background:rgba(232,200,121,.06); }
-.nav-links a.active { color:var(--ink); }
-.nav-links a.cta { color:#1a1410; background:linear-gradient(180deg,var(--accent-light),var(--accent) 80%); padding:8px 16px; border-radius:var(--radius-pill); margin-left:8px; font-weight:600; }
-.nav-links a.cta:hover { color:#1a1410; background:linear-gradient(180deg,var(--accent-light),var(--accent) 60%); }
-@media (max-width:760px){.nav-links .link{display:none;}.nav-links .cta{display:inline-flex;}}
-
-.page-head { max-width:880px; margin:0 auto; padding:var(--space-8) 32px var(--space-6); text-align:center; }
-.page-head .eyebrow { font-size:var(--type-xs); letter-spacing:var(--tracking-caps); text-transform:uppercase; color:var(--accent-light); margin-bottom:var(--space-3); font-weight:500; }
-.page-head h1 { font-family:var(--font-serif); font-style:italic; font-weight:500; font-size:clamp(2.5rem,7vw,5rem); line-height:var(--lh-tight); letter-spacing:var(--tracking-tight); margin:0 0 var(--space-3); }
-.page-head p { font-size:var(--type-md); color:var(--ink-soft); margin:0 auto; max-width:36em; }
-
-.tiers { max-width:1100px; margin:0 auto; padding:var(--space-5) 32px; display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); }
-@media (max-width:880px){.tiers{grid-template-columns:1fr;}}
-.tier { padding:var(--space-5) var(--space-4); border:1px solid var(--hairline); border-radius:var(--radius-lg); display:flex; flex-direction:column; }
-.tier.featured { border-color:var(--hairline-strong); background:linear-gradient(180deg,rgba(201,160,78,.04),transparent); position:relative; }
-.tier.featured::before { content:'Most popular'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--accent); color:#1a1410; padding:4px 12px; border-radius:var(--radius-pill); font-size:11px; font-weight:600; letter-spacing:.05em; }
-.tier .name { font-family:var(--font-serif); font-style:italic; font-size:var(--type-md); color:var(--ink); margin-bottom:4px; }
-.tier .price { font-family:var(--font-serif); font-size:var(--type-2xl); color:var(--accent-light); margin-bottom:var(--space-1); line-height:1; }
-.tier .price-sub { font-size:var(--type-sm); color:var(--ink-faint); margin-bottom:var(--space-3); }
-.tier ul { list-style:none; padding:0; margin:0 0 var(--space-4); border-top:1px solid var(--hairline); padding-top:var(--space-3); }
-.tier li { padding:8px 0; font-size:var(--type-sm); color:var(--ink-soft); position:relative; padding-left:18px; }
-.tier li::before { content:''; position:absolute; left:0; top:14px; width:6px; height:6px; background:var(--accent); border-radius:50%; }
-.tier .btn { display:block; text-align:center; padding:14px; border-radius:var(--radius-pill); text-decoration:none; font-weight:600; font-size:var(--type-sm); margin-top:auto; }
-.tier.featured .btn { background:var(--accent); color:#1a1410; }
-.tier.featured .btn:hover { background:var(--accent-light); }
-.tier:not(.featured) .btn { background:transparent; color:var(--ink); border:1px solid var(--hairline-2); }
-.tier:not(.featured) .btn:hover { border-color:var(--hairline-strong); background:rgba(232,200,121,.06); }
-
-.compare { max-width:880px; margin:var(--space-7) auto 0; padding:var(--space-7) 32px 0; border-top:1px solid var(--hairline); }
-.compare h2 { font-family:var(--font-serif); font-style:italic; font-size:var(--type-2xl); text-align:center; margin-bottom:var(--space-5); }
-.compare-row { display:grid; grid-template-columns:1fr 1fr 1fr; padding:var(--space-2) 0; border-bottom:1px solid var(--hairline); }
-.compare-row.header { font-weight:600; color:var(--ink-faint); font-size:var(--type-xs); letter-spacing:var(--tracking-caps); text-transform:uppercase; padding-bottom:var(--space-2); }
-.compare-row > div { font-size:var(--type-sm); color:var(--ink-soft); }
-.compare-row > div:first-child { color:var(--ink); }
-@media (max-width:760px){.compare-row{grid-template-columns:1fr;gap:8px;padding:8px 0;}.compare-row > div:first-child{font-weight:600;color:var(--accent-light);}}
-
-footer { border-top:1px solid var(--hairline); padding:var(--space-5) 32px; text-align:center; font-size:var(--type-sm); color:var(--ink-faint); margin-top:var(--space-8); }
-footer .links { display:flex; justify-content:center; gap:var(--space-4); margin-bottom:var(--space-3); flex-wrap:wrap; }
-footer a { color:var(--ink-faint); text-decoration:none; }
-footer a:hover { color:var(--accent-light); }
-
-.mobile-bottom-nav { display:none; }
-@media (max-width:760px) {
-  body { padding-bottom:60px; }
-  .mobile-bottom-nav { display:flex; position:fixed; bottom:0; left:0; right:0; height:56px; background:var(--glass); backdrop-filter:var(--glass-blur); -webkit-backdrop-filter:var(--glass-blur); border-top:1px solid var(--hairline); z-index:90; justify-content:space-around; align-items:center; padding-bottom:env(safe-area-inset-bottom,0); }
-  .mobile-bottom-nav a { display:flex; flex-direction:column; align-items:center; gap:2px; color:var(--ink-faint); text-decoration:none; font-size:11px; padding:6px 12px; min-width:56px; min-height:44px; justify-content:center; }
-  .mobile-bottom-nav a.active { color:var(--accent-light); }
-  .mobile-bottom-nav .icon { width:22px; height:22px; }
-}
-@media (min-width:761px){.mobile-bottom-nav{display:none;}}
-
-/* Theme toggle button — visible on both themes */
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--ink-soft);
-  transition: color 200ms, border-color 200ms, background 200ms;
-  padding: 0;
-  flex-shrink: 0;
-}
-.theme-toggle:hover {
-  border-color: var(--border-strong);
-  color: var(--accent-light);
-  background: rgba(201, 160, 78, 0.06);
-}
-.theme-toggle svg {
-  width: 18px;
-  height: 18px;
-  transition: opacity 200ms, transform 200ms;
-}
-/* Show sun when in dark mode (click to go to light) */
-.theme-toggle .icon-moon { display: none; }
-.theme-toggle .icon-sun { display: inline-block; }
-html[data-theme="warm-light"] .theme-toggle .icon-sun { display: none; }
-html[data-theme="warm-light"] .theme-toggle .icon-moon { display: inline-block; }
-
-
-/* v29 theme system (Kindle-e-ink warm themes) */
-
-v30 design system - layered on top of v29 */
-
-:root, html[data-theme="warm-dark"] {
-  /* === Backgrounds === */
-  --bg:              #0a0f1c;       /* page background */
-  --bg-elevated:     #15243f;       /* cards, surfaces, raised UI */
-  --bg-overlay:      rgba(15, 26, 46, 0.78);  /* nav backdrop blur */
-  --surface:         #1f3460;       /* hover states */
-  --surface-strong:  #2a4275;       /* pressed/active */
-
-  /* === Text hierarchy (4 tiers) === */
-  --text-heading:    #f5ecd6;       /* h1, h2, page titles */
-  --text-body:       #d8cba8;       /* paragraphs */
-  --text-caption:    #9eb6d4;       /* hints, timestamps */
-  --text-faint:      #6c7891;       /* footer, near-invisible */
-
-  /* === Brand & actions === */
-  --brand:           #c9a04e;       /* brass — the single brand color */
-  --brand-light:     #e8c879;       /* hover, focus */
-  --brand-deep:      #8a6a26;       /* pressed state */
-  --brand-soft:      rgba(201, 160, 78, 0.18);  /* selection bg */
-  --brand-text:      #1a1410;       /* text color on brass backgrounds */
-  --accent:          #c9a04e;       /* alias of brand for clarity */
-
-  /* === Status === */
-  --success:         #1d6b50;       /* emerald - done, success */
-  --success-light:   #3a8c6c;
-  --warning:         #f0b54a;       /* amber - caution */
-  --warning-deep:    #8a5e1a;
-  --danger:          #a02020;       /* rust - delete, error */
-  --danger-light:    #e07070;
-
-  /* === Surfaces === */
-  --border:          rgba(201, 160, 78, 0.18);
-  --border-strong:   rgba(201, 160, 78, 0.45);
-  --shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.20);
-  --shadow:          0 4px 12px rgba(0, 0, 0, 0.45);
-  --shadow-lg:       0 14px 32px rgba(0, 0, 0, 0.55);
-}
-
-
-html[data-theme="warm-light"] {
-  /* === Backgrounds === */
-  --bg:              #f4ecd8;       /* warm cream paper */
-  --bg-elevated:     #faf3e0;       /* lighter cream for cards */
-  --bg-overlay:      rgba(244, 236, 216, 0.85);
-  --surface:         #ebe0c8;
-  --surface-strong:  #d8c8a8;
-
-  /* === Text hierarchy === */
-  --text-heading:    #3d2e1f;       /* warm dark brown - strongest */
-  --text-body:       #5a4a35;       /* warm brown body */
-  --text-caption:    #8b7558;       /* tertiary warm brown */
-  --text-faint:      #a89579;       /* near-invisible warm brown */
-
-  /* === Brand & actions === */
-  --brand:           #b8842a;       /* brass - warmer/darker for cream bg */
-  --brand-light:     #d4a04d;
-  --brand-deep:      #7a5518;
-  --brand-soft:      rgba(184, 132, 42, 0.14);
-  --brand-text:      #fef9ec;       /* light text on brass button */
-  --accent:          #b8842a;
-
-  /* === Status === */
-  --success:         #2d8a5e;       /* slightly darker emerald for cream */
-  --success-light:   #4ca97a;
-  --warning:         #c89030;       /* darker amber for cream */
-  --warning-deep:    #a07020;
-  --danger:          #b03030;       /* slightly brighter rust for cream */
-  --danger-light:    #d05050;
-
-  /* === Surfaces === */
-  --border:          rgba(122, 98, 56, 0.20);
-  --border-strong:   rgba(122, 98, 56, 0.55);
-  --shadow-sm:       0 1px 3px rgba(60, 40, 15, 0.10);
-  --shadow:          0 1px 3px rgba(60, 40, 15, 0.12), 0 4px 10px rgba(60, 40, 15, 0.06);
-  --shadow-lg:       0 4px 12px rgba(60, 40, 15, 0.18), 0 14px 28px rgba(60, 40, 15, 0.12);
-}
-
-
-/* === Base typography (resets existing colors to use new tokens) === */
-html, body {
-  background: var(--bg);
-  color: var(--text-body);
-  transition: background 220ms ease, color 220ms ease;
-}
-h1, h2, h3, h4 {
-  color: var(--text-heading);
-  font-family: var(--font-serif, Georgia, serif);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-p, li {
-  color: var(--text-body);
-}
-small, .text-caption {
-  color: var(--text-caption);
-}
-.text-faint {
-  color: var(--text-faint);
-}
-
-/* === Buttons (3 tiers) === */
-.btn-primary, button.btn-primary, a.btn-primary {
-  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 70%, var(--brand-deep) 100%);
-  color: var(--brand-text);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: var(--radius-pill, 999px);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  padding: 14px 28px;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.20) inset,
-    0 0 0 1px var(--border-strong),
-    0 6px 18px var(--brand-soft),
-    0 2px 6px var(--shadow-sm);
-  transition: transform 200ms var(--ease-out), box-shadow 200ms;
-}
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.30) inset,
-    0 0 0 1px var(--brand-light),
-    0 10px 24px rgba(201, 160, 78, 0.28),
-    0 3px 8px var(--shadow);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--text-body);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-pill, 999px);
-  padding: 13px 26px;
-  font-weight: 600;
-  transition: background 200ms, border-color 200ms, color 200ms;
-}
-.btn-secondary:hover {
-  background: var(--brand-soft);
-  border-color: var(--brand);
-  color: var(--text-heading);
-}
-
-.btn-tertiary {
-  background: transparent;
-  color: var(--brand);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 8px 4px;
-  border: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 200ms;
-}
-.btn-tertiary:hover {
-  border-bottom-color: var(--brand);
-}
-
-/* === Status badges === */
-.status-success, .badge-success {
-  background: var(--brand-soft);
-  color: var(--success-light);
-  border: 1px solid var(--success);
-}
-.status-warning, .badge-warning {
-  background: rgba(240, 181, 74, 0.10);
-  color: var(--warning);
-  border: 1px solid var(--warning);
-}
-.status-danger, .badge-danger {
-  background: rgba(160, 32, 32, 0.10);
-  color: var(--danger-light);
-  border: 1px solid var(--danger);
-}
-html[data-theme="warm-light"] .status-warning {
-  color: var(--warning-deep);
-}
-
-/* === Cards === */
-.card, .panel {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg, 16px);
-  padding: var(--space-6, 2rem);
-  box-shadow: var(--shadow-sm);
-}
-.card:hover {
-  border-color: var(--border-strong);
-  background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--surface) 100%);
-}
-
-/* === Links === */
-a {
-  color: var(--brand);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 200ms;
-}
-a:hover {
-  border-bottom-color: var(--brand);
-}
-
-/* === Nav === */
-.nav, header.nav {
-  background: var(--bg-overlay);
-  border-bottom: 1px solid var(--border);
-}
-
-/* === Inputs === */
-input, textarea, select {
-  background: var(--bg-elevated);
-  color: var(--text-heading);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius, 8px);
-}
-input:focus, textarea:focus {
-  border-color: var(--brand);
-  outline: none;
-  box-shadow: 0 0 0 3px var(--brand-soft);
-}
-::placeholder {
-  color: var(--text-faint);
-}
-
-/* === Buttons (interactive ink) === */
-button, a.btn {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* === Selection === */
-::selection {
-  background: var(--brand-soft);
-  color: var(--text-heading);
-}
-
-
-
-/* ============================================================
-   THEME TOKENS - v29: Kindle-e-ink warm themes
-   Each semantic variable gets values for BOTH themes.
-   ============================================================ */
-:root {
-  /* Defaults = warm-dark (the "default" Apple-restrained look) */
-  --bg:            #0a0f1c;        /* page background */
-  --bg-elevated:   #15243f;        /* card background */
-  --bg-overlay:    rgba(15, 26, 46, 0.78);  /* nav backdrop blur */
-  --surface:       #1f3460;        /* hover states, secondary surfaces */
-  --border:        rgba(201, 160, 78, 0.14);  /* hairline */
-  --border-strong: rgba(201, 160, 78, 0.45);
-
-  --ink:           #f5ecd6;        /* primary text — warm cream */
-  --ink-soft:      #d8cba8;        /* body text — slight fade */
-  --ink-muted:     #9eb6d4;        /* tertiary text */
-  --ink-faint:     #6c7891;        /* footer, hints */
-
-  --accent:        #c9a04e;        /* brass */
-  --accent-light:  #e8c879;        /* lighter brass */
-  --accent-deep:   #8a6a26;        /* deeper brass */
-  --accent-warm:   #f0b54a;        /* amber — secondary accent */
-
-  --button-text:   #1a1410;        /* dark text on brass buttons */
-
-  --shadow:        0 4px 12px rgba(0, 0, 0, 0.45);
-  --shadow-lg:     0 14px 32px rgba(0, 0, 0, 0.55);
-
-  --hero-gradient:
-    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(93,222,240,0.05), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(240,181,74,0.05), transparent 60%),
-    var(--bg);
-}
-
-/* WARM-LIGHT theme = Kindle paper / e-ink look
-   Warm cream background (not white) + warm dark brown text (not black)
-   Easier on the eyes for long reading than pure white */
-html[data-theme="warm-light"] {
-  --bg:            #f4ecd8;        /* warm cream — like a paperback page */
-  --bg-elevated:   #faf3e0;        /* lighter cream for cards */
-  --bg-overlay:    rgba(244, 236, 216, 0.85);
-  --surface:       #ebe0c8;        /* hover state — slightly deeper cream */
-  --border:        rgba(122, 98, 56, 0.18);  /* warm brown hairline */
-  --border-strong: rgba(122, 98, 56, 0.55);
-
-  --ink:           #3d2e1f;        /* warm dark brown — like book ink */
-  --ink-soft:      #6b5840;        /* softer brown for body */
-  --ink-muted:     #8b7558;        /* tertiary text — like aged paper */
-  --ink-faint:     #a89579;        /* footer, hints */
-
-  --accent:        #b8842a;        /* brass — slightly warmer/darker for cream */
-  --accent-light:  #d4a04d;        /* lighter brass */
-  --accent-deep:   #7a5518;
-  --accent-warm:   #c89030;        /* amber */
-
-  --button-text:   #fef9ec;        /* light text on brass buttons (inverted for cream bg) */
-  /* Better: dark text on warm brass button for cream theme */
-
-  --shadow:        0 1px 3px rgba(60, 40, 15, 0.10), 0 4px 10px rgba(60, 40, 15, 0.06);
-  --shadow-lg:     0 4px 12px rgba(60, 40, 15, 0.18), 0 14px 28px rgba(60, 40, 15, 0.12);
-
-  --hero-gradient:
-    radial-gradient(ellipse 40% 50% at 25% 40%, rgba(184, 132, 42, 0.04), transparent 60%),
-    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(184, 132, 42, 0.04), transparent 60%),
-    var(--bg);
-}
-
-/* Override button text for warm-light theme — keep dark text on brass */
-html[data-theme="warm-light"] .cta-primary,
-html[data-theme="warm-light"] button.btn-primary,
-html[data-theme="warm-light"] .tier.featured .btn {
-  color: #1a1410;  /* dark text on brass */
-}
-</style>
+<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+<meta property="og:title" content="Pricing · PocketPlot Universe">
+<meta property="og:description" content="Three tiers. One goal. Free, Pro, Creator.">
+<meta property="og:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
+<meta property="og:image:width" content="2560">
+<meta property="og:image:height" content="1414">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pocketplot.app/pocketplot_16_launch_banner.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<meta property="og:title" content="Pricing - PocketPlot Universe">
-<meta property="og:description" content="Free, Pro, and Creator tiers for branching interactive storytelling. Free tier includes 3 stories/day.">
-<meta property="og:image" content="/pocketplot_16_launch_banner.jpg">
-<meta property="og:image:width" content="2560">
-<meta property="og:image:height" content="1414">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Pricing - PocketPlot Universe">
-<meta name="twitter:description" content="Free, Pro, and Creator tiers for branching interactive storytelling. Free tier includes 3 stories/day.">
-<meta property="og:image" content="/pocketplot_16_launch_banner.jpg">
+<link rel="stylesheet" href="/style.css?v=35">
+<style>
+/* v38: pricing — shared template */
+.pricing-page { max-width: 1100px; margin: 0 auto; padding: 140px 24px 80px; }
+.pricing-hero { text-align: center; margin-bottom: 48px; }
+.pricing-eyebrow { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.16em; color: var(--brand); text-transform: uppercase; margin-bottom: 12px; }
+.pricing-title { font-family: var(--font-display); font-style: italic; font-size: clamp(36px, 6vw, 56px); color: var(--text-heading); font-weight: 500; line-height: 1.1; margin: 0 0 16px; }
+.pricing-lede { font-family: var(--font-body); font-style: italic; font-size: 18px; color: var(--text-body); line-height: 1.55; max-width: 38em; margin: 0 auto; }
+.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 56px 0; align-items: stretch; }
+.tier { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; text-align: center; display: flex; flex-direction: column; }
+.tier.featured { border-color: var(--brand); border-width: 2px; position: relative; }
+.tier.featured::before { content: 'Most popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--brand); color: #1a1410; font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; border-radius: 99px; }
+.tier-art { width: 140px; height: 140px; margin: 0 auto 20px; }
+.tier-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tier-name { font-family: var(--font-display); font-style: italic; font-size: 28px; color: var(--text-heading); margin-bottom: 4px; }
+.tier-tagline { font-family: var(--font-body); font-style: italic; font-size: 14px; color: var(--text-caption); margin-bottom: 18px; min-height: 40px; }
+.tier-price { margin-bottom: 20px; }
+.tier-price .amt { font-family: var(--font-display); font-style: italic; font-size: 44px; color: var(--brand); line-height: 1; }
+.tier-price .unit { font-family: var(--font-body); font-size: 14px; color: var(--text-caption); margin-left: 4px; }
+.tier-feats { list-style: none; padding: 0; margin: 0 0 24px; text-align: left; }
+.tier-feats li { font-family: var(--font-body); font-size: 14px; color: var(--text-body); padding: 8px 0; border-bottom: 1px solid var(--border); }
+.tier-feats li:last-child { border-bottom: none; }
+.tier-feats li.dim { color: var(--text-faint); }
+.tier-feats li::before { content: '\\2713'; color: var(--brand); font-weight: 700; margin-right: 8px; }
+.tier-feats li.dim::before { content: '\\2014'; color: var(--text-faint); }
+.tier-cta { display: inline-block; width: 100%; padding: 14px; border-radius: var(--radius-md); font-family: var(--font-ui); font-weight: 700; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; text-align: center; transition: all 200ms; }
+.tier-cta.primary { background: var(--brand); color: #1a1410; }
+.tier-cta.primary:hover { background: var(--brand-light); }
+.tier-cta.secondary { background: transparent; border: 1.5px solid var(--brand); color: var(--brand); }
+.tier-cta.secondary:hover { background: var(--brand-soft); }
+.pricing-note { font-family: var(--font-body); font-size: 13px; color: var(--text-caption); text-align: center; margin-top: 32px; line-height: 1.6; }
+.pricing-note a { color: var(--brand); text-decoration: underline; }
+@media (max-width: 720px) { .pricing-page { padding-top: 100px; } }
+</style>
 </head>
 <body>
-
 <header class="nav">
-  <div class="nav-row">
-    <a href="/" class="brand-mark"><img src="/logo-240.png" alt=""><span class="word">PocketPlot</span></a>
-    <nav class="nav-links">
-      <a href="/how-it-works" class="link">How it works</a>
-      <a href="/pricing" class="link active">Pricing</a>
-      <a href="/library" class="link">Library</a>
-      <a href="/seed" class="link">Seed</a>
-      <a href="/faq" class="link">FAQ</a>
-      <a href="/signup" class="cta">Begin</a>
-      <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
-  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <svg class="icon-paper" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
-    <path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-  <span class="label label-dark">Night</span>
-  <span class="label label-light">Paper</span>
-</button>
-<script>
-  // Bind handler AFTER window.pocketplot is defined
-  (function bindThemeToggle() {
-    function tryBind() {
-      var btn = document.getElementById('theme-toggle-btn');
-      if (!btn || btn._ppBound) return;
-      if (!window.pocketplot || typeof window.pocketplot.toggleTheme !== 'function') {
-        setTimeout(tryBind, 5);
-        return;
-      }
-      btn.addEventListener('click', function() { window.pocketplot.toggleTheme(); });
-      btn._ppBound = true;
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', tryBind);
-    } else if (document.body) {
-      tryBind();
-    } else {
-      document.addEventListener('DOMContentLoaded', tryBind);
-    }
-  })();
-</script>
+  <a href="/" class="brand-mark"><img src="/logo-240.png" alt="" /><span class="word">PocketPlot Universe</span></a>
+  <nav class="nav-links">
+    <a href="/how-it-works" class="link">How it works</a>
+    <a href="/pricing" class="link" style="color:#e8c879">Pricing</a>
+    <a href="/library" class="link">Library</a>
+    <a href="/seed" class="link">Seed</a>
+    <a href="/remix" class="link">Remix</a>
+    <a href="/faq" class="link">FAQ</a>
+    <a href="/signup" class="cta">Begin →</a>
   </nav>
-  </div>
 </header>
 
-<main>
+<main class="pricing-page">
+  <section class="pricing-hero">
+    <p class="pricing-eyebrow">Pricing</p>
+    <h1 class="pricing-title">Three tiers. <em>One</em> goal.</h1>
+    <p class="pricing-lede">Branching interactive storytelling for adults. Start free, upgrade when you want more.</p>
+  </section>
 
-<section class="page-head">
-  <p class="eyebrow">Pricing</p>
-  <h1>Three tiers.<br>One goal.</h1>
-  <p>Bring your own brain, or use the procedural generator. Either way, you keep your worlds.</p>
-</section>
+  <section class="tiers">
+    <div class="tier">
+      <div class="tier-art"><img src="/pocketplot_17_tier_explorer.jpg" alt="Free tier: 1 star, single scene, minimal scope" loading="lazy"></div>
+      <div class="tier-name">Explorer</div>
+      <div class="tier-tagline">For curious readers and writers testing the waters.</div>
+      <div class="tier-price"><span class="amt">$0</span><span class="unit">/forever</span></div>
+      <ul class="tier-feats">
+        <li>3 stories per day</li>
+        <li>1,000-word ceiling</li>
+        <li>Procedural engine (default)</li>
+        <li>All 16 genres</li>
+        <li>Basic scene art</li>
+        <li>Public library access</li>
+        <li class="dim">BYOB engine</li>
+        <li class="dim">Email delivery</li>
+        <li class="dim">Vault tier progression</li>
+      </ul>
+      <a href="/signup" class="tier-cta secondary">Begin free</a>
+    </div>
 
-<section class="tiers reveal-stagger">
-  <div class="tier">
-    <figure class="reveal" style="margin:0 auto 16px;max-width:160px;text-align:center">
-  <img src="/pocketplot_17_tier_explorer.jpg" alt="Free tier - 1 star, minimal scope" loading="lazy"
-       style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);box-shadow:0 16px 40px -16px rgba(0,0,0,0.5)">
-</figure>
+    <div class="tier featured">
+      <div class="tier-art"><img src="/pocketplot_18_tier_worldsmith.jpg" alt="Pro tier: branching paths, globe with books on continents, medium complexity" loading="lazy"></div>
+      <div class="tier-name">Worldsmith</div>
+      <div class="tier-tagline">For daily writers building a library of branching worlds.</div>
+      <div class="tier-price"><span class="amt">$4.99</span><span class="unit">/month</span></div>
+      <ul class="tier-feats">
+        <li>16 stories per day</li>
+        <li>3,000-word ceiling</li>
+        <li>Procedural engine (default)</li>
+        <li>All 16 genres</li>
+        <li>HD scene art</li>
+        <li>Private library + remix</li>
+        <li>Word Vault tier progression</li>
+        <li>Email delivery</li>
+        <li>Priority support</li>
+        <li class="dim">BYOB engine</li>
+        <li class="dim">Creator-level caps</li>
+      </ul>
+      <a href="/signup?plan=pro" class="tier-cta primary">Start Pro</a>
+    </div>
 
-    <div class="name">Free</div>
-    <div class="price">$0</div>
-    <div class="price-sub">forever, no card</div>
-    <ul>
-      <li>3 stories / day</li>
-      <li>1,000-word cap</li>
-      <li>Procedural generator</li>
-      <li>16 genres</li>
-      <li>Public stories</li>
-    </ul>
-    <a href="/signup" class="btn">Begin free</a>
-  </div>
-  <div class="tier reveal"featured">
-    <figure class="reveal" style="margin:0 auto 16px;max-width:160px;text-align:center">
-  <img src="/pocketplot_18_tier_worldsmith.jpg" alt="Pro tier - branching paths, compass" loading="lazy"
-       style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);box-shadow:0 16px 40px -16px rgba(0,0,0,0.5)">
-</figure>
+    <div class="tier">
+      <div class="tier-art"><img src="/pocketplot_19_tier_architect.jpg" alt="Creator tier: gold frame, crown, orbs, maximum complexity" loading="lazy"></div>
+      <div class="tier-name">Architect</div>
+      <div class="tier-tagline">For serious writers who bring their own model.</div>
+      <div class="tier-price"><span class="amt">$19.99</span><span class="unit">/month</span></div>
+      <ul class="tier-feats">
+        <li>100 BYOB calls per day</li>
+        <li>5,000-word ceiling</li>
+        <li>BYOB engine (any OpenAI-compatible model)</li>
+        <li>All 16 genres + custom settings</li>
+        <li>4K scene art</li>
+        <li>Public API access</li>
+        <li>Full Word Vault + streak system</li>
+        <li>Email delivery + webhooks</li>
+        <li>Dedicated support</li>
+        <li>Early access to new features</li>
+      </ul>
+      <a href="/signup?plan=creator" class="tier-cta secondary">Start Creator</a>
+    </div>
+  </section>
 
-    <div class="name">Pro</div>
-    <div class="price">$7.99</div>
-    <div class="price-sub">/ month</div>
-    <ul>
-      <li>Unlimited stories</li>
-      <li>3,000-word cap</li>
-      <li>Themes, tone, world settings</li>
-      <li>Priority generation</li>
-      <li>Custom cover images</li>
-    </ul>
-    <a href="/signup-pro" class="btn">Begin Pro</a>
-  </div>
-  <div class="tier">
-    <figure class="reveal" style="margin:0 auto 16px;max-width:160px;text-align:center">
-  <img src="/pocketplot_19_tier_architect.jpg" alt="Creator tier - gold frame, orbs, max" loading="lazy"
-       style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);box-shadow:0 16px 40px -16px rgba(0,0,0,0.5)">
-</figure>
+  <p class="pricing-note">All plans include 18+ content policy, Stripe billing, and PocketPlot's <a href="/terms">Terms of Service</a>. Annual plans save 20%. Cancel anytime — no questions.</p>
 
-    <div class="name">Creator</div>
-    <div class="price">$19.99</div>
-    <div class="price-sub">/ month</div>
-    <ul>
-      <li>Everything in Pro</li>
-      <li>5,000-word cap</li>
-      <li>BYOB - your own LLM</li>
-      <li>Custom prompts</li>
-      <li>API access</li>
-    </ul>
-    <a href="/signup-creator" class="btn">Begin Creator</a>
-  </div>
-</section>
-
-<section class="compare">
-  <h2>Compare tiers</h2>
-  <div class="compare-row header"><div>Feature</div><div>Free</div><div>Pro · Creator</div></div>
-  <div class="compare-row"><div>Stories / day</div><div>3</div><div>Unlimited</div></div>
-  <div class="compare-row"><div>Word cap</div><div>1,000</div><div>3,000 · 5,000</div></div>
-  <div class="compare-row"><div>BYOB (your LLM)</div><div>—</div><div>Creator only</div></div>
-  <div class="compare-row"><div>API access</div><div>—</div><div>Creator only</div></div>
-  <div class="compare-row"><div>Public profiles</div><div>✓</div><div>✓</div></div>
-</section>
-
+  <section class="pricing-cta" style="text-align:center; margin-top:64px; padding:48px 32px; background:var(--bg-elevated); border:1px solid var(--brand); border-radius:var(--radius-lg);">
+    <h2 style="font-family:var(--font-display); font-style:italic; font-size:clamp(24px, 4vw, 32px); color:var(--text-heading); margin:0 0 8px; font-weight:500;">Not sure yet?</h2>
+    <p style="font-family:var(--font-body); color:var(--text-body); margin:0 0 16px;">Begin free. Upgrade when you want more.</p>
+    <a href="/signup" class="cta-primary">Begin your first world</a>
+  </section>
 </main>
-
-<footer>
-  <div class="links">
-    <a href="/pricing">Pricing</a>
-    <a href="/how-it-works">How it works</a>
-    <a href="/library">Library</a>
-    <a href="/seed">Seed generator</a>
-    <a href="/faq">FAQ</a>
-    <a href="/terms">Terms</a>
-  </div>
-  <div>PocketPlot Universe · 18+ · Original content only</div>
-</footer>
-
-<div class="mobile-bottom-nav" aria-label="Mobile navigation">
-  <a href="/"><svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12 12 3l9 9M5 10v10h14V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Home</span></a>
-  <a href="/library"><svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4zM4 8h16M8 4v16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Library</span></a>
-  <a href="/me"><svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Me</span></a>
-</div>
-
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(function() {});
-}
-</script>
-<script>
-// v33 motion: scroll-triggered reveals + count-up animations
-(function() {
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // If reduced motion, reveal everything immediately and bail
-  if (prefersReducedMotion) {
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      el.classList.add('visible');
-    });
-    document.querySelectorAll('.stat .n').forEach(function(el) {
-      el.classList.add('visible');
-    });
-    return;
-  }
-
-  // IntersectionObserver: add .visible when 15% in view
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -60px 0px'  // trigger slightly before fully visible
-    });
-
-    // Observe all .reveal elements
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      observer.observe(el);
-    });
-
-    // Observe stat numbers (have their own .n class)
-    document.querySelectorAll('.stat .n').forEach(function(el) {
-      observer.observe(el);
-    });
-  } else {
-    // Fallback: just show everything
-    document.querySelectorAll('.reveal, .stat .n').forEach(function(el) {
-      el.classList.add('visible');
-    });
-  }
-
-  // Toggle button: add spinning class momentarily on click
-  var toggleBtn = document.getElementById('theme-toggle-btn');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', function() {
-      toggleBtn.classList.add('spinning');
-      setTimeout(function() {
-        toggleBtn.classList.remove('spinning');
-      }, 400);
-    });
-  }
-
-  // Count-up animation for .stat .n when it gets .visible
-  document.querySelectorAll('.stat .n').forEach(function(el) {
-    var targetText = (el.textContent || '').trim();
-    var targetNum = parseFloat(targetText.replace(/[^0-9.]/g, ''));
-    if (isNaN(targetNum)) return;
-    var duration = 1200;
-    var start = performance.now();
-    var origText = targetText;
-    var suffix = targetText.replace(/[0-9.]/g, '').trim();
-
-    function tick() {
-      var elapsed = performance.now() - start;
-      if (elapsed >= duration) {
-        el.textContent = targetNum + suffix;
-        return;
-      }
-      var progress = elapsed / duration;
-      // ease-out-cubic
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var current = Math.floor(targetNum * eased);
-      el.textContent = current + suffix;
-      requestAnimationFrame(tick);
-    }
-
-    // Start count-up when .visible class is added
-    var mo = new MutationObserver(function(muts) {
-      muts.forEach(function(m) {
-        if (m.attributeName === 'class' && el.classList.contains('visible')) {
-          mo.disconnect();
-          el.textContent = '0' + suffix;
-          requestAnimationFrame(tick);
-        }
-      });
-    });
-    mo.observe(el, { attributes: true });
-  });
-})();
-</script>
-<!-- v33 motion system applied -->
 </body>
 </html>
