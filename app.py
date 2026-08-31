@@ -10572,6 +10572,14 @@ _BRAND_FILES = {
     'pocketplot_13b_screenshot-byob-framed.jpg',
     'pocketplot_14_screenshot-vault.jpg',
     'pocketplot_15_sticker-sheet.jpg',
+    'pocketplot_16_launch_banner.jpg',
+    'pocketplot_17_tier_explorer.jpg',
+    'pocketplot_18_tier_worldsmith.jpg',
+    'pocketplot_19_tier_architect.jpg',
+    'pocketplot_20_icon_branch.jpg',
+    'pocketplot_21_icon_world.jpg',
+    'pocketplot_22_icon_seed.jpg',
+    'pocketplot_23_icon_remix.jpg',
     'stickers.html',
 }
 @app.route('/<path:filename>', methods=['GET'])
