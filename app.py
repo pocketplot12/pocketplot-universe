@@ -2246,8 +2246,8 @@ INDEX_HTML = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PocketPlot — A unique bedtime story for your child, every night</title>
-<meta name="description" content="Personalised bedtime stories, delivered to your inbox every night. Your child is the hero. Free to start. No ads, ever.">
+<title>PocketPlot — A unique branching world, every day</title>
+<meta name="description" content="Personalised branching stories, delivered to your inbox every day. Your child is the hero. Free to start. No ads, ever.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2385,7 +2385,7 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
 <div class="nav-wrap">
   <div class="container">
     <nav class="main" aria-label="Primary">
-      <a href="/" class="brand"><span class="dot"></span>Story<em>Spark</em></a>
+      <a href="/" class="brand"><span class="dot"></span>Pocket<em>Plot</em></a>
       <div class="nav-links">
         <a href="#how">How it works</a>
         <a href="#pricing">Pricing</a>
@@ -2402,7 +2402,7 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
       <div class="hero-text">
         <span class="eyebrow">Bedtime stories, every night</span>
         <h1>A unique story for <em>your</em> child &mdash; in their inbox by 8&nbsp;pm.</h1>
-        <p class="lede">A fresh, personalised bedtime story, written just for your child &mdash; featuring their name, their age, and a tiny cast of recurring characters who grow with them.</p>
+        <p class="lede">A fresh, personalised branching world, written just for you &mdash; featuring their name, their age, and a tiny cast of recurring characters who grow with them.</p>
         <div class="hero-cta-row">
           <a href="/signup" class="btn btn-primary">Start your free story &rarr;</a>
           <a href="#how" class="btn btn-ghost">How it works</a>
@@ -2837,7 +2837,7 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
         <div class="tier-sub">Forever.</div>
         <div class="price"><span class="amt">$0</span><span class="unit">/ month</span></div>
         <ul class="feats">
-          <li><span class="tick">&#10003;</span>One fresh bedtime story every night</li>
+          <li><span class="tick">&#10003;</span>One fresh branching world every day</li>
           <li><span class="tick">&#10003;</span>Personalised &mdash; your child is the hero</li>
           <li><span class="tick">&#10003;</span>200&ndash;300 words, ready for one good yawn</li>
           <li><span class="tick">&#10003;</span><b>Word of the Day</b> in every story</li>
@@ -2889,7 +2889,7 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
       </div>
       <div class="testi">
         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>I bought it on a whim. Two months in, my son quotes Bram the bear at breakfast. I didn't know a bedtime app could be this gentle.</blockquote>
+        <blockquote>I bought it on a whim. Two months in, my son quotes Bram the bear at breakfast. I didn't know a branching story app could be this gentle.</blockquote>
         <div class="who"><div class="avatar">D</div><div><div class="name">David R.</div><div class="role">parent of Theo, age 4</div></div></div>
       </div>
       <div class="testi">
@@ -2905,7 +2905,7 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
   <div class="container">
     <div class="closing-inner">
       <span class="eyebrow">Ready when you are</span>
-      <h2>Make tonight's bedtime <em>unforgettable</em>.</h2>
+      <h2>Make today's story <em>unforgettable</em>.</h2>
       <p class="lede">One story. Two minutes to start. A tiny ritual your child will ask for again tomorrow.</p>
       <a href="/signup" class="btn btn-primary">Start your free story &rarr;</a>
     </div>
@@ -2914,7 +2914,7 @@ footer.site{padding:40px 28px 32px;border-top:1px solid var(--cream3);text-align
 
 <footer class="site">
   <div class="foot-row">
-    <a href="/" class="brand"><span class="dot"></span>Story<em>Spark</em></a>
+    <a href="/" class="brand"><span class="dot"></span>Pocket<em>Plot</em></a>
     <div class="foot-links">
       <a href="/pricing">Pricing</a>
       <a href="/login">Sign in</a>
@@ -4145,7 +4145,7 @@ input:focus{outline:none;border-color:#7a9a6e;box-shadow:0 0 0 3px rgba(122,154,
 .flash.ok{background:#ecf3e3;border-color:#7a9a6e;color:#3d5a3a}
 .back{display:block;text-align:center;margin-top:16px;font-size:13px;color:#7a3d20;text-decoration:none}
 </style></head><body><div class="card">
-<div class="wordmark">Story<i>Spark</i></div>
+<div class="wordmark">Pocket<i>Plot</i></div>
 <h1>Sign in</h1>
 <p class="lead">Enter your email and we'll send you a one-tap sign-in link. No password to remember.</p>
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -4312,7 +4312,7 @@ h1 i{font-style:italic;color:var(--moss);font-weight:400}
 .status-canceled{color:var(--faint)}
 </style></head><body>
 <header>
-  <div class="wordmark">Story<i>Spark</i></div>
+  <div class="wordmark">Pocket<i>Plot</i></div>
   <nav class="nav">
     <a href="/pricing">Pricing</a>
     <a href="/logout">Sign out</a>
@@ -5539,7 +5539,7 @@ ul.feats li .x{color:var(--faint);font-weight:700;font-size:14px;margin-top:2px;
 .note{margin-top:14px;text-align:center;font-size:12px;color:var(--faint)}
 </style></head><body>
 <header>
-  <div class="wordmark">Story<i>Spark</i></div>
+  <div class="wordmark">Pocket<i>Plot</i></div>
   <nav class="nav">
     <a href="/">Home</a>{% if authed %}<a href="/me">Account</a>{% else %}<a href="/login">Sign in</a>{% endif %}
   </nav>
@@ -5729,7 +5729,7 @@ h1{font-family:Fraunces;font-weight:500;font-size:26px;line-height:1.2;margin:10
 </style></head><body>
 <div class="card">
 <div class="tag">★ MOCK MODE</div>
-<div class="wordmark">Story<i>Spark</i></div>
+<div class="wordmark">Pocket<i>Plot</i></div>
 <h1>Confirm your Pro subscription</h1>
 <p style="color:#5a6a4a;font-size:14px;line-height:1.5">This is a simulated Stripe Checkout page. No card is charged. Clicking <b>Confirm</b> synthesizes the same webhook events Stripe would emit on a real subscription creation.</p>
 <div class="amount">$4.99<small>/month</small></div>
