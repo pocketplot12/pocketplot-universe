@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+(function() {
+  const STORAGE_KEY = 'pocketplot-theme';
+  const THEMES = ['warm-dark', 'warm-light'];
+  const DEFAULT_THEME = 'warm-light';
+  try {
+    let theme = localStorage.getItem(STORAGE_KEY);
+    if (!theme || !THEMES.includes(theme)) {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      theme = DEFAULT_THEME;
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.add('theme-' + theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', DEFAULT_THEME);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sticker pack - PocketPlot Universe</title>
+<link rel="canonical" href="/stickers">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+<meta property="og:title" content="PocketPlot mascot sticker pack">
+<meta property="og:description" content="Six die-cut mascot stickers for Telegram, WhatsApp, and social. Free to use.">
+<meta property="og:image" content="/pocketplot_15_sticker-sheet.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="1280">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/pocketplot_15_sticker-sheet.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css?v=35">
+<style>
+.sticker-page { max-width: 1100px; margin: 0 auto; padding: 120px 24px 80px; }
+.sticker-eyebrow { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.15em; color: var(--brand); text-transform: uppercase; text-align: center; margin: 0 0 16px; }
+.sticker-title { font-family: var(--font-serif); font-size: clamp(36px, 6vw, 56px); font-style: italic; color: var(--text-heading); text-align: center; margin: 0 0 12px; font-weight: 500; line-height: 1.1; }
+.sticker-lede { font-family: var(--font-body); font-size: 18px; color: var(--text-body); text-align: center; max-width: 38em; margin: 0 auto 48px; line-height: 1.6; }
+.sticker-sheet-figure { text-align: center; margin: 0 auto 48px; max-width: 720px; }
+.sticker-sheet-figure img { width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: 0 30px 80px -20px rgba(0,0,0,0.55); }
+.sticker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 48px; }
+.sticker-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; text-align: center; transition: transform 0.4s var(--ease-out); }
+.sticker-card:hover { transform: translateY(-4px); }
+.sticker-emoji { font-size: 56px; line-height: 1; margin-bottom: 12px; }
+.sticker-card-name { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--text-heading); margin-bottom: 4px; }
+.sticker-card-desc { font-family: var(--font-body); font-size: 14px; color: var(--text-body); line-height: 1.5; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a href="/" class="brand-mark"><img src="/logo-240.png" alt="" /><span class="word">PocketPlot Universe</span></a>
+  <nav class="nav-links">
+    <a href="/how-it-works" class="link">How it works</a>
+    <a href="/pricing" class="link">Pricing</a>
+    <a href="/library" class="link">Library</a>
+    <a href="/seed" class="link">Seed</a>
+    <a href="/faq" class="link">FAQ</a>
+    <a href="/app-store" class="link">App store</a>
+    <a href="/signup" class="cta">Begin</a>
+  </nav>
+  <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between Paper and Night themes" title="Switch themes (Paper / Night)">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="icon-paper" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span class="label label-dark">Night</span><span class="label label-light">Paper</span>
+  </button>
+</header>
+<main class="sticker-page">
+  <p class="sticker-eyebrow">Mascot sticker pack</p>
+  <h1 class="sticker-title">Six ways the book says hi.</h1>
+  <p class="sticker-lede">Free to use for Telegram, WhatsApp, Discord, and any chat that supports PNG stickers. Drag any of the cards below to download.</p>
+  
+  <figure class="sticker-sheet-figure reveal">
+    <img src="/pocketplot_15_sticker-sheet.jpg" alt="Six PocketPlot mascot stickers on a cream background: waving with sparkles, sleeping with Zzz and moon, writing with graduation cap, holding a golden key, surrounded by hearts, wearing a party hat">
+  </figure>
+
+  <div class="sticker-grid">
+    <div class="sticker-card reveal">
+      <div class="sticker-emoji">📖✨</div>
+      <div class="sticker-card-name">Hi!</div>
+      <div class="sticker-card-desc">Waving with sparkles. Use for "hello", "welcome", or "great to meet you".</div>
+    </div>
+    <div class="sticker-card reveal">
+      <div class="sticker-emoji">🌙💤</div>
+      <div class="sticker-card-name">Sleepy</div>
+      <div class="sticker-card-desc">Mid-story, late-night reading, when you're between worlds.</div>
+    </div>
+    <div class="sticker-card reveal">
+      <div class="sticker-emoji">🎓✍️</div>
+      <div class="sticker-card-name">Writing</div>
+      <div class="sticker-card-desc">For when you're authoring your next chapter or stuck on a plot point.</div>
+    </div>
+    <div class="sticker-card reveal">
+      <div class="sticker-emoji">🔑✨</div>
+      <div class="sticker-card-name">Unlocked</div>
+      <div class="sticker-card-desc">New world opened. Achievement unlocked. A choice has consequences.</div>
+    </div>
+    <div class="sticker-card reveal">
+      <div class="sticker-emoji">💕</div>
+      <div class="sticker-card-name">Hearts</div>
+      <div class="sticker-card-desc">Romance genre active. Ship just sailed. Two characters, one timeline.</div>
+    </div>
+    <div class="sticker-card reveal">
+      <div class="sticker-emoji">🎉</div>
+      <div class="sticker-card-name">Celebrate</div>
+      <div class="sticker-card-desc">Badge unlocked. Streak extended. Story completed. Just because.</div>
+    </div>
+  </div>
+
+  <p style="text-align:center;font-family:var(--font-body);color:var(--text-caption);max-width:32em;margin:0 auto 24px;">
+    Made with care by sister agent Charcoal. The whole pack is yours to remix, recolor, or repurpose for community use.
+  </p>
+</main>
+<script>
+window.pocketplot = window.pocketplot || {};
+window.pocketplot.setTheme = function(theme) {
+  if (!['warm-dark', 'warm-light'].includes(theme)) theme = 'warm-dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('pocketplot-theme', theme); } catch (e) {}
+  return theme;
+};
+window.pocketplot.toggleTheme = function() {
+  var cur = document.documentElement.getAttribute('data-theme');
+  window.pocketplot.setTheme(cur === 'warm-light' ? 'warm-dark' : 'warm-light');
+};
+document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+  window.pocketplot.toggleTheme();
+});
+(function() {
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+  }
+})();
+</script>
+</body>
+</html>

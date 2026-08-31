@@ -3484,6 +3484,15 @@ def admin_queue():
     return render_template_string(
         queue_templates.QUEUE_LIST_HTML, rows=rows, status=status or "all", counts=counts
     )
+@app.route('/stickers')
+def stickers_route():
+    """Mascot sticker pack page."""
+    try:
+        return send_file('stickers.html', conditional=True)
+    except Exception:
+        abort(404)
+
+
 @app.route('/empty')
 def empty_route():
     """Charcoal-designed empty state for new accounts."""
@@ -10558,6 +10567,12 @@ _BRAND_FILES = {
     'favicon-512.png',
     'favicon-196.png',
     'apple-touch-icon-1024.png',
+    'pocketplot_12_screenshot-read.jpg',
+    'pocketplot_13_screenshot-byob.jpg',
+    'pocketplot_13b_screenshot-byob-framed.jpg',
+    'pocketplot_14_screenshot-vault.jpg',
+    'pocketplot_15_sticker-sheet.jpg',
+    'stickers.html',
 }
 @app.route('/<path:filename>', methods=['GET'])
 def _serve_brand_asset(filename):
