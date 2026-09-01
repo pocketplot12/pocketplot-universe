@@ -54,8 +54,43 @@
 .sticker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 32px; }
 .sticker-card { display: block; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; text-align: center; text-decoration: none; color: inherit; transition: transform 200ms, border-color 200ms; }
 .sticker-card:hover { transform: translateY(-4px); border-color: var(--brand); }
-.sticker-img { width: 140px; height: 140px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
-.sticker-img img { width: 100%; height: 100%; object-fit: contain; }
+.sticker-img {
+  width: 100%;
+  max-width: 200px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sticker-img img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+.sticker-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 200ms, border-color 200ms;
+}
+.sticker-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand);
+}
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
 .sticker-card h3 { font-family: var(--font-display); font-style: italic; font-size: 20px; color: var(--text-heading); margin: 0 0 6px; }
 .sticker-card p { font-family: var(--font-body); font-size: 13px; color: var(--text-body); margin: 0; line-height: 1.5; }
 
@@ -72,12 +107,27 @@
   .footer-links { gap: 16px; }
 }
 
+
+.footer-cta { grid-column: 1 / -1; display: flex; justify-content: center; padding-top: 16px; }
+.footer-cta .cta-primary { background: var(--brand); color: var(--bg); padding: 12px 24px; border-radius: var(--radius-pill); font-family: var(--font-ui); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+.footer-cta .cta-primary:hover { background: var(--brand-light); }
+@media (max-width: 720px) {
+  .footer-cta { justify-content: center; }
+}
+
 </style>
 </head>
 <body>
 <header class="nav">
   <a href="/" class="brand-mark"><img src="/logo-240.png" alt="" /><span class="word">PocketPlot Universe</span></a>
   <nav class="nav-links">
+      <button class="hamburger" type="button" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Menu
+      </button>
+      
     <a href="/how-it-works" class="link">How it works</a>
     <a href="/pricing" class="link">Pricing</a>
     <a href="/library" class="link">Library</a>
@@ -185,8 +235,63 @@ document.getElementById('theme-toggle-btn').addEventListener('click', function()
       <a href="/faq">FAQ</a>
       <a href="/terms">Terms</a>
     </nav>
+    <div class="footer-cta">
+      <a href="/signup" class="cta-primary">Begin your first world</a>
+    </div>
     <p class="footer-meta">&copy; 2026 PocketPlot &middot; 18+ only &middot; Made for branching worlds.</p>
   </div>
 </footer>
-</body>
+<div class="mobile-menu-overlay"></div>
+<nav class="mobile-menu">
+  <button class="close" type="button" aria-label="Close menu">&times;</button>
+  <a href="/how-it-works">How it works</a>
+  <a href="/pricing">Pricing</a>
+  <a href="/library">Library</a>
+  <a href="/seed">Seed</a>
+  <a href="/remix">Remix</a>
+  <a href="/faq">FAQ</a>
+  <a href="/signup" style="color:var(--brand);font-weight:700;padding-top:24px;">Begin your first world →</a>
+</nav>
+<script>
+(function() {
+  function setupHamburger() {
+    var btn = document.querySelector('.hamburger');
+    var menu = document.querySelector('.mobile-menu');
+    var overlay = document.querySelector('.mobile-menu-overlay');
+    if (!btn || !menu) return;
+    
+    function open() {
+      menu.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      menu.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    
+    btn.addEventListener('click', function() {
+      if (menu.classList.contains('open')) close();
+      else open();
+    });
+    
+    var closeBtn = menu.querySelector('.close');
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    
+    if (overlay) overlay.addEventListener('click', close);
+    
+    // Close on ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) close();
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupHamburger);
+  } else {
+    setupHamburger();
+  }
+})();
+</script></body>
 </html>

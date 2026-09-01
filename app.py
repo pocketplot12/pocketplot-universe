@@ -4290,6 +4290,18 @@ h1{font-family:var(--font-display);font-style:italic;font-size:30px;color:var(--
 .foot{text-align:center;font-family:var(--font-body);font-size:13px;color:var(--text-caption);margin-top:18px}
 .foot a{color:var(--brand);text-decoration:underline}
 .flash{padding:10px 13px;border-radius:8px;font-size:13.5px;margin-bottom:14px;background:var(--bg-elevated);border:1px solid var(--brand);color:var(--text-heading)}
+
+.site-footer { background: var(--bg-elevated); border-top: 1px solid var(--border); padding: 48px 24px; margin-top: 80px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; }
+.footer-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 16px; color: var(--text-heading); text-decoration: none; font-weight: 500; }
+.footer-brand img { height: 28px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+.footer-links a { font-family: var(--font-ui); font-size: 13px; color: var(--text-body); text-decoration: none; }
+.footer-links a:hover { color: var(--brand); }
+.footer-cta { grid-column: 1 / -1; display: flex; justify-content: center; padding-top: 16px; }
+.footer-cta .cta-primary { background: var(--brand); color: var(--bg); padding: 12px 24px; border-radius: var(--radius-pill); font-family: var(--font-ui); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+.footer-cta .cta-primary:hover { background: var(--brand-light); }
+.footer-meta { font-family: var(--font-body); font-style: italic; font-size: 12px; color: var(--text-caption); margin: 0; }
 </style>
 </head><body>
 <div class="card">
@@ -4313,6 +4325,22 @@ h1{font-family:var(--font-display);font-style:italic;font-size:30px;color:var(--
     Don't have an account? <a href="/signup">Begin</a>
   </p>
 </div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="/" class="footer-brand"><img src="/logo-240.png" alt="" /><span>PocketPlot Universe</span></a>
+    <nav class="footer-links">
+      <a href="/how-it-works">How it works</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/library">Library</a>
+      <a href="/faq">FAQ</a>
+      <a href="/terms">Terms</a>
+    </nav>
+    <div class="footer-cta">
+      <a href="/signup" class="cta-primary">Begin your first world</a>
+    </div>
+    <p class="footer-meta">&copy; 2026 PocketPlot &middot; 18+ only &middot; Made for branching worlds.</p>
+  </div>
+</footer>
 </body></html>"""
 
 @app.route("/audio/<int:sub_id>/<path:filename>", methods=["GET"])
